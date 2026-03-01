@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Inner Compass | Stability OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --dim: #64748b;
+            --gold: #b45309; --blue: #2563eb; --green: #10b981; --border: #e2e8f0;
+        }
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 12px; display: flex; flex-direction: column; align-items: center; }
+
+        header { text-align: center; margin-bottom: 15px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #0f172a; margin: 0; }
+        
+        .daily-ribbon { width: 100%; max-width: 480px; padding: 12px; background: #fffbeb; border-radius: 12px; margin-bottom: 15px; text-align: center; border: 1px solid #fde68a; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .daily-content { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-style: italic; color: #78350f; margin: 0; line-height: 1.4; }
+
+        .anchor-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 480px; margin-bottom: 15px; }
+        .anchor-btn { background: white; border: 1px solid var(--border); padding: 10px 0; border-radius: 12px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--dim); cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+
+        .selector-wrap { width: 100%; max-width: 480px; margin-bottom: 20px; }
+        select { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 1rem; background: white; color: var(--text); box-shadow: 0 2px 4px rgba(0,0,0,0.05); outline: none; }
+
+        .dashboard { display: none; width: 100%; max-width: 480px; animation: slideUp 0.3s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .card { background: white; border-radius: 16px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .card.gita { border-left: 4px solid var(--gold); }
+        .card.stoic { border-left: 4px solid var(--blue); }
+
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+        .rotate-btn { background: #f1f5f9; border: none; color: var(--text-dim); font-size: 0.6rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; cursor: pointer; }
+
+        .quote-text { font-size: 0.95rem; line-height: 1.6; color: #334155; margin-bottom: 10px; }
+        .quote-ref { font-family: 'Playfair Display', serif; font-style: italic; color: var(--text-dim); font-size: 0.8rem; text-align: right; display: block; }
+
+        .habit-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+        .badge { background: #f0fdf4; color: var(--green); min-width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; }
+        .h-content b { font-size: 0.9rem; display: block; color: #0f172a; margin-bottom: 2px; }
+        .h-content p { margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
+
+        .pagination { width: 100%; padding: 10px; background: none; border: 1px dashed var(--border); border-radius: 10px; color: var(--blue); font-size: 0.7rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 1000; padding: 50px 25px; text-align: center; }
+    </style>
+</head>
+<body>
+
+<header><h1>The Inner Compass</h1></header>
+
+<div class="daily-ribbon"><p id="dailyThought" class="daily-content"></p></div>
+
+<div class="anchor-bar">
+    <div class="anchor-btn" onclick="openAnchor('gratitude')">Gratitude</div>
+    <div class="anchor-btn" onclick="openAnchor('prayer')">Pray</div>
+    <div class="anchor-btn" onclick="openAnchor('faith')">Believe</div>
+</div>
+
+<div class="selector-wrap">
+    <select id="emotionInput" onchange="initCompass()">
+        <option value="" disabled selected>Identify current feeling...</option>
+        <option value="overwhelmed">Overwhelmed (Too much work)</option>
+        <option value="priority">Unable to Prioritize</option>
+        <option value="mistake">Anger at someone's mistake</option>
+        <option value="talking">Anger while someone is talking</option>
+        <option value="badthings">Anger at bad actions/ethics</option>
+        <option value="restless">Restless & Anxious</option>
+        <option value="future">Fear of the Future</option>
+        <option value="failure">Fear of Failure</option>
+        <option value="opinions">Fear of Others' Opinions</option>
+        <option value="stressed">Generally Stressed</option>
+    </select>
+</div>
+
+<div id="dashboard" class="dashboard">
+    <div class="card gita">
+        <div class="card-header"><span class="label">Divine Anchor</span><button class="rotate-btn" onclick="rotate('gita')">NEXT VERSE ↻</button></div>
+        <div id="gt" class="quote-text"></div><span id="gr" class="quote-ref"></span>
+    </div>
+    <div class="card stoic">
+        <div class="card-header"><span class="label">Rational Shield</span><button class="rotate-btn" onclick="rotate('stoic')">NEXT THOUGHT ↻</button></div>
+        <div id="st" class="quote-text"></div><span id="sr" class="quote-ref"></span>
+    </div>
+    <div class="card">
+        <div class="card-header"><span class="label" id="habitLabel">Practical Habits</span></div>
+        <div id="habitsList"></div>
+        <button class="pagination" id="pageBtn" onclick="toggleHabits()">SHOW NEXT 5 ACTIONS →</button>
+    </div>
+</div>
+
+<div id="modal" onclick="this.style.display='none'">
+    <h2 id="mT" style="font-family:'Playfair Display'; color:var(--gold); margin-bottom:20px;"></h2>
+    <p id="mB" style="font-size:1.1rem; line-height:1.7; color:var(--text-main)"></p>
+    <p style="margin-top:50px; font-size:0.7rem; color:var(--text-dim)">[ TAP TO CLOSE ]</p>
+</div>
+
+<script>
+let state = { emotion: "", gIdx: 0, sIdx: 0, hPage: 0 };
+
+const thoughtPool = [
+    // --- Leadership & PM Logic ---
+    "A product's success is measured by the silence of its users.",
+    "Logic is your shield; empathy is your sword.",
+    "The best ROI is a calm mind at 10 PM.",
+    "Revenue leakage is a system error; mental leakage is a focus error.",
+    "Solve the root cause, or you'll be forever managing the symptoms.",
+    "Data tells you what is happening; intuition tells you why.",
+    "A leader is a student who never stops observing.",
+    "The most expensive resource in OperionAI is your undivided attention.",
+    "Productivity is about outcomes, not browser tabs.",
+    "Standardize the routine to liberate the creative.",
+    "Your team at boAt reflects your own internal stability.",
+    "A great PM says 'no' to 1,000 good ideas to say 'yes' to one great one.",
+    "Strategy is knowing what NOT to do.",
+    "Communication is what is heard, not what is said.",
+    "Build systems that work even when you are playing with Aryan.",
+    "Scale yourself before you scale your startup.",
+    "The 'Lead Domino' is usually the task you are avoiding most.",
+    "Clarity of thought precedes clarity of action.",
+    "Your calendar is the only honest reflection of your priorities.",
+    "Optimization without direction is just efficient failure.",
+
+    // --- Stoic & Rational Shield ---
+    "You have power over your mind—not outside events. Realize this.",
+    "We suffer more in imagination than in reality.",
+    "Accept the things to which fate binds you.",
+    "The best revenge is to be unlike him who performed the injury.",
+    "Waste no more time arguing what a good man should be. Be one.",
+    "The impediment to action advances action. What stands in the way becomes the way.",
+    "If it is not right, do not do it; if it is not true, do not say it.",
+    "Very little is needed to make a happy life.",
+    "External things are not the problem. It is your assessment of them.",
+    "Amor Fati: Love your fate, which is in fact your life.",
+    "He who fears death will never do anything worth of a man who is alive.",
+    "Life is very short and anxious for those who forget the past, neglect the present, and fear the future.",
+    "Man is not worried by real problems so much as by his imagined anxieties about real problems.",
+    "First say to yourself what you would be; and then do what you have to do.",
+    "It is the power of the mind to be unconquerable.",
+    "Don't explain your philosophy. Embody it.",
+    "He is a wise man who does not grieve for the things which he has not.",
+    "Wealth consists not in having great possessions, but in having few wants.",
+    "How long are you going to wait before you demand the best for yourself?",
+    "Every night, ask: What bad habit did I curb today?",
+
+    // --- Gita & Spiritual Anchor ---
+    "You are an instrument (Nimitta-Matram); let the Divine play the tune.",
+    "The soul is never born and never dies.",
+    "Yoga is the journey of the self, through the self, to the self.",
+    "Man is made by his belief. As he believes, so he is.",
+    "Curtain your ego, and the truth will appear.",
+    "Perform your duty (Dharma) without attachment to the results.",
+    "The mind acts like an enemy for those who do not control it.",
+    "Calmness, gentleness, and silence—these are the disciplines of the mind.",
+    "A person is what their deep, driving desire is.",
+    "Lust, anger, and greed are the three gates to self-destruction.",
+    "The peace of God is with those whose mind and soul are in harmony.",
+    "Whatever happened, happened for the good. Whatever is happening, is happening for the good.",
+    "You came empty-handed, and you will leave empty-handed.",
+    "Change is the law of the universe.",
+    "The wise man sees the same Divine in a priest, a cow, and a dog.",
+    "Focus on the work ($Karma$), never the fruit ($Phala$).",
+    "One who is equal in pleasure and pain is fit for immortality.",
+    "When meditation is mastered, the mind is unwavering like a lamp in a windless place.",
+    "The power of God is with you at all times; through the activities of mind, senses, breathing, and emotions.",
+    "Surrender all duties to the Divine and be free from fear.",
+
+    // --- Fatherhood & Family ---
+    "Aryan’s smile is the only KPI that truly never fluctuates.",
+    "Being a father is the ultimate practice in Stoicism.",
+    "Isha is the co-founder of your life; treat that partnership with the highest priority.",
+    "Your legacy isn't OperionAI; it’s the character you model for your son.",
+    "Children don't follow your advice; they follow your example.",
+    "The best thing you can spend on your family is time, not money.",
+    "A calm father creates a safe world.",
+    "Success at work is empty if there is failure at home.",
+    "Today’s stress will be forgotten; today’s play with Aryan will be remembered.",
+    "Listen to Isha with the same focus you give a board meeting.",
+    "Your home should be the 'windless place' where your lamp does not flicker.",
+    "Fatherhood is the highest form of Dharma.",
+    "The world needs your SaaS, but Aryan needs his dad.",
+    "Patience at home is the training ground for patience at work.",
+    "Gratitude for what you have is the best gift to your family.",
+    "A hug from your son is the reset button for any bad day.",
+    "Protect the peace of your household like a sacred temple.",
+    "Your presence is more valuable than your presents.",
+    "Marriage is a long conversation; keep it kind.",
+    "Teach Aryan not just how to win, but how to handle the fruit of effort.",
+
+    // --- Career & Relocation ---
+    "The right job in Bangalore or Pune is already waiting for your growth.",
+    "A location change is just a change of scenery; your stability comes from within.",
+    "Your MBA from IIMK is a tool, but your character is the craftsman.",
+    "The logistics industry needs your clarity, not just your code.",
+    "Every interview is a chance to practice equanimity.",
+    "Your value doesn't decrease based on someone's inability to see it.",
+    "Trust the transition; you are being moved to where you are needed most.",
+    "The skills you built at Tata Play and upGrad are your foundation.",
+    "A career is a marathon, not a sprint to the next title.",
+    "Networking is just making friends with people who have the same problems as you.",
+    "Your next role will find you when your 'Internal Compass' is steady.",
+    "Pune or Bangalore? Wherever you go, you take 'You' with you.",
+    "Market shifts are 'External Indifferents'. Your skills are 'Internal Goods'.",
+    "Prepare for the interview, but surrender the outcome.",
+    "A job is a place to exercise your virtue, not just your intellect.",
+    "The logistics of moving are temporary; the logic of growth is permanent.",
+    "Seek a role that challenges your spirit, not just your time.",
+    "Your startup experience makes you a better PM; your PM experience makes you a better founder.",
+    "The best career move is often the one that offers the most peace.",
+    "You are not your resume. You are the one who lived it.",
+
+    // --- Daily Momentum & Grit ---
+    "Win the morning, win the day.",
+    "Discipline is the bridge between goals and accomplishment.",
+    "Consistency is the playground of the greats.",
+    "Do it tired. Do it scared. Just do it.",
+    "The cost of 'later' is usually 'never'.",
+    "Focus on one 'Lead Domino' every 24 hours.",
+    "Your future self is depending on you to stay stable today.",
+    "Stop over-thinking and start over-acting.",
+    "Courage is not the absence of fear, but the decision that something else is more important.",
+    "The universe rewards action, not just planning.",
+    "Small steps in the right direction lead to massive changes.",
+    "Sleep is the investment; productivity is the return.",
+    "A year from now, you will wish you started today.",
+    "Don't trade your peace for a temporary peak.",
+    "Stability is a skill, not a gift.",
+    "The struggle you are in today is developing the strength you need for tomorrow.",
+    "Keep your head in the clouds (vision) but your feet on the ground (action).",
+    "The best way to predict the future is to create it.",
+    "Efficiency is doing things right; effectiveness is doing the right things.",
+    "End every day by forgiving yourself and planning to improve.",
+
+    // --- Deep Perspectives ---
+    "Life is a drama; play your part with absolute intensity but zero attachment.",
+    "The ocean is deep and calm despite the waves on the surface. Be the ocean.",
+    "Everything you are seeking is also seeking you.",
+    "Silence is the language of God; all else is poor translation.",
+    "Your mind is a garden; plant seeds of logic and water them with breath.",
+    "The sun doesn't seek validation; it just shines. Shine.",
+    "Be like the lotus—in the water, but not wet by it.",
+    "You are a soul having a human experience, not a human having a soul experience.",
+    "The only true wisdom is in knowing you know nothing.",
+    "Gratitude is the highest form of prayer.",
+    "Every person you meet is a teacher in disguise.",
+    "Live as if you were to die tomorrow. Learn as if you were to live forever.",
+    "The secret of happiness is freedom; the secret of freedom is courage.",
+    "Perspective is the difference between a mountain and a molehill.",
+    "Energy flows where attention goes.",
+    "You cannot control the wind, but you can adjust your sails.",
+    "Happiness is an internal job.",
+    "The quieter you become, the more you are able to hear.",
+    "Comparison is the thief of joy.",
+    "This too shall pass.",
+
+    // --- Startup & OperionAI Specific ---
+    "Solve a problem so real that users thank you for the bill.",
+    "B2B SaaS is about trust first, features second.",
+    "Revenue leakage is a puzzle; you are the one with the missing piece.",
+    "Scale only what is broken to see where it breaks.",
+    "A startup is a series of experiments until you find the truth.",
+    "Your users’ pain is your roadmap.",
+    "OperionAI is a marathon of pivots.",
+    "The best marketing is a product that actually works.",
+    "Founding is lonely; that's why you have your Gita.",
+    "Burnout is what happens when you try to control the fruit.",
+    "Measure everything, but trust your gut.",
+    "Don't build a product; build a solution.",
+    "The first 10 customers are your real co-founders.",
+    "A 'No' from a VC is just a redirect to a better partner.",
+    "OperionAI is your lab; treat every failure as data.",
+    "Simplicity is the ultimate sophistication in SaaS.",
+    "Automate the urgent to focus on the important.",
+    "Cash flow is the oxygen; purpose is the heartbeat.",
+    "Your startup is a reflection of your own maturity.",
+    "Build something that Isha and Aryan would be proud of.",
+
+    // --- Final Grounding ---
+    "Breathe. You are exactly where you need to be.",
+    "The universe is for you, not against you.",
+    "Stable mind, stable life.",
+    "Integrity above everything.",
+    "Love the work, leave the rest.",
+    "Stability is your superpower.",
+    "Stay curious, stay calm.",
+    "The present moment is the only place life exists.",
+    "Lead with light.",
+    "You are enough, right now.",
+    "Action is the antidote to anxiety.",
+    "The Dharma of a father is to be a rock.",
+    "The Dharma of a leader is to be a mirror.",
+    "Everything is energy; manage yours.",
+    "Focus on what is permanent.",
+    "The fruit will ripen when the time is right.",
+    "Until then, water the roots.",
+    "Stability in action. Clarity in thought.",
+    "Go win.",
+    "Peace."
+];
+
+const db = {
+    overwhelmed: {
+        g: [["The mind is restless, but it is subdued by practice and detachment.", "6.35"], ["Action is better than inaction; perform your duty.", "3.8"], ["Equanimity of mind is called Yoga.", "2.48"]],
+        s: [["Do not let imagination crush your reality.", "Marcus Aurelius"], ["If you seek tranquility, do less. Do what is essential.", "Marcus Aurelius"], ["Eliminate the non-essential; find more time.", "Seneca"]],
+        h: [["Brain Dump", "Write every worry on paper."], ["Monotask", "Close all tabs except one."], ["Box Breath", "4s in, 4s hold, 4s out, 4s hold."], ["5-Min Rule", "If it takes <5 mins, do it now."], ["Digital Fast", "Phone in drawer for 30 mins."], ["Eisenhower Matrix", "Label Urgent vs Important."], ["Water Reset", "Drink 500ml water."], ["Lead Domino", "Identify the one task that fixes others."], ["Say No", "Decline one non-essential request."], ["Sit Tall", "Adjust posture to signal safety."]]
+    },
+    priority: {
+        g: [["Better your own duty imperfectly than another's perfectly.", "18.47"], ["Intelligence is many-branched for the unfocused.", "2.41"], ["Act without attachment.", "3.25"]],
+        s: [["Don't set your heart on many things.", "Epictetus"], ["Focus strictly on the now.", "Marcus Aurelius"], ["Choice is yours.", "Epictetus"]],
+        h: [["Rule of 3", "Pick 3 'Must-Do' tasks."], ["80/20 Audit", "Find the 20% that matters."], ["No Meetings", "Block 'Deep Work' time."], ["Value Check", "Does this help OperionAI?"], ["Delegate", "Give away one low-value task."], ["Top Task", "Do the hardest thing first."], ["Calendar Lock", "Schedule your priorities."], ["Review", "Check goals every morning."], ["Exit List", "Plan tomorrow tonight."], ["Zero Inbox", "Clear the noise."]]
+    },
+    mistake: {
+        g: [["Compassion for all is divine nature.", "16.2"], ["Self is your friend when mind is controlled.", "6.5"], ["Avoid ill will to any being.", "12.13"]],
+        s: [["Recall your errors before judging.", "Marcus Aurelius"], ["Best revenge is to be different.", "Marcus Aurelius"], ["Bad men do wrong; expect it.", "Marcus Aurelius"]],
+        h: [["24-Hour Rule", "Wait a day before feedback."], ["Mentor Pivot", "Ask 'How to prevent this?'"], ["System Check", "Process vs Person error?"], ["Compassion Flash", "Recall your own early mistakes."], ["Positivity Sandwich", "Two praises, one fix."], ["Write it out", "Write feedback first."], ["Walk Away", "Leave if heart rate is high."], ["Low Volume", "Lower voice by 20%."], ["Identity Gap", "Mistake != Person."], ["Outcome Focus", "Fix result, skip blame."]]
+    },
+    talking: {
+        g: [["Speech should be truthful and pleasant.", "17.15"], ["Subdue the restless mind.", "6.35"], ["Be ego-free and compassionate.", "12.13"]],
+        s: [["Two ears, one mouth.", "Epictetus"], ["Silence is a virtue.", "Seneca"], ["Listen twice as much.", "Epictetus"]],
+        h: [["Listening Bench", "Hear full sentences."], ["Physical Anchor", "Press thumb to finger."], ["3-Breath Pause", "Pause before replying."], ["No Interrupting", "Let them finish completely."], ["Trigger Search", "Why am I annoyed?"], ["Subtext", "Listen for the hidden need."], ["Eye Contact", "Focus on them, not screen."], ["Clarify", "Ask: 'Do you mean X?'"], ["Validate", "Say: 'I hear you'."], ["Exit Gracefully", "End if it's not productive."]]
+    },
+    badthings: {
+        g: [["Rise of unrighteousness triggers Me.", "4.7"], ["Righteous cause is highest duty.", "2.31"], ["World is transient; worship Me.", "9.33"]],
+        s: [["Don't be like the wrongdoer.", "Marcus Aurelius"], ["Integrity is yours alone.", "Epictetus"], ["Watch as a witness.", "Marcus Aurelius"]],
+        h: [["Circle of Influence", "Stay ethical in your work."], ["Detached Action", "Oppose without hatred."], ["Value Audit", "Does it affect your integrity?"], ["Channel Anger", "Fuel for building better."], ["The Witness", "Watch the drama; don't join."], ["Safety First", "Address it if it's risky."], ["Moral Compass", "Verify your own stance."], ["Historical View", "Injustice is old; stay new."], ["Focus on Good", "Find 3 good people now."], ["Surrender", "God handles the scales."]]
+    },
+    restless: {
+        g: [["Lamp in windless place is steady.", "6.19"], ["Wandering senses carry away wisdom.", "2.67"], ["Control the self.", "6.7"]],
+        s: [["Power is over your mind.", "Marcus Aurelius"], ["Anticipate, then stay calm.", "Seneca"], ["Don't drag past suffering.", "Seneca"]],
+        h: [["Grounding", "5-4-3-2-1 Senses."], ["Phone Fast", "No screen for 30 mins."], ["3rd Person", "Say: 'Vaibhav is restless'."], ["20 Pushups", "Burn the adrenaline."], ["10-Min Walk", "Walk in silence."], ["Curious Mind", "Observe the feeling."], ["Nature", "Look at a tree or sky."], ["Hydrate", "Cold water reset."], ["Music", "Listen to calm sounds."], ["Acceptance", "It is okay to feel this."]]
+    },
+    future: {
+        g: [["Wise grieve not for living or dead.", "2.11"], ["Soul is eternal and undying.", "2.20"], ["Surrender unto Me.", "18.66"]],
+        s: [["We suffer in imagination.", "Seneca"], ["Foresight brings agony.", "Seneca"], ["Now is the only reality.", "Seneca"]],
+        h: [["Worst Case Plan", "Plan the fix, end the fear."], ["60-Min Focus", "Win only the next hour."], ["Control Check", "Ignore the outer circle."], ["Family Anchor", "Hug Aryan/Isha."], ["Data Proof", "Recall 5 past future-fears."], ["Budget worry", "Limit worry to 5 mins."], ["Plan B", "Have a safety net."], ["Gratitude", "List 3 current wins."], ["Prayer", "Surrender the fruit."], ["Action", "Do one task now."]]
+    },
+    failure: {
+        g: [["Abandon success/failure attachment.", "2.48"], ["Duty is your only engagement.", "2.31"], ["Effort is yours, fruit is Mine.", "2.47"]],
+        s: [["Choose not to be harmed.", "Marcus Aurelius"], ["Failure is a data point.", "Seneca"], ["It's how you react.", "Epictetus"]],
+        h: [["Scientist Lens", "Test failed? Pivot."], ["100% Stat", "You survived all hard days."], ["Values Check", "Did you stay honest?"], ["Small agency", "Make your bed."], ["Reframing", "Learning in real-time."], ["Post-Mortem", "What was the variable?"], ["Ego Check", "You != Business."], ["Growth", "Skills gained > Money lost."], ["Consult", "Talk to a mentor."], ["Reset", "Sleep and re-run tomorrow."]]
+    },
+    opinions: {
+        g: [["Honor/Dishonor are the same.", "14.25"], ["Equanimity is dear to Me.", "12.18"], ["Content with anything.", "12.19"]],
+        s: [["Value your own opinion more.", "Marcus Aurelius"], ["Integrity is yours alone.", "Epictetus"], ["Don't be harmed.", "Marcus Aurelius"]],
+        h: [["Spotlight Effect", "They aren't looking."], ["Source Audit", "Who are they to judge?"], ["Deathbed Test", "Will this matter at 80?"], ["Inner Score", "Are you proud?"], ["Social Fast", "24h off LinkedIn."], ["Core Values", "Stay on your path."], ["Circle of 5", "Only 5 opinions matter."], ["Laughter", "It's all a play."], ["Boundaries", "Say no to the noise."], ["Focus", "Do your work."]]
+    },
+    stressed: {
+        g: [["Yoga is the journey of self.", "6.20"], ["Agitation-free is dear to Me.", "12.15"], ["Happy within, rejoice within.", "5.24"]],
+        s: [["Enjoy the present.", "Seneca"], ["React wisely.", "Epictetus"], ["Mind is your strength.", "Marcus Aurelius"]],
+        h: [["Vagus Reset", "Longer exhales."], ["Nature Rule", "20 mins outside."], ["Task Uncouple", "You are the Witness."], ["Hydrate", "500ml water."], ["Smile", "Think of Aryan's laugh."], ["Music", "Calm your ears."], ["Sleep", "Rest the brain."], ["Fuel", "Eat high protein."], ["Limit caffeine", "Switch to water."], ["Affirm", "I am stable."]]
+    }
+};
+
+function initCompass() {
+    state.emotion = document.getElementById('emotionInput').value;
+    state.gIdx = Math.floor(Math.random() * 3);
+    state.sIdx = Math.floor(Math.random() * 3);
+    state.hPage = 0;
+    updateUI();
+}
+
+function rotate(type) {
+    if(type === 'gita') state.gIdx = (state.gIdx + 1) % 3;
+    if(type === 'stoic') state.sIdx = (state.sIdx + 1) % 3;
+    updateUI();
+}
+
+function toggleHabits() {
+    state.hPage = state.hPage === 0 ? 1 : 0;
+    updateUI();
+}
+
+function updateUI() {
+    const item = db[state.emotion];
+    if(!item) return;
+    document.getElementById('gt').innerText = item.g[state.gIdx][0];
+    document.getElementById('gr').innerText = "— Verse " + item.g[state.gIdx][1];
+    document.getElementById('st').innerText = item.s[state.sIdx][0] || item.s[state.sIdx];
+    document.getElementById('sr').innerText = "— Stoic Logic";
+    const list = document.getElementById('habitsList');
+    list.innerHTML = "";
+    const start = state.hPage * 5;
+    item.h.slice(start, start + 5).forEach((h, i) => {
+        list.innerHTML += `<div class="habit-item"><div class="badge">${start+i+1}</div><div class="h-content"><b>${h[0]}</b><p>${h[1]}</p></div></div>`;
+    });
+    document.getElementById('habitLabel').innerText = `Habits (${start+1}-${start+5})`;
+    document.getElementById('pageBtn').innerText = state.hPage === 0 ? "NEXT 5 ACTIONS →" : "PREVIOUS 5 ACTIONS ←";
+    document.getElementById('dashboard').style.display = 'block';
+    window.scrollTo({ top: 300, behavior: 'smooth' });
+}
+
+function openAnchor(type) {
+    const anchors = {
+        gratitude: ["Gratitude", "I am grateful for Isha and Aryan. I am grateful for the chance to build. I have enough."],
+        prayer: ["Prayer", "I am but an instrument. I offer my work to the Divine. Guide my mind."],
+        faith: ["Faith", "Everything is unfolding as it should. I am protected and guided."]
+    };
+    document.getElementById('mT').innerText = anchors[type][0];
+    document.getElementById('mB').innerText = anchors[type][1];
+    document.getElementById('modal').style.display = 'block';
+}
+
+(function init() {
+    const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+    document.getElementById('dailyThought').innerText = thoughtPool[day % thoughtPool.length];
+})();
+</script>
+</body>
+</html>
