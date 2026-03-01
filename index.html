@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#f8fafc">
     <title>The Inner Compass | Stability OS</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
     <style>
@@ -13,39 +14,54 @@
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 12px; display: flex; flex-direction: column; align-items: center; }
 
-        header { text-align: center; margin-bottom: 15px; }
-        h1 { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #0f172a; margin: 0; }
+        header { text-align: center; margin-bottom: 10px; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #0f172a; margin: 0; }
         
-        .daily-ribbon { width: 100%; max-width: 480px; padding: 12px; background: #fffbeb; border-radius: 12px; margin-bottom: 15px; text-align: center; border: 1px solid #fde68a; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
-        .daily-content { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-style: italic; color: #78350f; margin: 0; line-height: 1.4; }
+        .daily-ribbon { width: 100%; max-width: 480px; padding: 10px; background: #fffbeb; border-radius: 12px; margin-bottom: 15px; text-align: center; border: 1px solid #fde68a; }
+        .daily-content { font-family: 'Playfair Display', serif; font-size: 0.8rem; font-style: italic; color: #78350f; margin: 0; line-height: 1.4; }
 
-        .anchor-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; width: 100%; max-width: 480px; margin-bottom: 15px; }
-        .anchor-btn { background: white; border: 1px solid var(--border); padding: 10px 0; border-radius: 12px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; color: var(--dim); cursor: pointer; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .top-nav { width: 100%; max-width: 480px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
+        
+        .breathe-btn { 
+            background: #eff6ff; border: 1px solid #dbeafe; padding: 12px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            font-weight: 700; font-size: 0.8rem; color: var(--blue); text-transform: uppercase; cursor: pointer;
+        }
+        .breathe-dot { width: 10px; height: 10px; background: var(--blue); border-radius: 50%; animation: pulse 4s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(2.5); opacity: 1; } }
+
+        .anchor-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
+        .anchor-btn { background: white; border: 1px solid var(--border); padding: 8px 0; border-radius: 12px; font-size: 0.5rem; font-weight: 700; text-transform: uppercase; color: var(--dim); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
+        .anchor-btn i { font-style: normal; font-size: 1.2rem; }
 
         .selector-wrap { width: 100%; max-width: 480px; margin-bottom: 20px; }
-        select { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 1rem; background: white; color: var(--text); box-shadow: 0 2px 4px rgba(0,0,0,0.05); outline: none; }
+        select { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 1rem; background: white; color: var(--text); outline: none; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
 
         .dashboard { display: none; width: 100%; max-width: 480px; animation: slideUp 0.3s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .card { background: white; border-radius: 16px; padding: 18px; margin-bottom: 15px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
+        .card { background: white; border-radius: 16px; padding: 18px; margin-bottom: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
         .card.gita { border-left: 4px solid var(--gold); }
         .card.stoic { border-left: 4px solid var(--blue); }
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-        .label { font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
-        .rotate-btn { background: #f1f5f9; border: none; color: var(--text-dim); font-size: 0.6rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; cursor: pointer; }
+        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
+        .rotate-btn { background: #f1f5f9; border: none; color: var(--text-dim); font-size: 0.55rem; font-weight: 700; padding: 4px 8px; border-radius: 20px; cursor: pointer; }
 
-        .quote-text { font-size: 0.95rem; line-height: 1.6; color: #334155; margin-bottom: 10px; }
-        .quote-ref { font-family: 'Playfair Display', serif; font-style: italic; color: var(--text-dim); font-size: 0.8rem; text-align: right; display: block; }
+        .quote-text { font-size: 0.9rem; line-height: 1.5; color: #334155; margin-bottom: 8px; }
+        .quote-ref { font-family: 'Playfair Display', serif; font-style: italic; color: var(--text-dim); font-size: 0.75rem; text-align: right; display: block; }
 
-        .habit-item { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
-        .badge { background: #f0fdf4; color: var(--green); min-width: 22px; height: 22px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 800; }
-        .h-content b { font-size: 0.9rem; display: block; color: #0f172a; margin-bottom: 2px; }
-        .h-content p { margin: 0; font-size: 0.8rem; color: var(--text-dim); line-height: 1.4; }
+        .habit-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
+        .badge { background: #f0fdf4; color: var(--green); min-width: 20px; height: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; }
+        .h-content b { font-size: 0.85rem; display: block; color: #0f172a; margin-bottom: 1px; }
+        .h-content p { margin: 0; font-size: 0.75rem; color: var(--text-dim); line-height: 1.3; }
 
-        .pagination { width: 100%; padding: 10px; background: none; border: 1px dashed var(--border); border-radius: 10px; color: var(--blue); font-size: 0.7rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 1000; padding: 50px 25px; text-align: center; }
+        .pagination { width: 100%; padding: 10px; background: none; border: 1px dashed var(--border); border-radius: 10px; color: var(--blue); font-size: 0.65rem; font-weight: 700; cursor: pointer; margin-top: 5px; }
+        
+        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 1000; padding: 50px 25px; text-align: center; overflow-y: auto; }
+        #breatheOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; color: white; z-index: 2000; text-align: center; padding-top: 20vh; }
+        .breathe-circle-large { width: 100px; height: 100px; background: rgba(56, 189, 248, 0.2); border: 2px solid var(--blue); border-radius: 50%; margin: 0 auto 40px; animation: breatheBig 8s infinite ease-in-out; }
+        @keyframes breatheBig { 0%, 100% { transform: scale(1); } 50% { transform: scale(2.8); } }
     </style>
 </head>
 <body>
@@ -54,16 +70,26 @@
 
 <div class="daily-ribbon"><p id="dailyThought" class="daily-content"></p></div>
 
-<div class="anchor-bar">
-    <div class="anchor-btn" onclick="openAnchor('gratitude')">Gratitude</div>
-    <div class="anchor-btn" onclick="openAnchor('prayer')">Pray</div>
-    <div class="anchor-btn" onclick="openAnchor('faith')">Believe</div>
+<div class="top-nav">
+    <div class="breathe-btn" onclick="toggleBreathe()">
+        <div class="breathe-dot"></div> BREATHE RESET
+    </div>
+    <div class="anchor-grid">
+        <div class="anchor-btn" onclick="openAnchor('present')"><i>📍</i>Present</div>
+        <div class="anchor-btn" onclick="openAnchor('gratitude')"><i>🙏</i>Gratitude</div>
+        <div class="anchor-btn" onclick="openAnchor('prayer')"><i>🕯️</i>Pray</div>
+        <div class="anchor-btn" onclick="openAnchor('faith')"><i>✨</i>Believe</div>
+    </div>
 </div>
 
 <div class="selector-wrap">
     <select id="emotionInput" onchange="initCompass()">
         <option value="" disabled selected>Identify current feeling...</option>
-        <option value="overwhelmed">Overwhelmed (Too much work)</option>
+        <option value="stressed">Generally Stressed</option>
+        <option value="impatient">Impatient</option>
+        <option value="jealousy">Jealousy</option>
+        <option value="past">Dwelling on the Past</option>
+        <option value="overwhelmed">Overwhelmed</option>
         <option value="priority">Unable to Prioritize</option>
         <option value="mistake">Anger at someone's mistake</option>
         <option value="talking">Anger while someone is talking</option>
@@ -72,7 +98,6 @@
         <option value="future">Fear of the Future</option>
         <option value="failure">Fear of Failure</option>
         <option value="opinions">Fear of Others' Opinions</option>
-        <option value="stressed">Generally Stressed</option>
     </select>
 </div>
 
@@ -93,9 +118,15 @@
 </div>
 
 <div id="modal" onclick="this.style.display='none'">
-    <h2 id="mT" style="font-family:'Playfair Display'; color:var(--gold); margin-bottom:20px;"></h2>
-    <p id="mB" style="font-size:1.1rem; line-height:1.7; color:var(--text-main)"></p>
-    <p style="margin-top:50px; font-size:0.7rem; color:var(--text-dim)">[ TAP TO CLOSE ]</p>
+    <h2 id="mT" style="font-family:'Playfair Display'; color:var(--gold); margin-bottom:20px; font-size: 1.5rem;"></h2>
+    <p id="mB" style="font-size:1.05rem; line-height:1.6; color:var(--text)"></p>
+    <p style="margin-top:50px; font-size:0.6rem; color:var(--dim)">[ TAP ANYWHERE TO CLOSE ]</p>
+</div>
+
+<div id="breatheOverlay" onclick="this.style.display='none'">
+    <div class="breathe-circle-large"></div>
+    <h2 id="breatheText" style="font-family:'Playfair Display'; font-style:italic;">Inhale...</h2>
+    <p style="margin-top:20px; font-size:0.7rem; color:var(--dim)">[ Follow the circle. Tap to exit. ]</p>
 </div>
 
 <script>
@@ -302,69 +333,83 @@ const thoughtPool = [
 ];
 
 const db = {
+    stressed: {
+        g: [["One who has control over the mind is tranquil in heat and cold, pleasure and pain.", "6.7"], ["One who is not agitated by the world and by whom the world is not agitated... is dear to Me.", "12.15"], ["Happy within, rejoice within, illuminated within.", "5.24"]],
+        s: [["True happiness is to enjoy the present, without anxious dependence on the future.", "Seneca"], ["It’s not what happens to you, but how you react to it that matters.", "Epictetus"], ["Your mind is your strength. Control your thoughts.", "Marcus Aurelius"]],
+        h: [["Vagus Reset", "Exhale for 8s, Inhale for 4s."], ["Nature Rule", "20 mins outside."], ["Task Uncouple", "You are the witness, not the stress."], ["Hydrate", "Drink 500ml of water."], ["Gratitude Tap", "Think of Aryan's laugh."], ["Brown Noise", "Play to settle racing thoughts."], ["Rest Check", "Schedule a 10-min silence."], ["Fuel Check", "Avoid sugar spikes."], ["Caffeine Cut", "Stop coffee for 4 hours."], ["Affirm", "I am stable and exactly where I need to be."]]
+    },
+    impatient: {
+        g: [["Appearance of happiness and distress are like summer and winter seasons.", "2.14"], ["What is happening, is for the good.", "Wisdom"], ["Focus on action, not fruit.", "2.47"]],
+        s: [["Time is a violent torrent of things coming into being.", "Marcus Aurelius"], ["He who is brave is free.", "Seneca"], ["Nothing is better proof of a well ordered mind than being able to stop where you are.", "Seneca"]],
+        h: [["5-Min Wait", "Wait before checking metrics."], ["Micro-Progress", "Celebrate one small code fix."], ["Slow Walk", "Walk 10% slower physically."], ["Process Praise", "Praise effort, not outcome."], ["1-Year Lens", "Will this delay matter in 2027?"], ["'Not Yet'", "Replace 'Failure' with 'Not yet'."], ["Box Breath", "4s square breathing."], ["Input List", "Focus on what you controlled."], ["Listen Fully", "Don't interrupt anyone."], ["Evening Audit", "Did you rush? Forgive and reset."]]
+    },
+    jealousy: {
+        g: [["No ill will to any being; friendly and compassionate.", "12.13"], ["Better one's own duty imperfect than another's perfectly.", "18.47"], ["Wisdom is compassion to all.", "16.2"]],
+        s: [["Ask: 'Is it possible for this person to be better?'", "Marcus Aurelius"], ["Content to be thought foolish to improve.", "Epictetus"], ["Comparison is the thief of joy.", "Stoic Logic"]],
+        h: [["Highlight Fallacy", "You see their reels, not their reality."], ["Life Trade", "Would you trade 100% of your life for theirs? No."], ["Unique Dharma", "OperionAI is your path alone."], ["Bless Them", "Wish them well to break the poison."], ["Mute Trigger", "Mute accounts causing envy."], ["Value Anchor", "List 3 irreplicable wins."], ["Price Check", "Am I willing to pay THEIR price?"], ["Self-Reference", "Compare to 'Yesterday Vaibhav'."], ["Abundance", "Market is vast; wins are infinite."], ["Leader Mode", "Congratulate the peer."]]
+    },
+    past: {
+        g: [["Wise grieve not for living or dead.", "2.11"], ["Soul is eternal and unborn.", "2.20"], ["What happened, happened for the good.", "Wisdom"]],
+        s: [["Root out memory of past suffering.", "Seneca"], ["What is the point of dragging up old pain?", "Seneca"], ["Man is as wretched as he convinces himself.", "Seneca"]],
+        h: [["Close Folder", "Visualize closing the past file."], ["5-Year Rule", "Will this matter in 5 years?"], ["Forgive Past Self", "You did your best then."], ["Grounding", "Touch 3 physical objects."], ["Extract Lesson", "Keep lesson, burn memory."], ["Present Father", "Aryan knows 'Present You'."], ["Cardio Burst", "Run to stay in the 'Now'."], ["Sunrise Reset", "boAt sunrise = New life."], ["Write/Shred", "Write regret, then shred it."], ["Amor Fati", "Love the past for the growth."]]
+    },
     overwhelmed: {
-        g: [["The mind is restless, but it is subdued by practice and detachment.", "6.35"], ["Action is better than inaction; perform your duty.", "3.8"], ["Equanimity of mind is called Yoga.", "2.48"]],
-        s: [["Do not let imagination crush your reality.", "Marcus Aurelius"], ["If you seek tranquility, do less. Do what is essential.", "Marcus Aurelius"], ["Eliminate the non-essential; find more time.", "Seneca"]],
-        h: [["Brain Dump", "Write every worry on paper."], ["Monotask", "Close all tabs except one."], ["Box Breath", "4s in, 4s hold, 4s out, 4s hold."], ["5-Min Rule", "If it takes <5 mins, do it now."], ["Digital Fast", "Phone in drawer for 30 mins."], ["Eisenhower Matrix", "Label Urgent vs Important."], ["Water Reset", "Drink 500ml water."], ["Lead Domino", "Identify the one task that fixes others."], ["Say No", "Decline one non-essential request."], ["Sit Tall", "Adjust posture to signal safety."]]
+        g: [["Mind is restless, subdued by practice.", "6.35"], ["Action is better than inaction.", "3.8"], ["Yoga is evenness of mind.", "2.48"]],
+        s: [["If you seek tranquility, do less.", "Marcus Aurelius"], ["Do what is essential.", "Marcus Aurelius"], ["Eliminate non-essentials.", "Seneca"]],
+        h: [["Brain Dump", "Write every worry on paper."], ["One Tab", "Close everything except the key task."], ["Box Breath", "4s pattern."], ["5-Min Rule", "Do fast tasks now."], ["Phone Fast", "No screen for 1 hour."], ["Eisenhower Grid", "Important vs Urgent."], ["Lead Domino", "Identify the key move."], ["Water", "500ml reset."], ["Say No", "Decline one request."], ["Power Pose", "Stand tall for 2 mins."]]
     },
     priority: {
-        g: [["Better your own duty imperfectly than another's perfectly.", "18.47"], ["Intelligence is many-branched for the unfocused.", "2.41"], ["Act without attachment.", "3.25"]],
-        s: [["Don't set your heart on many things.", "Epictetus"], ["Focus strictly on the now.", "Marcus Aurelius"], ["Choice is yours.", "Epictetus"]],
-        h: [["Rule of 3", "Pick 3 'Must-Do' tasks."], ["80/20 Audit", "Find the 20% that matters."], ["No Meetings", "Block 'Deep Work' time."], ["Value Check", "Does this help OperionAI?"], ["Delegate", "Give away one low-value task."], ["Top Task", "Do the hardest thing first."], ["Calendar Lock", "Schedule your priorities."], ["Review", "Check goals every morning."], ["Exit List", "Plan tomorrow tonight."], ["Zero Inbox", "Clear the noise."]]
+        g: [["Better own duty imperfectly.", "18.47"], ["Intelligence is many-branched for unfocused.", "2.41"], ["Act without attachment.", "3.25"]],
+        s: [["Don't set heart on many things.", "Epictetus"], ["Focus strictly on the now.", "Marcus Aurelius"], ["Choice is yours.", "Epictetus"]],
+        h: [["Rule of 3", "3 'Must-Do' tasks."], ["80/20 Audit", "Find the 20% impact."], ["Deep Work Block", "No Slack for 2 hours."], ["Startup Filter", "Does this help OperionAI?"], ["Delegate", "Give away one low-value task."], ["Hardest First", "Eat the frog."], ["Priority Calendar", "Schedule tasks, not time."], ["Morning Review", "Check goals at 8 AM."], ["Tomorrow Plan", "Plan tonight."], ["Inbox Zero", "Clear the noise."]]
     },
     mistake: {
-        g: [["Compassion for all is divine nature.", "16.2"], ["Self is your friend when mind is controlled.", "6.5"], ["Avoid ill will to any being.", "12.13"]],
+        g: [["Compassion is divine nature.", "16.2"], ["Self is your friend when mind is controlled.", "6.5"], ["No ill will to any being.", "12.13"]],
         s: [["Recall your errors before judging.", "Marcus Aurelius"], ["Best revenge is to be different.", "Marcus Aurelius"], ["Bad men do wrong; expect it.", "Marcus Aurelius"]],
-        h: [["24-Hour Rule", "Wait a day before feedback."], ["Mentor Pivot", "Ask 'How to prevent this?'"], ["System Check", "Process vs Person error?"], ["Compassion Flash", "Recall your own early mistakes."], ["Positivity Sandwich", "Two praises, one fix."], ["Write it out", "Write feedback first."], ["Walk Away", "Leave if heart rate is high."], ["Low Volume", "Lower voice by 20%."], ["Identity Gap", "Mistake != Person."], ["Outcome Focus", "Fix result, skip blame."]]
+        h: [["24h Rule", "Wait a day before feedback."], ["Mentor Pivot", "Ask: 'How to prevent this?'"], ["System Check", "Process vs Person error?"], ["Compassion Flash", "Recall your early career."], ["Positivity Sandwich", "2 praise, 1 fix."], ["Write feedback", "Write it before speaking."], ["Heart-Rate Walk", "Walk if pulse is >100."], ["Low Volume", "Lower voice by 20%."], ["Identity Gap", "Mistake != Person."], ["Solution First", "Fix result, skip blame."]]
     },
     talking: {
-        g: [["Speech should be truthful and pleasant.", "17.15"], ["Subdue the restless mind.", "6.35"], ["Be ego-free and compassionate.", "12.13"]],
-        s: [["Two ears, one mouth.", "Epictetus"], ["Silence is a virtue.", "Seneca"], ["Listen twice as much.", "Epictetus"]],
-        h: [["Listening Bench", "Hear full sentences."], ["Physical Anchor", "Press thumb to finger."], ["3-Breath Pause", "Pause before replying."], ["No Interrupting", "Let them finish completely."], ["Trigger Search", "Why am I annoyed?"], ["Subtext", "Listen for the hidden need."], ["Eye Contact", "Focus on them, not screen."], ["Clarify", "Ask: 'Do you mean X?'"], ["Validate", "Say: 'I hear you'."], ["Exit Gracefully", "End if it's not productive."]]
+        g: [["Truthful and pleasant speech.", "17.15"], ["Subdue the restless mind.", "6.35"], ["Be ego-free.", "12.13"]],
+        s: [["Two ears, one mouth.", "Epictetus"], ["Listen twice as much.", "Epictetus"], ["Silence is a virtue.", "Seneca"]],
+        h: [["Listening Bench", "Hear full sentences."], ["Press Thumb", "Anchor to stay present."], ["3-Breath Pause", "Pause before reply."], ["No Interrupting", "Let them finish."], ["Why Am I Annoyed?", "Identify the trigger."], ["Subtext Search", "Listen for the need."], ["Eye Contact", "Focus on them."], ["Clarification", "Ask: 'Do you mean X?'"], ["Validation", "Say: 'I hear you'."], ["Exit", "End non-productive talks."]]
     },
     badthings: {
-        g: [["Rise of unrighteousness triggers Me.", "4.7"], ["Righteous cause is highest duty.", "2.31"], ["World is transient; worship Me.", "9.33"]],
-        s: [["Don't be like the wrongdoer.", "Marcus Aurelius"], ["Integrity is yours alone.", "Epictetus"], ["Watch as a witness.", "Marcus Aurelius"]],
-        h: [["Circle of Influence", "Stay ethical in your work."], ["Detached Action", "Oppose without hatred."], ["Value Audit", "Does it affect your integrity?"], ["Channel Anger", "Fuel for building better."], ["The Witness", "Watch the drama; don't join."], ["Safety First", "Address it if it's risky."], ["Moral Compass", "Verify your own stance."], ["Historical View", "Injustice is old; stay new."], ["Focus on Good", "Find 3 good people now."], ["Surrender", "God handles the scales."]]
+        g: [["Rise of unrighteousness triggers Me.", "4.7"], ["Righteous cause is highest duty.", "2.31"], ["World is transient.", "9.33"]],
+        s: [["Don't be like the wrongdoer.", "Marcus Aurelius"], ["Integrity is yours.", "Epictetus"], ["Watch as witness.", "Marcus Aurelius"]],
+        h: [["Circle of Influence", "Stay ethical in your lab."], ["Detached Action", "Oppose without hatred."], ["Value Audit", "Does it hurt your integrity?"], ["Channel Anger", "Fuel for building better."], ["The Witness", "Watch, don't join."], ["Safety", "Address it if risky."], ["Compass", "Verify your stance."], ["History", "Injustice is old; stay stable."], ["Focus Good", "Find 3 good people."], ["God handles scales", "Surrender."]]
     },
     restless: {
-        g: [["Lamp in windless place is steady.", "6.19"], ["Wandering senses carry away wisdom.", "2.67"], ["Control the self.", "6.7"]],
-        s: [["Power is over your mind.", "Marcus Aurelius"], ["Anticipate, then stay calm.", "Seneca"], ["Don't drag past suffering.", "Seneca"]],
-        h: [["Grounding", "5-4-3-2-1 Senses."], ["Phone Fast", "No screen for 30 mins."], ["3rd Person", "Say: 'Vaibhav is restless'."], ["20 Pushups", "Burn the adrenaline."], ["10-Min Walk", "Walk in silence."], ["Curious Mind", "Observe the feeling."], ["Nature", "Look at a tree or sky."], ["Hydrate", "Cold water reset."], ["Music", "Listen to calm sounds."], ["Acceptance", "It is okay to feel this."]]
+        g: [["Lamp in windless place.", "6.19"], ["Wandering senses carry away wisdom.", "2.67"], ["Control the self.", "6.7"]],
+        s: [["Power is over your mind.", "Marcus Aurelius"], ["Anticipate, then calm.", "Seneca"], ["Don't drag past pain.", "Seneca"]],
+        h: [["5-4-3-2-1", "Senses grounding."], ["Phone Fast", "30 mins off."], ["3rd Person", "Say: 'Vaibhav is restless'."], ["20 Pushups", "Burn adrenaline."], ["10-Min Walk", "No headphones."], ["Curiosity", "Observe the feeling."], ["Nature", "Look at the sky."], ["Hydrate", "Cold water."], ["Music", "Calm frequencies."], ["Acceptance", "It is okay."]]
     },
     future: {
-        g: [["Wise grieve not for living or dead.", "2.11"], ["Soul is eternal and undying.", "2.20"], ["Surrender unto Me.", "18.66"]],
-        s: [["We suffer in imagination.", "Seneca"], ["Foresight brings agony.", "Seneca"], ["Now is the only reality.", "Seneca"]],
-        h: [["Worst Case Plan", "Plan the fix, end the fear."], ["60-Min Focus", "Win only the next hour."], ["Control Check", "Ignore the outer circle."], ["Family Anchor", "Hug Aryan/Isha."], ["Data Proof", "Recall 5 past future-fears."], ["Budget worry", "Limit worry to 5 mins."], ["Plan B", "Have a safety net."], ["Gratitude", "List 3 current wins."], ["Prayer", "Surrender the fruit."], ["Action", "Do one task now."]]
+        g: [["Wise grieve not for dead.", "2.11"], ["Soul is eternal.", "2.20"], ["Surrender unto Me.", "18.66"]],
+        s: [["Suffer in imagination.", "Seneca"], ["Foresight is agony.", "Seneca"], ["Now is reality.", "Seneca"]],
+        h: [["Worst Case", "Plan the recovery."], ["60-Min Focus", "Win the hour."], ["Control Check", "Ignore outer circle."], ["Family", "Hug Aryan."], ["Data Proof", "5 past survival proofs."], ["Budget Worry", "5 mins only."], ["Plan B", "Safety net."], ["Gratitude", "3 current wins."], ["Prayer", "Surrender fruit."], ["Action", "One task now."]]
     },
     failure: {
-        g: [["Abandon success/failure attachment.", "2.48"], ["Duty is your only engagement.", "2.31"], ["Effort is yours, fruit is Mine.", "2.47"]],
-        s: [["Choose not to be harmed.", "Marcus Aurelius"], ["Failure is a data point.", "Seneca"], ["It's how you react.", "Epictetus"]],
-        h: [["Scientist Lens", "Test failed? Pivot."], ["100% Stat", "You survived all hard days."], ["Values Check", "Did you stay honest?"], ["Small agency", "Make your bed."], ["Reframing", "Learning in real-time."], ["Post-Mortem", "What was the variable?"], ["Ego Check", "You != Business."], ["Growth", "Skills gained > Money lost."], ["Consult", "Talk to a mentor."], ["Reset", "Sleep and re-run tomorrow."]]
+        g: [["Abandon attachment.", "2.48"], ["Duty is your engagement.", "2.31"], ["Effort is yours.", "2.47"]],
+        s: [["Choose not to be harmed.", "Marcus Aurelius"], ["Failure is a data point.", "Seneca"], ["How you react.", "Epictetus"]],
+        h: [["Scientist Lens", "Test failed? Pivot."], ["100% Stat", "Record stands."], ["Values Check", "Stay honest."], ["Small Agency", "Make bed."], ["Reframing", "Real-time learning."], ["Post-Mortem", "Variables?"], ["Ego Check", "You != Business."], ["Growth", "Skills gained."], ["Consult", "Talk to mentor."], ["Reset", "Sleep and re-run."]]
     },
     opinions: {
-        g: [["Honor/Dishonor are the same.", "14.25"], ["Equanimity is dear to Me.", "12.18"], ["Content with anything.", "12.19"]],
-        s: [["Value your own opinion more.", "Marcus Aurelius"], ["Integrity is yours alone.", "Epictetus"], ["Don't be harmed.", "Marcus Aurelius"]],
-        h: [["Spotlight Effect", "They aren't looking."], ["Source Audit", "Who are they to judge?"], ["Deathbed Test", "Will this matter at 80?"], ["Inner Score", "Are you proud?"], ["Social Fast", "24h off LinkedIn."], ["Core Values", "Stay on your path."], ["Circle of 5", "Only 5 opinions matter."], ["Laughter", "It's all a play."], ["Boundaries", "Say no to the noise."], ["Focus", "Do your work."]]
-    },
-    stressed: {
-        g: [["Yoga is the journey of self.", "6.20"], ["Agitation-free is dear to Me.", "12.15"], ["Happy within, rejoice within.", "5.24"]],
-        s: [["Enjoy the present.", "Seneca"], ["React wisely.", "Epictetus"], ["Mind is your strength.", "Marcus Aurelius"]],
-        h: [["Vagus Reset", "Longer exhales."], ["Nature Rule", "20 mins outside."], ["Task Uncouple", "You are the Witness."], ["Hydrate", "500ml water."], ["Smile", "Think of Aryan's laugh."], ["Music", "Calm your ears."], ["Sleep", "Rest the brain."], ["Fuel", "Eat high protein."], ["Limit caffeine", "Switch to water."], ["Affirm", "I am stable."]]
+        g: [["Honor/Dishonor are same.", "14.25"], ["Equanimity is dear.", "12.18"], ["Content with anything.", "12.19"]],
+        s: [["Value your own opinion.", "Marcus Aurelius"], ["Integrity is yours.", "Epictetus"], ["Don't be harmed.", "Marcus Aurelius"]],
+        h: [["Spotlight Effect", "They aren't looking."], ["Source Audit", "Who are they?"], ["Deathbed Test", "Matter at 80?"], ["Inner Score", "Are you proud?"], ["Social Fast", "24h off."], ["Core Values", "Stay on path."], ["Circle of 5", "Only 5 matter."], ["Laughter", "It's a play."], ["Boundaries", "Say no."], ["Focus", "Do your work."]]
     }
 };
 
 function initCompass() {
     state.emotion = document.getElementById('emotionInput').value;
-    state.gIdx = Math.floor(Math.random() * 3);
-    state.sIdx = Math.floor(Math.random() * 3);
-    state.hPage = 0;
+    state.gIdx = 0; state.sIdx = 0; state.hPage = 0;
     updateUI();
 }
 
 function rotate(type) {
-    if(type === 'gita') state.gIdx = (state.gIdx + 1) % 3;
-    if(type === 'stoic') state.sIdx = (state.sIdx + 1) % 3;
+    const item = db[state.emotion];
+    if(type === 'gita') state.gIdx = (state.gIdx + 1) % item.g.length;
+    if(type === 'stoic') state.sIdx = (state.sIdx + 1) % item.s.length;
     updateUI();
 }
 
@@ -389,18 +434,32 @@ function updateUI() {
     document.getElementById('habitLabel').innerText = `Habits (${start+1}-${start+5})`;
     document.getElementById('pageBtn').innerText = state.hPage === 0 ? "NEXT 5 ACTIONS →" : "PREVIOUS 5 ACTIONS ←";
     document.getElementById('dashboard').style.display = 'block';
-    window.scrollTo({ top: 300, behavior: 'smooth' });
+    window.scrollTo({ top: 350, behavior: 'smooth' });
 }
 
 function openAnchor(type) {
     const anchors = {
-        gratitude: ["Gratitude", "I am grateful for Isha and Aryan. I am grateful for the chance to build. I have enough."],
-        prayer: ["Prayer", "I am but an instrument. I offer my work to the Divine. Guide my mind."],
-        faith: ["Faith", "Everything is unfolding as it should. I am protected and guided."]
+        present: ["Root in the Now", "Yesterday is a memory; tomorrow is a projection. Only this breath and your current action are real. Drop the story. Return to the task."],
+        gratitude: ["Universal Gratitude", "I am grateful for Isha and Aryan. I am grateful for the chance to build. I have enough."],
+        prayer: ["The Instrument's Prayer", "I am but an instrument. I offer my work to the Divine. Let my actions be pure and results be Yours."],
+        faith: ["Faith in the Design", "Everything is unfolding as it should. I am protected, guided, and exactly where I need to be."]
     };
     document.getElementById('mT').innerText = anchors[type][0];
     document.getElementById('mB').innerText = anchors[type][1];
     document.getElementById('modal').style.display = 'block';
+}
+
+function toggleBreathe() {
+    document.getElementById('breatheOverlay').style.display = 'block';
+    const text = document.getElementById('breatheText');
+    let stateVal = 0;
+    const interval = setInterval(() => {
+        if (document.getElementById('breatheOverlay').style.display === 'none') {
+            clearInterval(interval); return;
+        }
+        text.innerText = stateVal % 2 === 0 ? "Exhale..." : "Inhale...";
+        stateVal++;
+    }, 4000);
 }
 
 (function init() {
