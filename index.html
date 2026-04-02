@@ -1,471 +1,1576 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#f8fafc">
-    <title>The Inner Compass | Stability OS</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #f8fafc; --card: #ffffff; --text: #1e293b; --dim: #64748b;
-            --gold: #b45309; --blue: #2563eb; --green: #10b981; --border: #e2e8f0;
-        }
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Inter', sans-serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 12px; display: flex; flex-direction: column; align-items: center; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Inner Compass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#1a1410; --bg:#f5ede0; --saffron:#c8651a; --saffron-pale:rgba(200,101,26,.1);
+  --ash:#8a7968; --border:#d4c4a8; --border-lt:#e8ddd0; --blue:#2a3f6f; --green:#3d6b4f;
+  --panel:rgba(255,255,255,.72);
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{overflow-x:hidden}
+body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--bg);color:var(--ink);min-height:100vh}
 
-        header { text-align: center; margin-bottom: 10px; }
-        h1 { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: #0f172a; margin: 0; }
-        
-        .daily-ribbon { width: 100%; max-width: 480px; padding: 10px; background: #fffbeb; border-radius: 12px; margin-bottom: 15px; text-align: center; border: 1px solid #fde68a; }
-        .daily-content { font-family: 'Playfair Display', serif; font-size: 0.8rem; font-style: italic; color: #78350f; margin: 0; line-height: 1.4; }
+/* HEADER */
+header{text-align:center;padding:40px 20px 22px;border-bottom:1px solid var(--border);background:var(--bg)}
+.om{font-size:1.8rem;color:var(--saffron);display:block;margin-bottom:6px;animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.65;transform:scale(1)}50%{opacity:1;transform:scale(1.09)}}
+h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:300;letter-spacing:.06em;line-height:1.1}
+h1 em{color:var(--saffron);font-style:italic}
+.subtitle{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-top:8px}
+.ribbon{max-width:600px;margin:18px auto 0;padding:12px 28px;background:rgba(255,251,235,.95);border:1px solid #e9d5a0;border-radius:2px;text-align:center;font-style:italic;font-size:.97rem;color:#78350f;line-height:1.5}
 
-        .top-nav { width: 100%; max-width: 480px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 8px; }
-        
-        .breathe-btn { 
-            background: #eff6ff; border: 1px solid #dbeafe; padding: 12px; border-radius: 12px;
-            display: flex; align-items: center; justify-content: center; gap: 10px;
-            font-weight: 700; font-size: 0.8rem; color: var(--blue); text-transform: uppercase; cursor: pointer;
-        }
-        .breathe-dot { width: 10px; height: 10px; background: var(--blue); border-radius: 50%; animation: pulse 4s infinite ease-in-out; }
-        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(2.5); opacity: 1; } }
+/* WRAP & PANELS */
+.wrap{max-width:660px;margin:0 auto;padding:26px 16px 80px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:2px;padding:22px;margin-bottom:18px;position:relative}
+.panel::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--saffron);border-radius:2px 0 0 2px;opacity:.55}
+.panel.blue::before{background:var(--blue)}
+.panel.green::before{background:var(--green)}
+.panel.amber::before{background:#92400e}
+.plabel{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.plabel.blue{color:var(--blue)}.plabel.green{color:var(--green)}.plabel.amber{color:#92400e}
+.plabel::after{content:'';flex:1;height:1px;background:var(--border)}
 
-        .anchor-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
-        .anchor-btn { background: white; border: 1px solid var(--border); padding: 8px 0; border-radius: 12px; font-size: 0.5rem; font-weight: 700; text-transform: uppercase; color: var(--dim); cursor: pointer; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-        .anchor-btn i { font-style: normal; font-size: 1.2rem; }
+/* TABS */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.tab{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 13px;border:1px solid var(--border);background:rgba(255,255,255,.5);color:var(--ash);cursor:pointer;border-radius:1px;transition:all .2s}
+.tab:hover{border-color:var(--saffron);color:var(--saffron)}
+.tab.on{border-color:var(--saffron);background:var(--saffron);color:#fff}
+.tsec{display:none;width:100%}
+.tsec.on{display:block;animation:fadeIn .25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
 
-        .selector-wrap { width: 100%; max-width: 480px; margin-bottom: 20px; }
-        select { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid #cbd5e1; font-size: 1rem; background: white; color: var(--text); outline: none; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+/* ANCHOR / BREATHE */
+.breathe-btn{display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border:1px solid #c7daf5;background:rgba(240,246,255,.8);border-radius:2px;cursor:pointer;margin-bottom:8px}
+.b-dot{width:9px;height:9px;background:var(--blue);border-radius:50%;animation:bDot 4s ease-in-out infinite}
+@keyframes bDot{0%,100%{transform:scale(1);opacity:.4}50%{transform:scale(2.4);opacity:1}}
+.b-label{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.anchor-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.abtn{border:1px solid var(--border);background:rgba(255,255,255,.5);border-radius:2px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;transition:all .2s}
+.abtn:hover{border-color:var(--saffron);background:var(--saffron-pale)}
+.abtn i{font-style:normal;font-size:1.3rem}
+.abtn span{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash)}
 
-        .dashboard { display: none; width: 100%; max-width: 480px; animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* EMERGENCY */
+.em-btn{width:100%;padding:12px;background:rgba(200,80,60,.08);border:1px solid rgba(200,80,60,.3);border-radius:2px;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:#c8503c;cursor:pointer;margin-bottom:8px}
+.em-btn:hover{background:rgba(200,80,60,.16)}
 
-        .card { background: white; border-radius: 16px; padding: 18px; margin-bottom: 12px; border: 1px solid var(--border); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .card.gita { border-left: 4px solid var(--gold); }
-        .card.stoic { border-left: 4px solid var(--blue); }
+/* EMOTION GRID */
+.egrid{display:flex;flex-wrap:wrap;gap:8px}
+.ebtn{border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--ink);padding:7px 13px;cursor:pointer;border-radius:1px;transition:all .2s;display:flex;align-items:center;gap:6px}
+.ebtn:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
+.ebtn.on{border-color:var(--saffron);background:var(--saffron);color:#fff}
 
-        .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .label { font-size: 0.6rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
-        .rotate-btn { background: #f1f5f9; border: none; color: var(--text-dim); font-size: 0.55rem; font-weight: 700; padding: 4px 8px; border-radius: 20px; cursor: pointer; }
+/* INTENSITY */
+.idots{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+.idot{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:rgba(255,255,255,.4);cursor:pointer;font-family:'DM Mono',monospace;font-size:.62rem;display:flex;align-items:center;justify-content:center;transition:all .2s;color:var(--ash)}
+.idot:hover{border-color:var(--saffron)}
+.idot.low{background:#d4edda;border-color:#4a8040;color:#2d5a28}
+.idot.mid{background:#fff3cd;border-color:#b45309;color:#78350f}
+.idot.high{background:#f8d7da;border-color:#c8503c;color:#8b1a1a}
+.iadv{font-size:.88rem;color:var(--ink);font-style:italic;padding:10px 13px;border-left:2px solid var(--saffron);background:rgba(200,101,26,.05);display:none;line-height:1.55;margin-top:8px}
+.iadv.on{display:block}
 
-        .quote-text { font-size: 0.9rem; line-height: 1.5; color: #334155; margin-bottom: 8px; }
-        .quote-ref { font-family: 'Playfair Display', serif; font-style: italic; color: var(--text-dim); font-size: 0.75rem; text-align: right; display: block; }
+/* WISDOM OUTPUT */
+.wisdom-out{min-height:80px;padding:14px 0;line-height:1.7;font-size:1rem;color:var(--ink)}
+.wisdom-out .quote{font-size:1.1rem;font-style:italic;font-weight:300;margin-bottom:8px}
+.wisdom-out .expl{font-size:.9rem;color:var(--ash);font-style:italic;padding-top:8px;border-top:1px dotted var(--border-lt);margin-top:6px}
+.wisdom-out .src{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-top:6px;text-align:right}
+.wisdom-sep{margin:14px 0;border:none;border-top:1px dashed var(--border-lt)}
+.wbtn{border:1px solid var(--saffron);background:transparent;color:var(--saffron);font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;padding:9px 20px;cursor:pointer;border-radius:1px;transition:all .2s;margin-top:4px}
+.wbtn:hover{background:var(--saffron);color:#fff}
+.wbtn:disabled{opacity:.4;cursor:not-allowed}
 
-        .habit-item { display: flex; gap: 10px; margin-bottom: 10px; align-items: flex-start; }
-        .badge { background: #f0fdf4; color: var(--green); min-width: 20px; height: 20px; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 800; }
-        .h-content b { font-size: 0.85rem; display: block; color: #0f172a; margin-bottom: 1px; }
-        .h-content p { margin: 0; font-size: 0.75rem; color: var(--text-dim); line-height: 1.3; }
+/* PROTOCOLS */
+.proto-list{display:flex;flex-direction:column;gap:14px}
+.proto-item{display:flex;gap:12px;align-items:flex-start;padding-bottom:12px;border-bottom:1px dashed var(--border-lt)}
+.proto-item:last-child{border-bottom:none;padding-bottom:0}
+.pnum{min-width:28px;height:28px;border:1px solid var(--saffron);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:.62rem;color:var(--saffron);flex-shrink:0;background:rgba(200,101,26,.07)}
+.ptitle{font-size:.97rem;font-weight:600;color:var(--ink);display:block;margin-bottom:3px}
+.pdesc{font-size:.88rem;color:var(--ash);line-height:1.55;font-style:italic}
+.psteps{margin-top:8px;padding-top:8px;border-top:1px dotted var(--border-lt);display:flex;flex-direction:column;gap:4px}
+.pstep{font-size:.84rem;color:var(--ink);line-height:1.45;padding-left:14px;position:relative;display:block}
+.pstep::before{content:'→';position:absolute;left:0;color:var(--saffron);font-size:.7rem;top:1px}
+.pagebtn{width:100%;margin-top:12px;padding:10px;background:transparent;border:1px dashed var(--border);border-radius:1px;color:var(--saffron);font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.pagebtn:hover{border-style:solid;background:var(--saffron-pale)}
 
-        .pagination { width: 100%; padding: 10px; background: none; border: 1px dashed var(--border); border-radius: 10px; color: var(--blue); font-size: 0.65rem; font-weight: 700; cursor: pointer; margin-top: 5px; }
-        
-        #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: white; z-index: 1000; padding: 50px 25px; text-align: center; overflow-y: auto; }
-        #breatheOverlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; color: white; z-index: 2000; text-align: center; padding-top: 20vh; }
-        .breathe-circle-large { width: 100px; height: 100px; background: rgba(56, 189, 248, 0.2); border: 2px solid var(--blue); border-radius: 50%; margin: 0 auto 40px; animation: breatheBig 8s infinite ease-in-out; }
-        @keyframes breatheBig { 0%, 100% { transform: scale(1); } 50% { transform: scale(2.8); } }
-    </style>
+/* FOUNDATION HABITS */
+.hgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:480px){.hgrid{grid-template-columns:1fr}}
+.hcard{border:1px solid var(--border);background:rgba(255,255,255,.35);border-radius:2px;padding:14px 15px}
+.hicon{font-size:1.3rem;display:block;margin-bottom:5px}
+.htitle{font-size:.97rem;font-weight:600;color:var(--ink);display:block;margin-bottom:3px}
+.hdesc{font-size:.84rem;color:var(--ash);line-height:1.5;font-style:italic}
+.hsteps{margin-top:8px;padding-top:8px;border-top:1px dashed var(--border-lt);list-style:none}
+.hsteps li{font-size:.82rem;color:var(--ink);line-height:1.5;padding:2px 0 2px 13px;position:relative}
+.hsteps li::before{content:'·';position:absolute;left:0;color:var(--saffron);font-weight:700}
+
+/* DIAGNOSTIC */
+.dq{font-size:1.05rem;font-weight:300;color:var(--ink);line-height:1.6;margin-bottom:12px;font-style:italic}
+.dopts{display:flex;flex-direction:column;gap:7px}
+.dopt{border:1px solid var(--border);background:rgba(255,255,255,.4);font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--ink);padding:10px 14px;cursor:pointer;border-radius:1px;transition:all .2s;text-align:left}
+.dopt:hover{border-color:var(--saffron);background:var(--saffron-pale);color:var(--saffron)}
+.dres{padding:14px 16px;background:rgba(200,101,26,.07);border:1px solid rgba(200,101,26,.25);border-radius:1px;display:none}
+.dres.on{display:block}
+.dres-title{font-size:1.1rem;font-weight:600;color:var(--saffron);margin-bottom:6px}
+.dres-text{font-size:.93rem;color:var(--ink);line-height:1.65;font-style:italic}
+.dprog{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:var(--ash);margin-bottom:10px;text-transform:uppercase}
+.dback{background:none;border:none;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);cursor:pointer;margin-top:8px;padding:0}
+.dback:hover{color:var(--saffron)}
+
+/* TRACKER */
+.streak-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.streak-num{font-size:2.2rem;font-weight:300;color:var(--saffron)}
+.sdots{display:flex;gap:4px;flex-wrap:wrap}
+.sdot{width:13px;height:13px;border-radius:50%;background:var(--border)}
+.sdot.done{background:var(--saffron)}
+.slabel{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash)}
+.checkin-btn{border:1px solid var(--saffron);background:transparent;color:var(--saffron);font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:7px 16px;cursor:pointer;border-radius:1px;transition:all .2s;margin-left:auto}
+.checkin-btn:hover{background:var(--saffron);color:#fff}
+.checkin-btn:disabled{opacity:.4;cursor:not-allowed}
+.sinsight{font-size:.88rem;color:var(--ash);font-style:italic;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border-lt);line-height:1.55}
+
+/* LOG */
+.log-row{display:flex;gap:8px;margin-bottom:10px}
+.log-ta{flex:1;border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.97rem;color:var(--ink);padding:9px 12px;outline:none;border-radius:1px;resize:none;height:58px;line-height:1.5}
+.log-ta::placeholder{color:var(--ash);font-style:italic}
+.log-ta:focus{border-color:var(--saffron)}
+.sel{border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'DM Mono',monospace;font-size:.6rem;color:var(--ink);padding:7px 8px;outline:none;border-radius:1px}
+.abtn2{border:none;background:var(--saffron);color:#fff;font-family:'DM Mono',monospace;font-size:.62rem;padding:8px 14px;cursor:pointer;border-radius:1px;letter-spacing:.1em}
+.abtn2:hover{background:#e8854a}
+.log-list{display:flex;flex-direction:column;gap:8px;max-height:280px;overflow-y:auto}
+.log-entry{border:1px solid var(--border-lt);border-radius:1px;padding:10px 12px;background:rgba(255,255,255,.3)}
+.log-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.log-emo{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron)}
+.log-date{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--ash)}
+.log-text{font-size:.9rem;color:var(--ink);line-height:1.5;font-style:italic;white-space:pre-wrap}
+.int-badge{font-family:'DM Mono',monospace;font-size:.54rem;padding:1px 6px;border-radius:10px;margin-left:5px}
+.int-low{background:#d4edda;color:#2d5a28}.int-mid{background:#fff3cd;color:#78350f}.int-high{background:#f8d7da;color:#8b1a1a}
+.xbtn{background:none;border:none;color:var(--border);cursor:pointer;font-size:.85rem}
+.xbtn:hover{color:#c8503c}
+.empty-msg{text-align:center;padding:18px;color:var(--ash);font-style:italic;font-size:.9rem;border:1px dashed var(--border-lt);border-radius:1px}
+
+/* TRIGGER MAP */
+.tadd{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+.tinput{flex:1;min-width:140px;border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.97rem;color:var(--ink);padding:8px 12px;outline:none;border-radius:1px}
+.tinput:focus{border-color:var(--saffron)}
+.tinput::placeholder{color:var(--ash);font-style:italic}
+.titem{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;padding:9px 12px;border:1px solid var(--border-lt);background:rgba(255,255,255,.3);border-radius:1px;margin-bottom:6px}
+.temo{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--saffron);text-transform:uppercase;letter-spacing:.1em}
+.ttext{font-size:.9rem;color:var(--ink);line-height:1.45;flex:1}
+
+/* EVENING */
+.eq{font-size:1rem;color:var(--ink);font-style:italic;margin-bottom:8px;font-weight:300;line-height:1.55}
+.eta{width:100%;border:1px solid var(--border);background:rgba(255,255,255,.4);font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);padding:11px 13px;outline:none;border-radius:1px;resize:none;line-height:1.65;min-height:72px}
+.eta:focus{border-color:var(--saffron)}
+.eta::placeholder{color:var(--ash);font-style:italic}
+.esaved{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--saffron);text-transform:uppercase;opacity:0;transition:opacity .4s;margin-left:10px}
+.esaved.on{opacity:1}
+.elog-list{display:flex;flex-direction:column;gap:9px;max-height:260px;overflow-y:auto;margin-top:12px}
+.elog-entry{border:1px solid var(--border-lt);border-radius:1px;padding:11px 13px;background:rgba(255,255,255,.3)}
+.elog-date{font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);text-transform:uppercase;letter-spacing:.1em;margin-bottom:5px;display:flex;justify-content:space-between}
+.elog-qa{font-size:.88rem;color:var(--ink);line-height:1.5;white-space:pre-wrap}
+
+/* LEARNINGS */
+.lcard{border:1px solid var(--border);border-radius:2px;padding:15px 17px;margin-bottom:11px;background:rgba(255,255,255,.4);animation:fadeIn .3s ease}
+.lcard.hidden{display:none}
+.lcard-head{display:flex;gap:8px;align-items:center;margin-bottom:9px;flex-wrap:wrap}
+.lcat{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(200,101,26,.3);color:var(--saffron);border-radius:1px;background:rgba(200,101,26,.06)}
+.ldate{font-family:'DM Mono',monospace;font-size:.54rem;color:var(--ash)}
+.llabel{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:3px}
+.llabel.inc{color:var(--ash)}.llabel.lrn{color:var(--saffron)}
+.lincident{font-size:.93rem;color:var(--ash);line-height:1.55;margin-bottom:9px;font-style:italic;white-space:pre-wrap}
+.llearning{font-size:.97rem;color:var(--ink);line-height:1.65;white-space:pre-wrap}
+
+/* OVERLAYS */
+#breatheOverlay{display:none;position:fixed;inset:0;background:#0d1117;z-index:200;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:40px}
+#breatheOverlay.on{display:flex}
+.bring{width:120px;height:120px;border-radius:50%;border:1.5px solid rgba(147,197,253,.5);background:radial-gradient(circle,rgba(56,189,248,.12),transparent 70%);margin-bottom:36px;animation:bring 8s ease-in-out infinite;display:flex;align-items:center;justify-content:center}
+.bring::after{content:'';width:60px;height:60px;border-radius:50%;border:1px solid rgba(147,197,253,.3);animation:bring 8s ease-in-out infinite reverse}
+@keyframes bring{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.5);opacity:1}}
+#btext{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:2rem;color:rgba(224,242,254,.9);letter-spacing:.05em}
+.bclose{position:absolute;bottom:30px;font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(148,163,184,.6);cursor:pointer;background:none;border:none}
+#modal{display:none;position:fixed;inset:0;background:rgba(26,20,16,.82);z-index:100;padding:20px;align-items:center;justify-content:center}
+#modal.on{display:flex}
+.mcard{background:var(--bg);border:1px solid var(--border);border-radius:2px;padding:36px 28px;max-width:400px;width:100%;text-align:center;position:relative}
+.mcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--saffron);border-radius:2px 2px 0 0}
+#mtitle{font-size:1.5rem;font-weight:300;color:var(--saffron);font-style:italic;margin-bottom:16px;line-height:1.25}
+#mbody{font-size:1rem;line-height:1.7;color:var(--ink);font-weight:300}
+.mclose{margin-top:24px;display:block;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);cursor:pointer;background:none;border:none}
+#emOverlay{display:none;position:fixed;inset:0;background:var(--bg);z-index:300;overflow-y:auto;padding:36px 20px 60px}
+#emOverlay.on{display:block}
+.emh{text-align:center;margin-bottom:30px}
+.emh h2{font-size:1.6rem;font-weight:300;color:var(--saffron);letter-spacing:.06em}
+.emh p{font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);margin-top:6px}
+.emsteps{max-width:460px;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+.emstep{border:1px solid var(--border);border-radius:2px;padding:22px 20px;background:rgba(255,255,255,.65)}
+.emstep-n{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:7px}
+.emstep h3{font-size:1.45rem;font-weight:300;color:var(--ink);margin-bottom:7px}
+.emstep p{font-size:.97rem;color:var(--ash);line-height:1.65;font-style:italic}
+.emtimer{font-family:'DM Mono',monospace;font-size:2.2rem;color:var(--saffron);text-align:center;margin:10px 0;letter-spacing:.08em}
+.emclose{display:block;text-align:center;margin:26px auto 0;font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);cursor:pointer;background:none;border:1px dashed var(--border);padding:9px 22px;border-radius:1px}
+.emclose:hover{border-color:var(--saffron);color:var(--saffron)}
+
+/* SHEETS SETUP */
+.sheets-url{width:100%;border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ink);padding:10px 12px;outline:none;border-radius:1px;margin-bottom:8px}
+.sheets-url:focus{border-color:var(--saffron)}
+.sstatus{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;margin-top:6px;display:none}
+.search-row{display:flex;gap:8px;flex-wrap:wrap}
+.lsearch{border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--ink);padding:6px 10px;outline:none;border-radius:1px;flex:1;min-width:120px}
+.lsearch:focus{border-color:var(--saffron)}
+.lcount{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin:10px 0 0}
+
+/* SPINNER */
+.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* STATS BAR */
+.sbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:14px 20px;background:rgba(255,255,255,.4);border:1px solid var(--border);border-radius:1px;margin-bottom:18px}
+.sstat{font-family:'DM Mono',monospace;font-size:.66rem;letter-spacing:.14em;color:var(--ash);text-transform:uppercase}
+.sstat span{color:var(--saffron);font-size:1.1rem;font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:0}
+.gita-bar{font-style:italic;font-family:'Cormorant Garamond',serif;font-size:.8rem;color:var(--ash);max-width:320px;text-align:right}
+</style>
 </head>
 <body>
 
-<header><h1>The Inner Compass</h1></header>
+<header>
+  <span class="om">ॐ</span>
+  <h1>The Inner <em>Compass</em></h1>
+  <p class="subtitle">Equanimity · Clarity · Unshakeable Action</p>
+  <div class="ribbon" id="ribbon"></div>
+</header>
 
-<div class="daily-ribbon"><p id="dailyThought" class="daily-content"></p></div>
+<div class="wrap">
 
-<div class="top-nav">
-    <div class="breathe-btn" onclick="toggleBreathe()">
-        <div class="breathe-dot"></div> BREATHE RESET
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab on" data-t="now">🧭 Right Now</button>
+    <button class="tab" data-t="habits">🌿 Foundation</button>
+    <button class="tab" data-t="diagnose">🔍 Root Cause</button>
+    <button class="tab" data-t="tracker">📊 My Patterns</button>
+    <button class="tab" data-t="triggers">⚡ Trigger Map</button>
+    <button class="tab" data-t="evening">🌙 Evening Review</button>
+    <button class="tab" data-t="learnings">📖 Life Learnings</button>
+  </div>
+
+  <!-- RIGHT NOW -->
+  <div class="tsec on" id="tab-now">
+    <div class="panel">
+      <div class="plabel">Instant Tools</div>
+      <button class="em-btn" onclick="openEM()">🆘 Emergency Protocol — 60 Second Crisis Mode</button>
+      <div class="breathe-btn" onclick="openBreathe()">
+        <div class="b-dot"></div>
+        <span class="b-label">Breathe Reset — Tap to Begin</span>
+      </div>
+      <div class="anchor-grid">
+        <div class="abtn" onclick="openAnchor('present')"><i>📍</i><span>Present</span></div>
+        <div class="abtn" onclick="openAnchor('gratitude')"><i>🙏</i><span>Gratitude</span></div>
+        <div class="abtn" onclick="openAnchor('prayer')"><i>🕯️</i><span>Pray</span></div>
+        <div class="abtn" onclick="openAnchor('faith')"><i>✨</i><span>Believe</span></div>
+      </div>
     </div>
-    <div class="anchor-grid">
-        <div class="anchor-btn" onclick="openAnchor('present')"><i>📍</i>Present</div>
-        <div class="anchor-btn" onclick="openAnchor('gratitude')"><i>🙏</i>Gratitude</div>
-        <div class="anchor-btn" onclick="openAnchor('prayer')"><i>🕯️</i>Pray</div>
-        <div class="anchor-btn" onclick="openAnchor('faith')"><i>✨</i>Believe</div>
+
+    <details style="margin-bottom:16px">
+    <summary style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);cursor:pointer;padding:8px 0;user-select:none">⚙ Optional: Anthropic API Key (for live AI wisdom)</summary>
+    <div style="margin-top:10px;padding:14px 16px;background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:2px">
+      <p style="font-size:.84rem;color:var(--ash);font-style:italic;line-height:1.55;margin-bottom:10px">Without a key, rich built-in wisdom loads instantly. With a key, wisdom is generated live by Claude for your exact situation. Your key is stored only in your browser — never sent anywhere except Anthropic.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <input type="password" id="apiKeyInput" placeholder="sk-ant-api03-…" style="flex:1;min-width:180px;border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'DM Mono',monospace;font-size:.65rem;color:var(--ink);padding:8px 10px;outline:none;border-radius:1px">
+        <button onclick="saveApiKey()" style="border:none;background:var(--saffron);color:#fff;font-family:'DM Mono',monospace;font-size:.62rem;padding:8px 14px;cursor:pointer;border-radius:1px;letter-spacing:.1em">Save Key</button>
+        <button onclick="clearApiKey()" style="border:1px solid var(--border);background:transparent;color:var(--ash);font-family:'DM Mono',monospace;font-size:.62rem;padding:8px 14px;cursor:pointer;border-radius:1px;letter-spacing:.1em">Clear</button>
+        <span id="apiKeyStatus" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green)"></span>
+      </div>
     </div>
+  </details>
+
+  <div class="panel">
+      <div class="plabel">Identify Your Current Feeling</div>
+      <div class="egrid" id="egrid"></div>
+    </div>
+
+    <div id="wisdomSection" style="display:none">
+      <div class="panel">
+        <div class="plabel">Gita — Path of Equanimity</div>
+        <div id="gitaOut" class="wisdom-out"></div>
+        <button class="wbtn" id="wbtn1" onclick="fetchWisdom('gita')">✦ Get Gita Guidance</button>
+      </div>
+      <div class="panel blue">
+        <div class="plabel blue">Stoic — Circle of Control</div>
+        <div id="stoicOut" class="wisdom-out"></div>
+        <button class="wbtn" id="wbtn2" onclick="fetchWisdom('stoic')">✦ Get Stoic Guidance</button>
+      </div>
+      <div class="panel green">
+        <div class="plabel green" id="protoLabel">Recovery Protocols</div>
+        <div class="proto-list" id="protoList"></div>
+        <button class="pagebtn" id="protoBtn" onclick="fetchProtocols()">✦ Load Recovery Protocols</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUNDATION HABITS -->
+  <div class="tsec" id="tab-habits">
+    <div class="panel amber">
+      <div class="plabel amber">6 Foundation Habits — Practice Daily</div>
+      <div class="hgrid" id="habitsGrid"></div>
+    </div>
+  </div>
+
+  <!-- ROOT CAUSE -->
+  <div class="tsec" id="tab-diagnose">
+    <div class="panel">
+      <div class="plabel">Root Cause Finder</div>
+      <p style="font-size:.9rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:16px">Most surface emotions mask a deeper root. These questions guide you to the real source.</p>
+      <div id="diagBox"></div>
+    </div>
+  </div>
+
+  <!-- MY PATTERNS -->
+  <div class="tsec" id="tab-tracker">
+    <div class="panel">
+      <div class="plabel">Daily Check-In Streak</div>
+      <div class="streak-row">
+        <div><div class="streak-num" id="streakN">0</div><div class="slabel">Day streak</div></div>
+        <div><div class="sdots" id="sdots"></div><div class="slabel" style="margin-top:4px">Last 30 days</div></div>
+        <button class="checkin-btn" id="ciBtn" onclick="doCheckin()">Check In ✓</button>
+      </div>
+      <div class="sinsight" id="sinsight"></div>
+    </div>
+    <div class="panel">
+      <div class="plabel">Emotion Log</div>
+      <p style="font-size:.87rem;color:var(--ash);font-style:italic;margin-bottom:12px;line-height:1.55">Log what you felt and why. Patterns become visible over time.</p>
+      <div class="log-row">
+        <textarea class="log-ta" id="logTa" placeholder="What are you feeling and what triggered it?"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap">
+        <select class="sel" id="logEmo" style="flex:1;min-width:130px"></select>
+        <select class="sel" id="logInt">
+          <option value="">Intensity…</option>
+          <option value="low">Low (1–3)</option>
+          <option value="mid">Medium (4–6)</option>
+          <option value="high">High (7–10)</option>
+        </select>
+        <button class="abtn2" onclick="addLog()">Log It</button>
+      </div>
+      <div class="log-list" id="logList"></div>
+    </div>
+  </div>
+
+  <!-- TRIGGER MAP -->
+  <div class="tsec" id="tab-triggers">
+    <div class="panel">
+      <div class="plabel">My Personal Trigger Map</div>
+      <p style="font-size:.9rem;color:var(--ash);font-style:italic;margin-bottom:14px;line-height:1.6">Your personal map of what reliably triggers specific emotions — your earliest warning system.</p>
+      <div class="tadd">
+        <input class="tinput" id="trigInput" placeholder="When X happens, I feel…" maxlength="200">
+        <select class="sel" id="trigEmo" style="max-width:130px"></select>
+        <button class="abtn2" onclick="addTrigger()">Add</button>
+      </div>
+      <div id="trigList"></div>
+    </div>
+    <div class="panel blue" id="trigInsPanel" style="display:none">
+      <div class="plabel blue">Pattern Insights</div>
+      <div id="trigIns"></div>
+    </div>
+  </div>
+
+  <!-- EVENING REVIEW -->
+  <div class="tsec" id="tab-evening">
+    <div class="panel">
+      <div class="plabel">Evening Reflection</div>
+      <p style="font-size:.9rem;color:var(--ash);font-style:italic;margin-bottom:16px;line-height:1.6">Five minutes now saves five hours of reactivity tomorrow.</p>
+      <div id="eqBox"></div>
+      <div style="display:flex;align-items:center;margin-top:10px">
+        <button class="abtn2" onclick="saveEvening()">Save Reflection</button>
+        <span class="esaved" id="esaved">✓ Saved</span>
+      </div>
+    </div>
+    <div class="panel" id="elogPanel">
+      <div class="plabel">Past Reflections</div>
+      <div class="elog-list" id="elogList"></div>
+    </div>
+  </div>
+
+  <!-- LIFE LEARNINGS -->
+  <div class="tsec" id="tab-learnings">
+    <div class="panel" id="sheetsSetup">
+      <div class="plabel amber">Connect to Google Sheets</div>
+      <p style="font-size:.9rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:14px">Your learnings sync to Google Sheets — accessible everywhere, forever. One-time setup.</p>
+      <input type="url" class="sheets-url" id="sheetsUrl" placeholder="https://script.google.com/macros/s/…/exec">
+      <div style="display:flex;gap:8px">
+        <button class="abtn2" onclick="connectSheets()">Connect ✓</button>
+        <details style="margin-top:10px">
+  <summary style="font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);cursor:pointer;padding:8px 0;user-select:none">📋 View Apps Script Code — Click to Expand</summary>
+  <div style="margin-top:10px">
+    <p style="font-size:.84rem;color:var(--ash);font-style:italic;margin-bottom:8px;line-height:1.5">Click inside the box below, press <strong style="color:var(--ink)">Ctrl+A</strong> to select all, then <strong style="color:var(--ink)">Ctrl+C</strong> to copy.</p>
+    <textarea id="scriptTextarea" readonly onclick="this.select()" style="width:100%;height:280px;border:1px solid #d4c4a8;background:rgba(255,255,255,.8);font-family:monospace;font-size:.72rem;color:#1a1410;padding:10px;outline:none;border-radius:1px;resize:vertical;line-height:1.5;cursor:text">// Inner Compass — Life Learnings · Google Apps Script
+// Deploy: Web App | Execute as: Me | Access: Anyone
+
+const SHEET_NAME = &#x27;Learnings&#x27;;
+
+function getOrCreateSheet() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  let sheet = ss.getSheetByName(SHEET_NAME);
+  if (!sheet) {
+    sheet = ss.insertSheet(SHEET_NAME);
+    const h = sheet.getRange(1,1,1,5);
+    h.setValues([[&#x27;Date&#x27;,&#x27;Category&#x27;,&#x27;Incident&#x27;,&#x27;Learning&#x27;,&#x27;Timestamp&#x27;]]);
+    h.setFontWeight(&#x27;bold&#x27;);
+    h.setBackground(&#x27;#f5ede0&#x27;);
+    sheet.setFrozenRows(1);
+    [110,140,320,320,160].forEach((w,i) =&gt; sheet.setColumnWidth(i+1,w));
+  }
+  return sheet;
+}
+
+function doGet(e) {
+  const callback = e.parameter.callback;
+  const action   = e.parameter.action || &#x27;read&#x27;;
+  let result;
+  if (action === &#x27;write&#x27;) {
+    try {
+      const sheet = getOrCreateSheet();
+      const now   = new Date();
+      const d     = Utilities.formatDate(now, Session.getScriptTimeZone(), &#x27;dd MMM yyyy&#x27;);
+      sheet.appendRow([d, e.parameter.category||&#x27;&#x27;, e.parameter.incident||&#x27;&#x27;, e.parameter.learning||&#x27;&#x27;, now.toISOString()]);
+      result = {success: true};
+    } catch(err) {
+      result = {success: false, error: err.toString()};
+    }
+  } else {
+    try {
+      const sheet = getOrCreateSheet();
+      const data  = sheet.getDataRange().getValues();
+      if (data.length &lt;= 1) {
+        result = {success: true, rows: []};
+      } else {
+        const rows = data.slice(1)
+          .filter(r =&gt; r[2] || r[3])
+          .map(r =&gt; ({
+            date:     String(r[0]||&#x27;&#x27;),
+            category: String(r[1]||&#x27;&#x27;),
+            incident: String(r[2]||&#x27;&#x27;),
+            learning: String(r[3]||&#x27;&#x27;),
+            ts:       String(r[4]||&#x27;&#x27;)
+          }))
+          .reverse();
+        result = {success: true, rows: rows};
+      }
+    } catch(err) {
+      result = {success: false, error: err.toString()};
+    }
+  }
+  const json = JSON.stringify(result);
+  if (callback) {
+    return ContentService
+      .createTextOutput(callback + &#x27;(&#x27; + json + &#x27;)&#x27;)
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService
+    .createTextOutput(json)
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function doPost(e) {
+  try {
+    const p     = e.parameter;
+    const sheet = getOrCreateSheet();
+    const now   = new Date();
+    const d     = Utilities.formatDate(now, Session.getScriptTimeZone(), &#x27;dd MMM yyyy&#x27;);
+    sheet.appendRow([d, p.category||&#x27;&#x27;, p.incident||&#x27;&#x27;, p.learning||&#x27;&#x27;, now.toISOString()]);
+    return ContentService
+      .createTextOutput(JSON.stringify({success:true}))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(err) {
+    return ContentService
+      .createTextOutput(JSON.stringify({success:false, error:err.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}</textarea>
+    <button onclick="(function(){var ta=document.getElementById('scriptTextarea');ta.select();try{if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(ta.value).then(function(){var b=event.target;var old=b.textContent;b.textContent='✓ Copied!';b.style.background='#3d6b4f';setTimeout(function(){b.textContent=old;b.style.background='';},2000);});}else{document.execCommand('copy');var b=event.target;b.textContent='✓ Copied!';b.style.background='#3d6b4f';setTimeout(function(){b.textContent='Copy to Clipboard';b.style.background='';},2000);}}catch(e){}})()" style="margin-top:8px;border:none;background:#c8651a;color:#fff;font-family:'DM Mono',monospace;font-size:.65rem;padding:8px 16px;cursor:pointer;border-radius:1px;letter-spacing:.1em">Copy to Clipboard</button>
+  </div>
+</details>
+      </div>
+      <div class="sstatus" id="sstatus"></div>
+      <details style="margin-top:14px">
+        <summary style="font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);cursor:pointer">▸ Setup instructions (2 minutes)</summary>
+        <div style="margin-top:10px;font-size:.87rem;color:var(--ash);line-height:1.75;border-left:2px solid var(--border);padding-left:12px">
+          <p style="margin-bottom:7px"><strong style="color:var(--ink)">1.</strong> Create a new Google Sheet at <a href="https://sheets.google.com" target="_blank" style="color:var(--saffron)">sheets.google.com</a></p>
+          <p style="margin-bottom:7px"><strong style="color:var(--ink)">2.</strong> Click <strong style="color:var(--ink)">Extensions → Apps Script</strong>. Delete existing code. Click 📋 Copy Apps Script above and paste it in.</p>
+          <p style="margin-bottom:7px"><strong style="color:var(--ink)">3.</strong> Click <strong style="color:var(--ink)">Deploy → New Deployment</strong>. Type: Web App. Execute as: Me. Access: Anyone. Deploy and copy the URL.</p>
+          <p><strong style="color:var(--ink)">4.</strong> Paste the URL above and click Connect.</p>
+        </div>
+      </details>
+    </div>
+    <div class="panel" id="lForm" style="display:none">
+      <div class="plabel">Add a New Learning</div>
+      <p style="font-size:.88rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:14px">Every difficult experience carries a lesson. Capturing it converts pain into permanent wisdom.</p>
+      <div style="margin-bottom:12px">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:5px">The Incident</div>
+        <textarea id="incidentTa" placeholder="What happened? Describe the situation briefly…" style="width:100%;border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);padding:10px 12px;outline:none;border-radius:1px;resize:none;line-height:1.65;min-height:72px" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+      <div style="margin-bottom:12px">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:5px">The Learning</div>
+        <textarea id="learningTa" placeholder="What did this teach you? What truth did it reveal?" style="width:100%;border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);padding:10px 12px;outline:none;border-radius:1px;resize:none;line-height:1.65;min-height:72px" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='var(--border)'"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <select class="sel" id="lCat">
+          <option>Relationships</option><option>Work &amp; Career</option><option>Self &amp; Identity</option>
+          <option>Anger &amp; Reactions</option><option>Trust &amp; Betrayal</option><option>Fear &amp; Courage</option>
+          <option>Communication</option><option>Money &amp; Decisions</option><option>Discipline &amp; Habits</option><option>Other</option>
+        </select>
+        <button class="abtn2" id="lSaveBtn" onclick="saveLearning()">Save to Sheet ✦</button>
+        <span id="lSaveMsg" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;opacity:0;transition:opacity .3s"></span>
+      </div>
+    </div>
+    <div class="panel" id="lList" style="display:none">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px">
+        <div class="plabel" style="margin-bottom:0">Wisdom Library</div>
+        <div class="search-row">
+          <input class="lsearch" id="lSearch" type="text" placeholder="Search…" oninput="filterL()">
+          <select class="sel" id="lFilter" onchange="filterL()">
+            <option value="">All</option>
+            <option>Relationships</option><option>Work &amp; Career</option><option>Self &amp; Identity</option>
+            <option>Anger &amp; Reactions</option><option>Trust &amp; Betrayal</option><option>Fear &amp; Courage</option>
+            <option>Communication</option><option>Money &amp; Decisions</option><option>Discipline &amp; Habits</option><option>Other</option>
+          </select>
+          <button class="abtn2" style="background:transparent;border:1px solid var(--border);color:var(--ash);font-size:.58rem" onclick="loadLearnings()">↻</button>
+        </div>
+      </div>
+      <div class="lcount" id="lcount"></div>
+      <div id="lCards"></div>
+      <div id="lLoading" style="display:none;text-align:center;padding:24px;color:var(--ash);font-style:italic;font-size:.9rem"><span class="spin"></span>Loading…</div>
+      <div id="lEmpty" style="display:none" class="empty-msg">No learnings yet. Add your first one above.</div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="sbar">
+    <div class="sstat">Tasks: <span id="statT">0</span></div>
+    <div class="sstat">Done: <span id="statD">0</span></div>
+    <div class="sstat">Left: <span id="statL">0</span></div>
+    <div class="sstat">Journal: <span id="statN">0</span></div>
+    <div class="gita-bar">"You have a right to perform your duties, not to the fruits thereof." — Gita 2.47</div>
+  </div>
+
 </div>
 
-<div class="selector-wrap">
-    <select id="emotionInput" onchange="initCompass()">
-        <option value="" disabled selected>Identify current feeling...</option>
-        <option value="stressed">Generally Stressed</option>
-        <option value="impatient">Impatient</option>
-        <option value="jealousy">Jealousy</option>
-        <option value="past">Dwelling on the Past</option>
-        <option value="overwhelmed">Overwhelmed</option>
-        <option value="priority">Unable to Prioritize</option>
-        <option value="mistake">Anger at someone's mistake</option>
-        <option value="talking">Anger while someone is talking</option>
-        <option value="badthings">Anger at bad actions/ethics</option>
-        <option value="restless">Restless & Anxious</option>
-        <option value="future">Fear of the Future</option>
-        <option value="failure">Fear of Failure</option>
-        <option value="opinions">Fear of Others' Opinions</option>
-    </select>
+<!-- OVERLAYS -->
+<div id="breatheOverlay" onclick="closeBreathe()">
+  <div class="bring"></div>
+  <p id="btext">Inhale…</p>
+  <button class="bclose" onclick="closeBreathe()">Tap anywhere to close</button>
 </div>
 
-<div id="dashboard" class="dashboard">
-    <div class="card gita">
-        <div class="card-header"><span class="label">Divine Anchor</span><button class="rotate-btn" onclick="rotate('gita')">NEXT VERSE ↻</button></div>
-        <div id="gt" class="quote-text"></div><span id="gr" class="quote-ref"></span>
-    </div>
-    <div class="card stoic">
-        <div class="card-header"><span class="label">Rational Shield</span><button class="rotate-btn" onclick="rotate('stoic')">NEXT THOUGHT ↻</button></div>
-        <div id="st" class="quote-text"></div><span id="sr" class="quote-ref"></span>
-    </div>
-    <div class="card">
-        <div class="card-header"><span class="label" id="habitLabel">Practical Habits</span></div>
-        <div id="habitsList"></div>
-        <button class="pagination" id="pageBtn" onclick="toggleHabits()">SHOW NEXT 5 ACTIONS →</button>
-    </div>
+<div id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="mcard">
+    <h2 id="mtitle"></h2>
+    <p id="mbody"></p>
+    <button class="mclose" onclick="closeModal()">[ Tap to Close ]</button>
+  </div>
 </div>
 
-<div id="modal" onclick="this.style.display='none'">
-    <h2 id="mT" style="font-family:'Playfair Display'; color:var(--gold); margin-bottom:20px; font-size: 1.5rem;"></h2>
-    <p id="mB" style="font-size:1.05rem; line-height:1.6; color:var(--text)"></p>
-    <p style="margin-top:50px; font-size:0.6rem; color:var(--dim)">[ TAP ANYWHERE TO CLOSE ]</p>
-</div>
-
-<div id="breatheOverlay" onclick="this.style.display='none'">
-    <div class="breathe-circle-large"></div>
-    <h2 id="breatheText" style="font-family:'Playfair Display'; font-style:italic;">Inhale...</h2>
-    <p style="margin-top:20px; font-size:0.7rem; color:var(--dim)">[ Follow the circle. Tap to exit. ]</p>
+<div id="emOverlay">
+  <div class="emh"><h2>Emergency Protocol</h2><p>You are safe. Do exactly these 3 steps.</p></div>
+  <div class="emsteps">
+    <div class="emstep">
+      <div class="emstep-n">Step 1 — Do This Now</div>
+      <h3>Stop Everything</h3>
+      <p>Sit or stand with feet flat on the floor. Do not speak, type, or react yet.</p>
+    </div>
+    <div class="emstep">
+      <div class="emstep-n">Step 2 — Breathe for 60 Seconds</div>
+      <h3>One Breath at a Time</h3>
+      <p>Inhale 4 counts. Exhale 6 counts. Repeat until the timer reaches zero.</p>
+      <div class="emtimer" id="emTimer">60</div>
+    </div>
+    <div class="emstep">
+      <div class="emstep-n">Step 3 — Ground Yourself</div>
+      <h3>Return to Now</h3>
+      <p>Say aloud: "I am [name]. I am in [place]. It is [date]. I am physically safe." Name 3 things you can see.</p>
+    </div>
+  </div>
+  <button class="emclose" onclick="closeEM()">I am calmer. Close this.</button>
 </div>
 
 <script>
-let state = { emotion: "", gIdx: 0, sIdx: 0, hPage: 0 };
-
-const thoughtPool = [
-    // --- Leadership & PM Logic ---
-    "A product's success is measured by the silence of its users.",
-    "Logic is your shield; empathy is your sword.",
-    "The best ROI is a calm mind at 10 PM.",
-    "Revenue leakage is a system error; mental leakage is a focus error.",
-    "Solve the root cause, or you'll be forever managing the symptoms.",
-    "Data tells you what is happening; intuition tells you why.",
-    "A leader is a student who never stops observing.",
-    "The most expensive resource in OperionAI is your undivided attention.",
-    "Productivity is about outcomes, not browser tabs.",
-    "Standardize the routine to liberate the creative.",
-    "Your team at boAt reflects your own internal stability.",
-    "A great PM says 'no' to 1,000 good ideas to say 'yes' to one great one.",
-    "Strategy is knowing what NOT to do.",
-    "Communication is what is heard, not what is said.",
-    "Build systems that work even when you are playing with Aryan.",
-    "Scale yourself before you scale your startup.",
-    "The 'Lead Domino' is usually the task you are avoiding most.",
-    "Clarity of thought precedes clarity of action.",
-    "Your calendar is the only honest reflection of your priorities.",
-    "Optimization without direction is just efficient failure.",
-
-    // --- Stoic & Rational Shield ---
-    "You have power over your mind—not outside events. Realize this.",
-    "We suffer more in imagination than in reality.",
-    "Accept the things to which fate binds you.",
-    "The best revenge is to be unlike him who performed the injury.",
-    "Waste no more time arguing what a good man should be. Be one.",
-    "The impediment to action advances action. What stands in the way becomes the way.",
-    "If it is not right, do not do it; if it is not true, do not say it.",
-    "Very little is needed to make a happy life.",
-    "External things are not the problem. It is your assessment of them.",
-    "Amor Fati: Love your fate, which is in fact your life.",
-    "He who fears death will never do anything worth of a man who is alive.",
-    "Life is very short and anxious for those who forget the past, neglect the present, and fear the future.",
-    "Man is not worried by real problems so much as by his imagined anxieties about real problems.",
-    "First say to yourself what you would be; and then do what you have to do.",
-    "It is the power of the mind to be unconquerable.",
-    "Don't explain your philosophy. Embody it.",
-    "He is a wise man who does not grieve for the things which he has not.",
-    "Wealth consists not in having great possessions, but in having few wants.",
-    "How long are you going to wait before you demand the best for yourself?",
-    "Every night, ask: What bad habit did I curb today?",
-
-    // --- Gita & Spiritual Anchor ---
-    "You are an instrument (Nimitta-Matram); let the Divine play the tune.",
-    "The soul is never born and never dies.",
-    "Yoga is the journey of the self, through the self, to the self.",
-    "Man is made by his belief. As he believes, so he is.",
-    "Curtain your ego, and the truth will appear.",
-    "Perform your duty (Dharma) without attachment to the results.",
-    "The mind acts like an enemy for those who do not control it.",
-    "Calmness, gentleness, and silence—these are the disciplines of the mind.",
-    "A person is what their deep, driving desire is.",
-    "Lust, anger, and greed are the three gates to self-destruction.",
-    "The peace of God is with those whose mind and soul are in harmony.",
-    "Whatever happened, happened for the good. Whatever is happening, is happening for the good.",
-    "You came empty-handed, and you will leave empty-handed.",
-    "Change is the law of the universe.",
-    "The wise man sees the same Divine in a priest, a cow, and a dog.",
-    "Focus on the work ($Karma$), never the fruit ($Phala$).",
-    "One who is equal in pleasure and pain is fit for immortality.",
-    "When meditation is mastered, the mind is unwavering like a lamp in a windless place.",
-    "The power of God is with you at all times; through the activities of mind, senses, breathing, and emotions.",
-    "Surrender all duties to the Divine and be free from fear.",
-
-    // --- Fatherhood & Family ---
-    "Aryan’s smile is the only KPI that truly never fluctuates.",
-    "Being a father is the ultimate practice in Stoicism.",
-    "Isha is the co-founder of your life; treat that partnership with the highest priority.",
-    "Your legacy isn't OperionAI; it’s the character you model for your son.",
-    "Children don't follow your advice; they follow your example.",
-    "The best thing you can spend on your family is time, not money.",
-    "A calm father creates a safe world.",
-    "Success at work is empty if there is failure at home.",
-    "Today’s stress will be forgotten; today’s play with Aryan will be remembered.",
-    "Listen to Isha with the same focus you give a board meeting.",
-    "Your home should be the 'windless place' where your lamp does not flicker.",
-    "Fatherhood is the highest form of Dharma.",
-    "The world needs your SaaS, but Aryan needs his dad.",
-    "Patience at home is the training ground for patience at work.",
-    "Gratitude for what you have is the best gift to your family.",
-    "A hug from your son is the reset button for any bad day.",
-    "Protect the peace of your household like a sacred temple.",
-    "Your presence is more valuable than your presents.",
-    "Marriage is a long conversation; keep it kind.",
-    "Teach Aryan not just how to win, but how to handle the fruit of effort.",
-
-    // --- Career & Relocation ---
-    "The right job in Bangalore or Pune is already waiting for your growth.",
-    "A location change is just a change of scenery; your stability comes from within.",
-    "Your MBA from IIMK is a tool, but your character is the craftsman.",
-    "The logistics industry needs your clarity, not just your code.",
-    "Every interview is a chance to practice equanimity.",
-    "Your value doesn't decrease based on someone's inability to see it.",
-    "Trust the transition; you are being moved to where you are needed most.",
-    "The skills you built at Tata Play and upGrad are your foundation.",
-    "A career is a marathon, not a sprint to the next title.",
-    "Networking is just making friends with people who have the same problems as you.",
-    "Your next role will find you when your 'Internal Compass' is steady.",
-    "Pune or Bangalore? Wherever you go, you take 'You' with you.",
-    "Market shifts are 'External Indifferents'. Your skills are 'Internal Goods'.",
-    "Prepare for the interview, but surrender the outcome.",
-    "A job is a place to exercise your virtue, not just your intellect.",
-    "The logistics of moving are temporary; the logic of growth is permanent.",
-    "Seek a role that challenges your spirit, not just your time.",
-    "Your startup experience makes you a better PM; your PM experience makes you a better founder.",
-    "The best career move is often the one that offers the most peace.",
-    "You are not your resume. You are the one who lived it.",
-
-    // --- Daily Momentum & Grit ---
-    "Win the morning, win the day.",
-    "Discipline is the bridge between goals and accomplishment.",
-    "Consistency is the playground of the greats.",
-    "Do it tired. Do it scared. Just do it.",
-    "The cost of 'later' is usually 'never'.",
-    "Focus on one 'Lead Domino' every 24 hours.",
-    "Your future self is depending on you to stay stable today.",
-    "Stop over-thinking and start over-acting.",
-    "Courage is not the absence of fear, but the decision that something else is more important.",
-    "The universe rewards action, not just planning.",
-    "Small steps in the right direction lead to massive changes.",
-    "Sleep is the investment; productivity is the return.",
-    "A year from now, you will wish you started today.",
-    "Don't trade your peace for a temporary peak.",
-    "Stability is a skill, not a gift.",
-    "The struggle you are in today is developing the strength you need for tomorrow.",
-    "Keep your head in the clouds (vision) but your feet on the ground (action).",
-    "The best way to predict the future is to create it.",
-    "Efficiency is doing things right; effectiveness is doing the right things.",
-    "End every day by forgiving yourself and planning to improve.",
-
-    // --- Deep Perspectives ---
-    "Life is a drama; play your part with absolute intensity but zero attachment.",
-    "The ocean is deep and calm despite the waves on the surface. Be the ocean.",
-    "Everything you are seeking is also seeking you.",
-    "Silence is the language of God; all else is poor translation.",
-    "Your mind is a garden; plant seeds of logic and water them with breath.",
-    "The sun doesn't seek validation; it just shines. Shine.",
-    "Be like the lotus—in the water, but not wet by it.",
-    "You are a soul having a human experience, not a human having a soul experience.",
-    "The only true wisdom is in knowing you know nothing.",
-    "Gratitude is the highest form of prayer.",
-    "Every person you meet is a teacher in disguise.",
-    "Live as if you were to die tomorrow. Learn as if you were to live forever.",
-    "The secret of happiness is freedom; the secret of freedom is courage.",
-    "Perspective is the difference between a mountain and a molehill.",
-    "Energy flows where attention goes.",
-    "You cannot control the wind, but you can adjust your sails.",
-    "Happiness is an internal job.",
-    "The quieter you become, the more you are able to hear.",
-    "Comparison is the thief of joy.",
-    "This too shall pass.",
-
-    // --- Startup & OperionAI Specific ---
-    "Solve a problem so real that users thank you for the bill.",
-    "B2B SaaS is about trust first, features second.",
-    "Revenue leakage is a puzzle; you are the one with the missing piece.",
-    "Scale only what is broken to see where it breaks.",
-    "A startup is a series of experiments until you find the truth.",
-    "Your users’ pain is your roadmap.",
-    "OperionAI is a marathon of pivots.",
-    "The best marketing is a product that actually works.",
-    "Founding is lonely; that's why you have your Gita.",
-    "Burnout is what happens when you try to control the fruit.",
-    "Measure everything, but trust your gut.",
-    "Don't build a product; build a solution.",
-    "The first 10 customers are your real co-founders.",
-    "A 'No' from a VC is just a redirect to a better partner.",
-    "OperionAI is your lab; treat every failure as data.",
-    "Simplicity is the ultimate sophistication in SaaS.",
-    "Automate the urgent to focus on the important.",
-    "Cash flow is the oxygen; purpose is the heartbeat.",
-    "Your startup is a reflection of your own maturity.",
-    "Build something that Isha and Aryan would be proud of.",
-
-    // --- Final Grounding ---
-    "Breathe. You are exactly where you need to be.",
-    "The universe is for you, not against you.",
-    "Stable mind, stable life.",
-    "Integrity above everything.",
-    "Love the work, leave the rest.",
-    "Stability is your superpower.",
-    "Stay curious, stay calm.",
-    "The present moment is the only place life exists.",
-    "Lead with light.",
-    "You are enough, right now.",
-    "Action is the antidote to anxiety.",
-    "The Dharma of a father is to be a rock.",
-    "The Dharma of a leader is to be a mirror.",
-    "Everything is energy; manage yours.",
-    "Focus on what is permanent.",
-    "The fruit will ripen when the time is right.",
-    "Until then, water the roots.",
-    "Stability in action. Clarity in thought.",
-    "Go win.",
-    "Peace."
+// ── DATA ──────────────────────────────────────────────────────
+const THOUGHTS = [
+  "Focus on action, never the fruit.",
+  "Discipline today is freedom tomorrow.",
+  "Integrity is the only shield that never breaks.",
+  "The peace you seek is a decision away.",
+  "You have already survived every hard day so far.",
+  "Act from duty; release the outcome entirely.",
+  "True power is quiet, unhurried, and unshakeable.",
+  "What you think repeatedly, you eventually become.",
+  "Suffering is resistance. Acceptance is the door out.",
+  "Do not pray for an easy life. Pray for strength.",
+  "Between stimulus and response lies your freedom.",
+  "The obstacle is the way."
 ];
 
-const db = {
-    stressed: {
-        g: [["One who has control over the mind is tranquil in heat and cold, pleasure and pain.", "6.7"], ["One who is not agitated by the world and by whom the world is not agitated... is dear to Me.", "12.15"], ["Happy within, rejoice within, illuminated within.", "5.24"]],
-        s: [["True happiness is to enjoy the present, without anxious dependence on the future.", "Seneca"], ["It’s not what happens to you, but how you react to it that matters.", "Epictetus"], ["Your mind is your strength. Control your thoughts.", "Marcus Aurelius"]],
-        h: [["Vagus Reset", "Exhale for 8s, Inhale for 4s."], ["Nature Rule", "20 mins outside."], ["Task Uncouple", "You are the witness, not the stress."], ["Hydrate", "Drink 500ml of water."], ["Gratitude Tap", "Think of Aryan's laugh."], ["Brown Noise", "Play to settle racing thoughts."], ["Rest Check", "Schedule a 10-min silence."], ["Fuel Check", "Avoid sugar spikes."], ["Caffeine Cut", "Stop coffee for 4 hours."], ["Affirm", "I am stable and exactly where I need to be."]]
-    },
-    impatient: {
-        g: [["Appearance of happiness and distress are like summer and winter seasons.", "2.14"], ["What is happening, is for the good.", "Wisdom"], ["Focus on action, not fruit.", "2.47"]],
-        s: [["Time is a violent torrent of things coming into being.", "Marcus Aurelius"], ["He who is brave is free.", "Seneca"], ["Nothing is better proof of a well ordered mind than being able to stop where you are.", "Seneca"]],
-        h: [["5-Min Wait", "Wait before checking metrics."], ["Micro-Progress", "Celebrate one small code fix."], ["Slow Walk", "Walk 10% slower physically."], ["Process Praise", "Praise effort, not outcome."], ["1-Year Lens", "Will this delay matter in 2027?"], ["'Not Yet'", "Replace 'Failure' with 'Not yet'."], ["Box Breath", "4s square breathing."], ["Input List", "Focus on what you controlled."], ["Listen Fully", "Don't interrupt anyone."], ["Evening Audit", "Did you rush? Forgive and reset."]]
-    },
-    jealousy: {
-        g: [["No ill will to any being; friendly and compassionate.", "12.13"], ["Better one's own duty imperfect than another's perfectly.", "18.47"], ["Wisdom is compassion to all.", "16.2"]],
-        s: [["Ask: 'Is it possible for this person to be better?'", "Marcus Aurelius"], ["Content to be thought foolish to improve.", "Epictetus"], ["Comparison is the thief of joy.", "Stoic Logic"]],
-        h: [["Highlight Fallacy", "You see their reels, not their reality."], ["Life Trade", "Would you trade 100% of your life for theirs? No."], ["Unique Dharma", "OperionAI is your path alone."], ["Bless Them", "Wish them well to break the poison."], ["Mute Trigger", "Mute accounts causing envy."], ["Value Anchor", "List 3 irreplicable wins."], ["Price Check", "Am I willing to pay THEIR price?"], ["Self-Reference", "Compare to 'Yesterday Vaibhav'."], ["Abundance", "Market is vast; wins are infinite."], ["Leader Mode", "Congratulate the peer."]]
-    },
-    past: {
-        g: [["Wise grieve not for living or dead.", "2.11"], ["Soul is eternal and unborn.", "2.20"], ["What happened, happened for the good.", "Wisdom"]],
-        s: [["Root out memory of past suffering.", "Seneca"], ["What is the point of dragging up old pain?", "Seneca"], ["Man is as wretched as he convinces himself.", "Seneca"]],
-        h: [["Close Folder", "Visualize closing the past file."], ["5-Year Rule", "Will this matter in 5 years?"], ["Forgive Past Self", "You did your best then."], ["Grounding", "Touch 3 physical objects."], ["Extract Lesson", "Keep lesson, burn memory."], ["Present Father", "Aryan knows 'Present You'."], ["Cardio Burst", "Run to stay in the 'Now'."], ["Sunrise Reset", "boAt sunrise = New life."], ["Write/Shred", "Write regret, then shred it."], ["Amor Fati", "Love the past for the growth."]]
-    },
-    overwhelmed: {
-        g: [["Mind is restless, subdued by practice.", "6.35"], ["Action is better than inaction.", "3.8"], ["Yoga is evenness of mind.", "2.48"]],
-        s: [["If you seek tranquility, do less.", "Marcus Aurelius"], ["Do what is essential.", "Marcus Aurelius"], ["Eliminate non-essentials.", "Seneca"]],
-        h: [["Brain Dump", "Write every worry on paper."], ["One Tab", "Close everything except the key task."], ["Box Breath", "4s pattern."], ["5-Min Rule", "Do fast tasks now."], ["Phone Fast", "No screen for 1 hour."], ["Eisenhower Grid", "Important vs Urgent."], ["Lead Domino", "Identify the key move."], ["Water", "500ml reset."], ["Say No", "Decline one request."], ["Power Pose", "Stand tall for 2 mins."]]
-    },
-    priority: {
-        g: [["Better own duty imperfectly.", "18.47"], ["Intelligence is many-branched for unfocused.", "2.41"], ["Act without attachment.", "3.25"]],
-        s: [["Don't set heart on many things.", "Epictetus"], ["Focus strictly on the now.", "Marcus Aurelius"], ["Choice is yours.", "Epictetus"]],
-        h: [["Rule of 3", "3 'Must-Do' tasks."], ["80/20 Audit", "Find the 20% impact."], ["Deep Work Block", "No Slack for 2 hours."], ["Startup Filter", "Does this help OperionAI?"], ["Delegate", "Give away one low-value task."], ["Hardest First", "Eat the frog."], ["Priority Calendar", "Schedule tasks, not time."], ["Morning Review", "Check goals at 8 AM."], ["Tomorrow Plan", "Plan tonight."], ["Inbox Zero", "Clear the noise."]]
-    },
-    mistake: {
-        g: [["Compassion is divine nature.", "16.2"], ["Self is your friend when mind is controlled.", "6.5"], ["No ill will to any being.", "12.13"]],
-        s: [["Recall your errors before judging.", "Marcus Aurelius"], ["Best revenge is to be different.", "Marcus Aurelius"], ["Bad men do wrong; expect it.", "Marcus Aurelius"]],
-        h: [["24h Rule", "Wait a day before feedback."], ["Mentor Pivot", "Ask: 'How to prevent this?'"], ["System Check", "Process vs Person error?"], ["Compassion Flash", "Recall your early career."], ["Positivity Sandwich", "2 praise, 1 fix."], ["Write feedback", "Write it before speaking."], ["Heart-Rate Walk", "Walk if pulse is >100."], ["Low Volume", "Lower voice by 20%."], ["Identity Gap", "Mistake != Person."], ["Solution First", "Fix result, skip blame."]]
-    },
-    talking: {
-        g: [["Truthful and pleasant speech.", "17.15"], ["Subdue the restless mind.", "6.35"], ["Be ego-free.", "12.13"]],
-        s: [["Two ears, one mouth.", "Epictetus"], ["Listen twice as much.", "Epictetus"], ["Silence is a virtue.", "Seneca"]],
-        h: [["Listening Bench", "Hear full sentences."], ["Press Thumb", "Anchor to stay present."], ["3-Breath Pause", "Pause before reply."], ["No Interrupting", "Let them finish."], ["Why Am I Annoyed?", "Identify the trigger."], ["Subtext Search", "Listen for the need."], ["Eye Contact", "Focus on them."], ["Clarification", "Ask: 'Do you mean X?'"], ["Validation", "Say: 'I hear you'."], ["Exit", "End non-productive talks."]]
-    },
-    badthings: {
-        g: [["Rise of unrighteousness triggers Me.", "4.7"], ["Righteous cause is highest duty.", "2.31"], ["World is transient.", "9.33"]],
-        s: [["Don't be like the wrongdoer.", "Marcus Aurelius"], ["Integrity is yours.", "Epictetus"], ["Watch as witness.", "Marcus Aurelius"]],
-        h: [["Circle of Influence", "Stay ethical in your lab."], ["Detached Action", "Oppose without hatred."], ["Value Audit", "Does it hurt your integrity?"], ["Channel Anger", "Fuel for building better."], ["The Witness", "Watch, don't join."], ["Safety", "Address it if risky."], ["Compass", "Verify your stance."], ["History", "Injustice is old; stay stable."], ["Focus Good", "Find 3 good people."], ["God handles scales", "Surrender."]]
-    },
-    restless: {
-        g: [["Lamp in windless place.", "6.19"], ["Wandering senses carry away wisdom.", "2.67"], ["Control the self.", "6.7"]],
-        s: [["Power is over your mind.", "Marcus Aurelius"], ["Anticipate, then calm.", "Seneca"], ["Don't drag past pain.", "Seneca"]],
-        h: [["5-4-3-2-1", "Senses grounding."], ["Phone Fast", "30 mins off."], ["3rd Person", "Say: 'Vaibhav is restless'."], ["20 Pushups", "Burn adrenaline."], ["10-Min Walk", "No headphones."], ["Curiosity", "Observe the feeling."], ["Nature", "Look at the sky."], ["Hydrate", "Cold water."], ["Music", "Calm frequencies."], ["Acceptance", "It is okay."]]
-    },
-    future: {
-        g: [["Wise grieve not for dead.", "2.11"], ["Soul is eternal.", "2.20"], ["Surrender unto Me.", "18.66"]],
-        s: [["Suffer in imagination.", "Seneca"], ["Foresight is agony.", "Seneca"], ["Now is reality.", "Seneca"]],
-        h: [["Worst Case", "Plan the recovery."], ["60-Min Focus", "Win the hour."], ["Control Check", "Ignore outer circle."], ["Family", "Hug Aryan."], ["Data Proof", "5 past survival proofs."], ["Budget Worry", "5 mins only."], ["Plan B", "Safety net."], ["Gratitude", "3 current wins."], ["Prayer", "Surrender fruit."], ["Action", "One task now."]]
-    },
-    failure: {
-        g: [["Abandon attachment.", "2.48"], ["Duty is your engagement.", "2.31"], ["Effort is yours.", "2.47"]],
-        s: [["Choose not to be harmed.", "Marcus Aurelius"], ["Failure is a data point.", "Seneca"], ["How you react.", "Epictetus"]],
-        h: [["Scientist Lens", "Test failed? Pivot."], ["100% Stat", "Record stands."], ["Values Check", "Stay honest."], ["Small Agency", "Make bed."], ["Reframing", "Real-time learning."], ["Post-Mortem", "Variables?"], ["Ego Check", "You != Business."], ["Growth", "Skills gained."], ["Consult", "Talk to mentor."], ["Reset", "Sleep and re-run."]]
-    },
-    opinions: {
-        g: [["Honor/Dishonor are same.", "14.25"], ["Equanimity is dear.", "12.18"], ["Content with anything.", "12.19"]],
-        s: [["Value your own opinion.", "Marcus Aurelius"], ["Integrity is yours.", "Epictetus"], ["Don't be harmed.", "Marcus Aurelius"]],
-        h: [["Spotlight Effect", "They aren't looking."], ["Source Audit", "Who are they?"], ["Deathbed Test", "Matter at 80?"], ["Inner Score", "Are you proud?"], ["Social Fast", "24h off."], ["Core Values", "Stay on path."], ["Circle of 5", "Only 5 matter."], ["Laughter", "It's a play."], ["Boundaries", "Say no."], ["Focus", "Do your work."]]
-    }
+const EMOTIONS = [
+  {k:"respect",    i:"🫡", l:"Lack of Respect"},
+  {k:"ignored",    i:"🔇", l:"Being Ignored"},
+  {k:"intelligence",i:"🧠",l:"Intelligence Overlooked"},
+  {k:"stressed",   i:"🌡️", l:"Generally Stressed"},
+  {k:"overwhelmed",i:"🌊", l:"Overwhelmed"},
+  {k:"priority",   i:"🎯", l:"Can't Prioritize"},
+  {k:"mistake",    i:"💢", l:"Anger at Mistakes"},
+  {k:"talking",    i:"🗣️", l:"Anger While Listening"},
+  {k:"badthings",  i:"⚖️", l:"Anger at Bad Ethics"},
+  {k:"impatient",  i:"⏳", l:"Impatient"},
+  {k:"jealousy",   i:"😶", l:"Jealousy / Envy"},
+  {k:"past",       i:"🌀", l:"Dwelling on Past"},
+  {k:"restless",   i:"⚡", l:"Restless & Anxious"},
+  {k:"future",     i:"🌫️", l:"Fear of Future"},
+  {k:"failure",    i:"🪨", l:"Fear of Failure"},
+  {k:"opinions",   i:"👁️", l:"Fear of Opinions"},
+  {k:"loneliness", i:"🫥", l:"Loneliness"},
+  {k:"grief",      i:"🌧️", l:"Grief / Loss"},
+  {k:"shame",      i:"🫣", l:"Shame / Guilt"},
+  {k:"anger_self", i:"🔥", l:"Anger at Yourself"},
+  {k:"comparison", i:"📊", l:"Constant Comparison"},
+  {k:"rejection",  i:"🚪", l:"Rejection"},
+  {k:"boredom",    i:"🥱", l:"Boredom / Emptiness"},
+  {k:"confusion",  i:"🌪️", l:"Confusion / No Direction"},
+  {k:"nomotiv",    i:"🪫",  l:"No Motivation"},
+  {k:"burnout",    i:"🕯️", l:"Burnout / Exhaustion"},
+  {k:"betrayal",   i:"🗡️", l:"Betrayal / Trust Broken"},
+  {k:"detached",   i:"🫧", l:"Feeling Numb / Detached"}
+];
+
+const HABITS = [
+  {icon:"🫁", title:"Box Breathing", desc:"The fastest way to reset your nervous system.",
+   steps:["Inhale through nose for 4 counts.","Hold — lungs full — for 4 counts.","Exhale fully for 4 counts.","Hold empty for 4 counts. Repeat 4–6 cycles."]},
+  {icon:"💧", title:"Hydration Reset", desc:"Even 2% dehydration amplifies emotional reactivity.",
+   steps:["Drink 500ml of water right now.","Avoid caffeine for the next 2–4 hours.","Splash cold water on your wrists and neck.","Notice clarity returning within 5 minutes."]},
+  {icon:"🚶", title:"10-Minute Walk", desc:"Walking without destination resets cortisol and creates new perspective.",
+   steps:["Put phone on silent. Leave it or pocket it.","Walk at 10% slower than your usual pace.","No destination. Just move through space.","Return only when breathing has settled."]},
+  {icon:"📓", title:"3-Line Brain Dump", desc:"The mind loops because it fears forgetting. Writing transfers the burden.",
+   steps:["Set a 3-minute timer. Write every looping thought.","Underline only what is within your control today.","Cross out the rest — those are not yours right now.","Pick ONE underlined item. Do one thing about it."]},
+  {icon:"🌞", title:"Gratitude Anchor", desc:"Gratitude is factual redirection of attention to what is already working.",
+   steps:["Name one person who genuinely cares about you.","Name one thing your body can do that you're grateful for.","Name one small thing that went right in the last 24 hours.","Hold each one for 10 seconds. Let it be real."]},
+  {icon:"🤫", title:"Two-Minute Silence", desc:"Silence is not emptiness — it is the most productive state.",
+   steps:["Set a timer for 2 minutes. Sit still. No phone, no music.","Let thoughts come — don't fight them. Watch them pass.","Focus only on the physical sensation of your breath.","When mind wanders, return. That return IS the practice."]}
+];
+
+const DIAG = {
+  q:"When did this feeling arrive?",
+  opts:[
+    {l:"Something just happened — sudden", next:{
+      q:"What was the trigger?",
+      opts:[
+        {l:"Someone said or did something to me", next:{
+          q:"What aspect bothered you most?",
+          opts:[
+            {l:"I felt disrespected or dismissed", res:{t:"Root: Wounded Pride / Need for Recognition", x:"The deeper wound is a need to be seen and valued. The event confirmed a fear you carry: that you are not fully respected. Healing is building such a strong internal sense of worth that external dismissal loses its power to wound."}},
+            {l:"I felt blamed unfairly", res:{t:"Root: Injustice Sensitivity", x:"You have a strong internal sense of fairness and it was violated. The emotion is appropriate — something genuinely wrong happened. The question is whether you address it functionally or are consumed by it."}},
+            {l:"I felt ignored or overlooked", res:{t:"Root: Fear of Invisibility", x:"Beneath the sting of being ignored is a fear: that your presence does not matter. This needs addressing at the identity level — not by seeking more attention, but by building a fuller inner life that doesn't depend on external witness."}}
+          ]
+        }},
+        {l:"A situation or outcome went against me", next:{
+          q:"What did the outcome feel like it confirmed?",
+          opts:[
+            {l:"That I am not capable enough", res:{t:"Root: Competence Fear / Imposter Syndrome", x:"One adverse outcome has been recruited as evidence for a pre-existing fear about your competence. The fear existed before the event — it just got a story. Examine the fear separately from the event. They are not the same thing."}},
+            {l:"That I cannot control things", res:{t:"Root: Control Anxiety", x:"The distress is not about the outcome itself but about what it revealed: that the future is genuinely uncertain. This is a confrontation with impermanence. Both Stoic and Gita practices are designed specifically for this root."}},
+            {l:"That things are unfair", res:{t:"Root: Injustice and Helplessness", x:"You are facing genuine injustice combined with perceived inability to change it. The result is a mix of anger and grief. The path forward is to separate what is within your circle of influence and act there — while genuinely releasing what is not."}}
+          ]
+        }}
+      ]
+    }},
+    {l:"It has been building for days or weeks", next:{
+      q:"What best describes the texture?",
+      opts:[
+        {l:"A background hum of dread or worry", next:{
+          q:"What are you most afraid of?",
+          opts:[
+            {l:"Something specific going wrong", res:{t:"Root: Anticipatory Anxiety / Catastrophizing", x:"The imagination is rehearsing disaster. The suffering is entirely in anticipation. Seneca: 'We suffer more in imagination than in reality.' Plan for the worst once, build a response, then return to the present."}},
+            {l:"A vague sense something is wrong", res:{t:"Root: Existential Unease / Loss of Meaning", x:"This is deeper than situational anxiety. It is a signal from the soul that something important is misaligned — your work, values, relationships, or sense of direction. The emotion is asking a large question that requires honest reflection."}}
+          ]
+        }},
+        {l:"Emptiness or going through the motions", res:{t:"Root: Disconnection / Burnout", x:"Emotional flatness that persists is the psyche's signal that it is depleted or disconnected from meaning. This is not laziness — it is exhaustion of a deep kind. Recovery requires genuine rest, reconnection with values, and often a structural change in how your days are organized."}},
+        {l:"Low-grade anger or resentment", res:{t:"Root: Chronic Boundary Violation", x:"Persistent low-grade anger is rarely about today. It is the accumulated weight of boundaries consistently crossed without being addressed. Where are you not holding the line in your own life? The anger is the signal; the boundary is the answer."}}
+      ]
+    }},
+    {l:"I'm not sure — it's just there", next:{
+      q:"Where do you feel it physically?",
+      opts:[
+        {l:"Chest — tight, heavy, or hollow", res:{t:"Root: Grief or Unprocessed Loss", x:"The chest is where grief and loss live in the body. You may be carrying something not fully acknowledged — a loss of a relationship, an opportunity, a version of yourself. Grief that is named begins to move. Ask: what have I lost that I have not truly grieved?"}},
+        {l:"Stomach — tight, uneasy, or sick", res:{t:"Root: Fear of Judgment or Inadequacy", x:"The gut is the address of social fear and inadequacy. Something in your environment is signaling a threat to your standing or performance. Identify whose judgment you fear and examine whether their opinion is actually as high-stakes as your body believes."}},
+        {l:"Head — foggy, scattered, or pressured", res:{t:"Root: Overwhelm / Decision Fatigue / Identity Confusion", x:"Mental fog usually indicates: too many open loops demanding attention simultaneously; decision fatigue from sustained high-stakes choice-making; or deeper confusion about identity and direction. The first needs a brain dump. The second needs rest. The third needs values-clarification work."}}
+      ]
+    }}
+  ]
 };
 
-function initCompass() {
-    state.emotion = document.getElementById('emotionInput').value;
-    state.gIdx = 0; state.sIdx = 0; state.hPage = 0;
-    updateUI();
-}
+const ANCHORS = {
+  present:["Root in the Now","Yesterday is a memory; tomorrow is a projection. Only this breath and your current action are real. Drop the story. Return to the task."],
+  gratitude:["Universal Gratitude","I am grateful for those I love. I am grateful for the chance to build. I have enough. I am enough."],
+  prayer:["The Instrument's Prayer","I am but an instrument. I offer my work to the Divine. Let my actions be pure and the results be Yours."],
+  faith:["Faith in the Design","Everything is unfolding as it should. I am protected, guided, and exactly where I need to be."]
+};
 
-function rotate(type) {
-    const item = db[state.emotion];
-    if(type === 'gita') state.gIdx = (state.gIdx + 1) % item.g.length;
-    if(type === 'stoic') state.sIdx = (state.sIdx + 1) % item.s.length;
-    updateUI();
-}
+// ── STATE ─────────────────────────────────────────────────────
+let curEmotion = '', curIntensity = '';
+const SHEETS_KEY = 'ic_sheets_url';
+let allLearnings = [];
 
-function toggleHabits() {
-    state.hPage = state.hPage === 0 ? 1 : 0;
-    updateUI();
-}
-
-function updateUI() {
-    const item = db[state.emotion];
-    if(!item) return;
-    document.getElementById('gt').innerText = item.g[state.gIdx][0];
-    document.getElementById('gr').innerText = "— Verse " + item.g[state.gIdx][1];
-    document.getElementById('st').innerText = item.s[state.sIdx][0] || item.s[state.sIdx];
-    document.getElementById('sr').innerText = "— Stoic Logic";
-    const list = document.getElementById('habitsList');
-    list.innerHTML = "";
-    const start = state.hPage * 5;
-    item.h.slice(start, start + 5).forEach((h, i) => {
-        list.innerHTML += `<div class="habit-item"><div class="badge">${start+i+1}</div><div class="h-content"><b>${h[0]}</b><p>${h[1]}</p></div></div>`;
-    });
-    document.getElementById('habitLabel').innerText = `Habits (${start+1}-${start+5})`;
-    document.getElementById('pageBtn').innerText = state.hPage === 0 ? "NEXT 5 ACTIONS →" : "PREVIOUS 5 ACTIONS ←";
-    document.getElementById('dashboard').style.display = 'block';
-    window.scrollTo({ top: 350, behavior: 'smooth' });
-}
-
-function openAnchor(type) {
-    const anchors = {
-        present: ["Root in the Now", "Yesterday is a memory; tomorrow is a projection. Only this breath and your current action are real. Drop the story. Return to the task."],
-        gratitude: ["Universal Gratitude", "I am grateful for Isha and Aryan. I am grateful for the chance to build. I have enough."],
-        prayer: ["The Instrument's Prayer", "I am but an instrument. I offer my work to the Divine. Let my actions be pure and results be Yours."],
-        faith: ["Faith in the Design", "Everything is unfolding as it should. I am protected, guided, and exactly where I need to be."]
-    };
-    document.getElementById('mT').innerText = anchors[type][0];
-    document.getElementById('mB').innerText = anchors[type][1];
-    document.getElementById('modal').style.display = 'block';
-}
-
-function toggleBreathe() {
-    document.getElementById('breatheOverlay').style.display = 'block';
-    const text = document.getElementById('breatheText');
-    let stateVal = 0;
-    const interval = setInterval(() => {
-        if (document.getElementById('breatheOverlay').style.display === 'none') {
-            clearInterval(interval); return;
-        }
-        text.innerText = stateVal % 2 === 0 ? "Exhale..." : "Inhale...";
-        stateVal++;
-    }, 4000);
-}
-
+// ── INIT ──────────────────────────────────────────────────────
 (function init() {
-    const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-    document.getElementById('dailyThought').innerText = thoughtPool[day % thoughtPool.length];
+  // Daily thought
+  const d = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
+  document.getElementById('ribbon').textContent = '"' + THOUGHTS[d % THOUGHTS.length] + '"';
+
+  // Tab navigation
+  document.querySelectorAll('.tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('on'); });
+      document.querySelectorAll('.tsec').forEach(function(s) { s.classList.remove('on'); });
+      tab.classList.add('on');
+      document.getElementById('tab-' + tab.dataset.t).classList.add('on');
+      // Restore sheets UI when learnings tab is opened
+      if (tab.dataset.t === 'learnings') {
+        var savedUrl = localStorage.getItem(SHEETS_KEY);
+        if (savedUrl) {
+          document.getElementById('sheetsSetup').style.display = 'none';
+          document.getElementById('lForm').style.display       = 'block';
+          document.getElementById('lList').style.display       = 'block';
+          if (allLearnings.length === 0) loadLearnings();
+        }
+      }
+    });
+  });
+
+  // Emotion grid
+  var eg = document.getElementById('egrid');
+  EMOTIONS.forEach(function(e) {
+    var b = document.createElement('button');
+    b.className = 'ebtn';
+    b.dataset.k = e.k;
+    b.innerHTML = '<span style="font-style:normal">' + e.i + '<\/span>' + e.l;
+    b.addEventListener('click', function() {
+      document.querySelectorAll('.ebtn').forEach(function(x) { x.classList.remove('on'); });
+      b.classList.add('on');
+      selectEmotion(e.k, e.l);
+    });
+    eg.appendChild(b);
+  });
+
+
+  // Foundation habits
+  var hg = document.getElementById('habitsGrid');
+  HABITS.forEach(function(h) {
+    var steps = h.steps.map(function(s) { return '<li>' + s + '<\/li>'; }).join('');
+    var card = document.createElement('div');
+    card.className = 'hcard';
+    card.innerHTML = '<span class="hicon">' + h.icon + '<\/span><span class="htitle">' + h.title + '<\/span><span class="hdesc">' + h.desc + '<\/span><ul class="hsteps">' + steps + '<\/ul>';
+    hg.appendChild(card);
+  });
+
+  // Diagnostic
+  renderDiag(DIAG, []);
+
+  // Evening questions
+  var eqs = [
+    {l:"The Honest Moment", q:"What emotion visited me most today, and what was I really reacting to beneath the surface?"},
+    {l:"What Worked", q:"Where did I handle something with more wisdom, patience, or courage than I might have in the past?"},
+    {l:"What to Release", q:"What am I still carrying from today that I am ready to let go of before sleep?"},
+    {l:"The Learning", q:"If today were a teacher, what was the one lesson it most wanted me to take away?"},
+    {l:"Tomorrow's Intention", q:"In one sentence: who do I choose to be tomorrow morning, before anything happens?"}
+  ];
+  var eq = document.getElementById('eqBox');
+  eqs.forEach(function(q, i) {
+    var d = document.createElement('div');
+    d.style.marginBottom = '16px';
+    d.innerHTML = '<div class="eq"><span style="font-family:\'DM Mono\',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--saffron);display:block;margin-bottom:4px">' + q.l + '<\/span>' + q.q + '<\/div><textarea class="eta" id="evq' + i + '" placeholder="Write freely…"><\/textarea>';
+    eq.appendChild(d);
+  });
+
+  // Emotion selects for log & trigger
+  var emoOpts = '<option value="">Emotion…<\/option>' + EMOTIONS.map(function(e) { return '<option value="' + e.k + '">' + e.i + ' ' + e.l + '<\/option>'; }).join('');
+  document.getElementById('logEmo').innerHTML = emoOpts;
+  document.getElementById('trigEmo').innerHTML = emoOpts;
+
+  // Load persisted data
+  loadLog(); renderStreak(); loadTriggers(); renderElog();
+
+  // Sheets
+  var saved = localStorage.getItem(SHEETS_KEY);
+  if (saved) {
+    document.getElementById('sheetsUrl').value = saved;
+    document.getElementById('sheetsSetup').style.display = 'none';
+    document.getElementById('lForm').style.display = 'block';
+    document.getElementById('lList').style.display = 'block';
+
+  }
+
+  updateStats();
+  // Show API key status
+  var savedKey = localStorage.getItem('ic_api_key');
+  if (savedKey) {
+    var kStatus = document.getElementById('apiKeyStatus');
+    if (kStatus) kStatus.textContent = '✓ API key active';
+  }
 })();
+
+// ── EMOTION SELECTION ─────────────────────────────────────────
+function selectEmotion(key, label) {
+  curEmotion = key;
+  document.getElementById('wisdomSection').style.display = 'block';
+  // Reset wisdom panels
+  document.getElementById('gitaOut').innerHTML = '<span style="color:var(--ash);font-style:italic;font-size:.9rem">Click the button below to receive personalised Gita wisdom for "' + label + '".<\/span>';
+  document.getElementById('stoicOut').innerHTML = '<span style="color:var(--ash);font-style:italic;font-size:.9rem">Click the button below to receive Stoic guidance for "' + label + '".<\/span>';
+  document.getElementById('protoList').innerHTML = '';
+  document.getElementById('protoBtn').textContent = '✦ Load Recovery Protocols';
+  document.getElementById('protoBtn').disabled = false;
+  document.getElementById('protoLabel').textContent = 'Recovery Protocols for "' + label + '"';
+  document.getElementById('wbtn1').disabled = false;
+  document.getElementById('wbtn2').disabled = false;
+  // Scroll
+  setTimeout(function() { document.getElementById('intPanel').scrollIntoView({behavior:'smooth',block:'start'}); }, 80);
+}
+
+// ── AI WISDOM ─────────────────────────────────────────────────
+function fetchWisdom(type) {
+  if (!curEmotion) return;
+  var emoObj = EMOTIONS.find(function(e) { return e.k === curEmotion; });
+  var label = emoObj ? emoObj.l : curEmotion;
+  var outId = type === 'gita' ? 'gitaOut' : 'stoicOut';
+  var btnId = type === 'gita' ? 'wbtn1' : 'wbtn2';
+  var out = document.getElementById(outId);
+  var btn = document.getElementById(btnId);
+  btn.disabled = true;
+  out.innerHTML = '<span class="spin"><\/span>Consulting the ancient texts\u2026';
+
+  var source = type === 'gita' ? 'Bhagavad Gita' : 'Stoic philosophy (Marcus Aurelius, Seneca, Epictetus)';
+  var prompt = 'A person is feeling "' + label + '". Give 2 deeply resonant quotes from ' + source + ' that speak directly to this emotional state.\n\nRespond ONLY as a JSON array:\n[{"quote":"...","ref":"...","explanation":"..."}]\n\nquote = the verse/saying, ref = source reference, explanation = 2-3 sentences why this applies now. No markdown. JSON only.';
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 800, messages: [{ role: 'user', content: prompt }] })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var text = data.content.map(function(b) { return b.text || ''; }).join('').replace(/```json|```/g, '').trim();
+    var items = JSON.parse(text);
+    renderWisdom(out, items, btn);
+  })
+  .catch(function() {
+    // Fallback: rich built-in wisdom by emotion + type
+    var fallback = getWisdomFallback(curEmotion, type);
+    renderWisdom(out, fallback, btn);
+  });
+}
+
+function renderWisdom(out, items, btn) {
+  var html = items.map(function(item) {
+    return '<div class="wisdom-out"><div class="quote">&#8220;' + esc(item.quote) + '&#8221;<\/div>'
+      + '<div class="src">' + esc(item.ref) + '<\/div>'
+      + '<div class="expl">' + esc(item.explanation) + '<\/div><\/div><hr class="wisdom-sep">';
+  }).join('');
+  out.innerHTML = html;
+  btn.textContent = '\u21bb Refresh';
+  btn.disabled = false;
+}
+
+function getWisdomFallback(emotion, type) {
+  var gita = {
+    'overwhelmed': [{quote:"The mind is restless and difficult to subdue, but it can be brought under control through practice and detachment.",ref:"Bhagavad Gita 6.35",explanation:"Krishna acknowledges that feeling overwhelmed is universal — the scattered mind is the human condition, not a personal failure. The path is not to stop the thoughts but to practice returning to one point, one task, one breath at a time."},{quote:"Action is far better than inaction. Even to maintain your body, you must act.",ref:"Bhagavad Gita 3.8",explanation:"When overwhelmed, the instinct is to freeze. The Gita's counterintuitive instruction is to begin — with anything, with the smallest step. The relief from overwhelm comes not from solving everything but from moving on one thing."}],
+    'stressed': [{quote:"One who has control over the mind is tranquil in heat and cold, in pleasure and pain, in honor and dishonor.",ref:"Bhagavad Gita 6.7",explanation:"Equanimity is not the absence of stress — it is a trained capacity to remain stable within it. This stability is not inherited; it is built through the repeated practice of returning to the present moment."},{quote:"Let right actions be your motive, not the fruit which comes from them.",ref:"Bhagavad Gita 2.47",explanation:"Much of our stress is future-facing — anxiety about outcomes we cannot control. When you anchor your energy entirely on the quality of your present action and release the result, the stress loses its grip."}],
+    'anger': [{quote:"From anger comes delusion; from delusion, confused memory; from confused memory, the ruin of reason — and from that, one perishes.",ref:"Bhagavad Gita 2.63",explanation:"The Gita traces the cascade from anger to destruction with clinical precision. This is not a moral judgment but a description of neuroscience — the amygdala hijack that collapses rational thinking. The 90-second pause is not weakness; it is the most intelligent possible response."},{quote:"You are your own best friend and your own worst enemy. The self is the friend of the controlled mind; the enemy of the uncontrolled.",ref:"Bhagavad Gita 6.5-6.6",explanation:"Anger directed outward often begins with an internal wound. The practice of self-mastery — choosing your response rather than being driven by your reaction — is the deepest form of self-friendship."}],
+    'failure': [{quote:"Abandon all attachment to the results of your actions and attain the supreme peace.",ref:"Bhagavad Gita 2.47-2.48",explanation:"Failure in the Gita's framework is not a verdict — it is what happens when we fuse our identity with a specific outcome. When you detach the self from the result while remaining fully committed to the action, failure becomes information rather than identity."},{quote:"Never consider yourself the cause of the results of your activities, and never be attached to not doing your duty.",ref:"Bhagavad Gita 2.47",explanation:"You are responsible for the quality of your effort and the integrity of your action — not for every downstream result. This is not an escape from accountability but a precise understanding of where your power actually ends."}],
+    'restless': [{quote:"The lamp that stands in a windless place does not flicker. This is the simile for the controlled mind.",ref:"Bhagavad Gita 6.19",explanation:"Restlessness is the mind in wind. The practice is not to eliminate the wind but to build a windless place inside — a stable core that the external turbulence cannot reach. This is built through deliberate stillness, practiced when it is hardest."},{quote:"The wandering senses carry away the wisdom of even a wise person, as winds carry away a boat on water.",ref:"Bhagavad Gita 2.67",explanation:"Restlessness is not a character flaw — it is the natural pull of ungoverned senses. The Gita acknowledges its power while pointing to the practice: not suppression, but redirection of that energy toward what actually matters."}],
+    'jealousy': [{quote:"No ill will toward any being. This is the mark of one who has transcended the pairs of opposites.",ref:"Bhagavad Gita 12.13",explanation:"Jealousy requires you to wish someone else less well. When you genuinely wish well to the person you envy, something radical happens — you move from scarcity to abundance in your own experience. The abundance already exists; the envy was hiding it."},{quote:"Better to perform one's own dharma imperfectly than another's dharma perfectly.",ref:"Bhagavad Gita 18.47",explanation:"Jealousy is rooted in the belief that another person's path is better than yours. The Gita insists that each person has a unique dharma — a singular contribution only they can make. Pursuing another's path perfectly is both a spiritual error and a waste of your gifts."}],
+    'grief': [{quote:"Never was there a time when I did not exist, nor you. Nor in the future shall any of us cease to be.",ref:"Bhagavad Gita 2.12",explanation:"The Gita does not ask you to suppress grief. Instead it offers the largest possible frame — the continuity of the soul beyond any single form or life. This is not an argument to stop feeling. It is an invitation to grieve within the largest possible context of meaning."},{quote:"The soul is not slain when the body is slain. It is eternal, ancient, unborn, undying.",ref:"Bhagavad Gita 2.20",explanation:"What you have lost was a form. The love that connected you to it — and the love you carry forward — is not subject to loss. Grief is love with nowhere to go. The Gita suggests it always has somewhere to go."}],
+    'future': [{quote:"The wise grieve neither for the living nor the dead. There was never a time when you were not, and there will never be when you are not.",ref:"Bhagavad Gita 2.11",explanation:"Fear of the future is the imagination placed in the service of catastrophe. The Gita's response is to zoom out radically — to locate the self in a continuity larger than any single outcome. You have navigated everything that brought you here. That capacity remains."},{quote:"Perform your duty and abandon all attachment to success or failure. Such equanimity is called yoga.",ref:"Bhagavad Gita 2.48",explanation:"The antidote to future fear is total present action. When your energy is entirely in the quality of what you are doing right now, the future becomes downstream of your present effort — not an approaching threat."}],
+    'loneliness': [{quote:"The soul that is one with Me, who sees Me everywhere and sees everything in Me — I am not separated from that soul, nor is that soul separated from Me.",ref:"Bhagavad Gita 6.30",explanation:"The Gita points to a connection available at the deepest level — one that no circumstance can sever. The practice of finding the universal in the particular — in a tree, in a moment of beauty, in the breath — is the antidote to the feeling of fundamental isolation."},{quote:"Let a person lift themselves by their own self. Let them not degrade themselves, for the self alone is the friend of the self.",ref:"Bhagavad Gita 6.5",explanation:"The most important relationship you can cultivate is the one with your own inner life. When you are genuinely at home within yourself, aloneness becomes solitude — a resource rather than a deprivation."}],
+    'burnout': [{quote:"For one who eats too much or too little, who sleeps too much or too little — for such a person, yoga is not possible.",ref:"Bhagavad Gita 6.16",explanation:"This verse is extraordinary in its directness: sustainability is a spiritual requirement, not an indulgence. The discipline of rest and recovery is as spiritually mandatory as the discipline of work. Burnout is the consequence of violating this law."},{quote:"Action is better than inaction — but do what is essential. Do less, better, with full presence.",ref:"Bhagavad Gita 3.8 synthesis",explanation:"The Gita's instruction to act does not mean to act frantically. Quality of presence matters more than quantity of output. The person who does one thing fully is more aligned with dharma than the one who does ten things in exhaustion."}]
+  };
+
+  var stoic = {
+    'overwhelmed': [{quote:"If you seek tranquility, do less — or more accurately, do what is essential. Do less, better.",ref:"Marcus Aurelius, Meditations",explanation:"Marcus governed an empire and still identified 'doing less, better' as the path to peace. The relief from overwhelm never comes from doing more — it comes from identifying what is truly essential and doing only that with full attention."},{quote:"Confine yourself to the present.",ref:"Marcus Aurelius, Meditations",explanation:"Overwhelm is almost entirely a future-facing experience — a simultaneous mental holding of everything that needs to happen. The present moment contains only one task. When you confine yourself there, the pile disappears, and only the next step remains."}],
+    'stressed': [{quote:"True happiness is to enjoy the present without anxious dependence on the future, not to amuse ourselves with hopes or fears but to rest satisfied with what we have.",ref:"Seneca, Letters",explanation:"Stress is almost always future-facing — a projection of what might go wrong. The present moment, examined honestly, almost always contains enough. The Stoic practice is to return here, again and again, with deliberate attention."},{quote:"It is not things that disturb us, but our judgments about things. Remove the judgment and the disturbance is removed.",ref:"Epictetus, Enchiridion",explanation:"This is perhaps the most important insight in all of Stoic philosophy. The stressor itself is neutral. The suffering is added by the story we tell about it. Change the story — deliberately and factually — and the experience of stress begins to dissolve."}],
+    'anger': [{quote:"The best revenge is not to be like your enemy. Meet anger with virtue, not with mirror anger.",ref:"Marcus Aurelius, Meditations",explanation:"When someone else's wrong triggers anger that causes you to behave badly, their error has produced two errors instead of one. Marcus's instruction: respond to wrong with right — not because you owe it to them, but because your character is worth more than your reaction."},{quote:"How much better to heal than to remain angry. Anger is a punishment we give ourselves for another's mistake.",ref:"Seneca, On Anger",explanation:"Sustained anger carries a hidden cost: you remain in continuous internal relationship with the person or event that harmed you, even when the outer circumstance is over. The healing is not forgetting — it is reclaiming your own peace from the grip of what happened."}],
+    'failure': [{quote:"Failure is a data point, not a verdict. The scientist does not consider a failed hypothesis a personal defeat.",ref:"Seneca synthesis",explanation:"When failure is treated as information, it becomes the engine of improvement. When treated as identity, it becomes the prison of avoidance. The frame you choose determines what the failure produces."},{quote:"It is not what happens to you but how you react to it that matters. Between stimulus and response there is a space — that space is your freedom.",ref:"Epictetus / Viktor Frankl",explanation:"Failure-the-event is genuinely neutral. The suffering is produced by the interpretation, and the interpretation is yours to choose. This is not denial — it is the precise location of your actual power."}],
+    'restless': [{quote:"You have power over your mind, not over external events. Realize this and you will find strength.",ref:"Marcus Aurelius, Meditations",explanation:"The restless mind believes its peace depends on external circumstances being resolved. Marcus insists otherwise — peace is a capacity of the mind, not a product of circumstances. This is both the hardest and the most liberating realization."},{quote:"Begin at once to live and count each day as a separate life. The person who is always preparing to live never does.",ref:"Seneca, Letters",explanation:"Restlessness is fundamentally about not being present — preparing to live rather than actually living. Seneca's instruction is blunt: begin now. The present moment is the only place where actual life occurs."}],
+    'jealousy': [{quote:"He who competes with others is always looking sideways instead of forward. Be content; run your own race.",ref:"Epictetus synthesis",explanation:"Every moment spent measuring yourself against another person is a moment you are not moving forward on your own path. Envy is the most expensive form of distraction — it consumes your attention while producing nothing."},{quote:"Comparison is the thief of joy. You are measuring your interior experience against their exterior presentation.",ref:"Stoic observation",explanation:"The comparison is structurally unfair — you have access to all your doubts and fears, while they present only their highlights. The competition is between incomparable things. Your race is singular."}],
+    'grief': [{quote:"It is folly to pull up what you have already harvested. Take the lessons and move on. Whatever it was — it is already over.",ref:"Seneca, Letters",explanation:"Seneca is not dismissive of grief — he wrote about it with extraordinary tenderness. But he insists on the wider context: loss is built into the structure of existence. Grief is appropriate. Being destroyed by grief is unnecessary."},{quote:"Nature requires both birth and death. What reason do you have to be a victim of what has been the universal law since the beginning?",ref:"Seneca, Letters",explanation:"To grieve is profoundly human. To be destroyed by grief is unnecessary — not because it does not hurt, but because the soul's capacity for continuation was always greater than the wound."}],
+    'future': [{quote:"We suffer more in imagination than in reality. Most of what you fear will never come. And what does come, you will handle.",ref:"Seneca, Letters",explanation:"Seneca's observation has been confirmed by modern psychology — we consistently overestimate how bad things will be and underestimate our own resilience. The imagination's threat-modeling is systematically more severe than actual events."},{quote:"The present moment is all we ever have. The past is a memory, the future is imagination, the now is the only place action lives.",ref:"Stoic synthesis",explanation:"Future fear requires you to leave the present and inhabit a scenario that does not yet exist. Every moment spent in that imagined future is a moment subtracted from building the actual one you want."}],
+    'loneliness': [{quote:"Retire into yourself as much as you can, but admit only those who will improve you. Never become so alone that you stop being a friend to yourself.",ref:"Seneca, Letters",explanation:"Seneca valued solitude — but as a resource, not a prison. The quality of your relationship with your own mind determines the quality of aloneness. When you are genuinely good company for yourself, the sting of loneliness loses much of its sharpness."},{quote:"Never say of anything 'I have lost it.' Say only 'I have returned it.' Your friend, your lover — they were given, not owned. Return them with gratitude.",ref:"Epictetus, Enchiridion",explanation:"This reframe does not eliminate the pain of separation. It places the loss in a context of genuine appreciation rather than bitter deprivation — and that context makes the grief possible to carry rather than impossible to survive."}],
+    'burnout': [{quote:"If you seek tranquility, do less. Or more accurately, do what is essential — and accept the inevitable.",ref:"Marcus Aurelius, Meditations",explanation:"Burnout is almost always the product of doing too much of the wrong things, not too little of anything. The Stoic response is to identify what is truly essential and eliminate everything else — ruthlessly and consistently."},{quote:"Nothing is more active than a wise person — for their activity includes knowing when to rest.",ref:"Seneca synthesis",explanation:"The Stoics did not equate activity with virtue. They equated wisdom with knowing the right action at the right time — and rest, for an exhausted person, is the wisest possible action."}]
+  };
+
+  // Default fallback for emotions not explicitly mapped
+  var defaultGita = [{quote:"You have the right to perform your duties, but never to the fruits of your actions. Let not the fruits of action be your motive, nor let your attachment be to inaction.",ref:"Bhagavad Gita 2.47",explanation:"This verse is the heart of the Gita's teaching. Whatever you are facing, the instruction is the same: act with full commitment, release the outcome. Your peace is not housed in how things turn out — it is housed in how fully and honestly you show up."},{quote:"The self is the friend of the person who has mastered the self. But for one who has not mastered the self, the self becomes the very enemy.",ref:"Bhagavad Gita 6.6",explanation:"The feeling you are experiencing right now is a message from the part of you that needs mastering — not with suppression, but with understanding. Every difficult emotion is a teacher pointing at where your inner work lives."}];
+
+  var defaultStoic = [{quote:"You have power over your mind, not over external events. Realize this and you will find strength.",ref:"Marcus Aurelius, Meditations",explanation:"Whatever is happening outside you, the one thing that remains entirely yours is how you choose to respond. This is not a small power — it is the only power that matters and the one no circumstance can take from you."},{quote:"It is not what happens to you but how you react that matters. This is where your freedom lives.",ref:"Epictetus, Enchiridion",explanation:"Between whatever triggered this feeling and your response to it, there is a space. That space is your freedom. The Stoic practice is to find that space and widen it — one breath, one pause, one deliberate choice at a time."}];
+
+  var wisdomMap = type === 'gita' ? gita : stoic;
+  return wisdomMap[emotion] || (type === 'gita' ? defaultGita : defaultStoic);
+}
+
+
+function fetchProtocols() {
+  if (!curEmotion) return;
+  var emoObj = EMOTIONS.find(function(e) { return e.k === curEmotion; });
+  var label = emoObj ? emoObj.l : curEmotion;
+  var list = document.getElementById('protoList');
+  var btn  = document.getElementById('protoBtn');
+  btn.disabled = true;
+  list.innerHTML = '<span class="spin"><\/span>Generating protocols\u2026';
+
+  var prompt = 'A person is feeling "' + label + '". Give 5 practical recovery protocols drawing from psychology, Stoicism, Ayurveda, and behavioral science.\n\nRespond ONLY as a JSON array:\n[{"title":"...","why":"...","steps":["...","...","...","..."]}]\n\ntitle = short name (3-5 words), why = 1 sentence why it works, steps = 4 specific actionable steps. No markdown. JSON only.';
+
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ model: 'claude-sonnet-4-20250514', max_tokens: 1200, messages: [{ role: 'user', content: prompt }] })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    var text = data.content.map(function(b) { return b.text || ''; }).join('').replace(/```json|```/g, '').trim();
+    var items = JSON.parse(text);
+    renderProtocols(list, items, btn, label);
+  })
+  .catch(function() {
+    var fallback = getProtocolFallback(curEmotion);
+    renderProtocols(list, fallback, btn, label);
+  });
+}
+
+function renderProtocols(list, items, btn, label) {
+  list.innerHTML = items.map(function(item, i) {
+    var stepsHtml = item.steps.map(function(step) {
+      return '<span class="pstep">' + esc(step) + '<\/span>';
+    }).join('');
+    return '<div class="proto-item"><div class="pnum">' + (i+1) + '<\/div>'
+      + '<div><span class="ptitle">' + esc(item.title) + '<\/span>'
+      + '<span class="pdesc">' + esc(item.why) + '<\/span>'
+      + '<div class="psteps">' + stepsHtml + '<\/div><\/div><\/div>';
+  }).join('');
+  if (btn) { btn.textContent = '\u21bb Refresh Protocols'; btn.disabled = false; }
+}
+
+function getProtocolFallback(emotion) {
+  var common = [
+    {title:"Box Breathing Reset",why:"Activates the parasympathetic nervous system, moving you from reactive to responsive within 2 minutes.",steps:["Inhale slowly through your nose for 4 counts.","Hold your breath — lungs full — for 4 counts.","Exhale fully through your mouth for 4 counts.","Hold empty — lungs still — for 4 counts. Repeat 5 cycles."]},
+    {title:"Brain Dump on Paper",why:"The mind loops because it fears forgetting. Writing transfers the burden from working memory to paper, creating instant relief.",steps:["Set a 5-minute timer and write every looping thought — no filtering, no order.","When done, look at the list. Notice it is finite; your brain was experiencing it as infinite.","Underline only what is within your control today. Cross out the rest.","Pick ONE underlined item. Do one concrete thing about it right now."]},
+    {title:"Cold Water Physiology",why:"Cold water activates the dive reflex, immediately slowing heart rate and quieting the nervous system — measurable within 30 seconds.",steps:["Splash cold water directly on your face, wrists, and the back of your neck.","Or hold something cold (ice, cold glass) in your palms for 30 seconds.","Breathe slowly while the cold sensation occupies your attention.","Notice the shift in your nervous system state within 60 seconds."]},
+    {title:"10-Minute Walk",why:"Walking without destination resets cortisol, generates new perspectives, and physically discharges the adrenaline that emotions produce.",steps:["Put your phone on silent and leave it behind or in your pocket.","Walk at a pace 10% slower than your instinct.","No headphones — let your mind wander without feeding it input.","Return only when you notice your breathing has naturally settled."]},
+    {title:"Gratitude Anchor",why:"Gratitude is not toxic positivity — it is a factual redirection of attention to what is already working, which measurably shifts neurological state.",steps:["Name one person who genuinely cares about you. Picture their face specifically.","Name one capability your body has that you are grateful for.","Name one thing that went right in the last 24 hours — however small.","Hold each one for 10 full seconds. Let it land before moving to the next."]}
+  ];
+
+  var specific = {
+    'anger': [
+      {title:"90-Second Anger Rule",why:"Neuroscience shows the chemical surge of anger lasts 90 seconds. After that you are choosing to continue it.",steps:["The moment you feel the surge — say nothing, do nothing for 90 full seconds.","Set a timer if needed. Let the wave pass without acting on it.","After 90 seconds, ask: 'What outcome do I actually want from this?'","Then respond from that answer — not from the original heat."]},
+      {title:"Voice Calibration",why:"Lowering your voice 20% signals safety to the listener and regains psychological control of the situation.",steps:["Consciously lower your speaking volume by one notch.","Slow your pace of speech deliberately.","Take one breath before each sentence.","Notice how the room dynamic shifts when you become quieter, not louder."]}
+    ],
+    'overwhelmed': [
+      {title:"Lead Domino Identification",why:"In any complex situation, one task — when done — makes multiple others easier or irrelevant.",steps:["Write every open task and obligation on paper (3 minutes, no filtering).","Ask: 'If I could only do one thing today, which makes everything else easier?'","Circle that task. That is your only job until it is done.","Do not open any other task until the Lead Domino is complete or meaningfully advanced."]},
+      {title:"One-Tab Rule",why:"Digital overwhelm mirrors mental overwhelm — closing tabs creates measurable cognitive relief.",steps:["Close every browser tab and app except the one directly related to your current task.","Put your phone in another room or on airplane mode.","Give yourself 45 minutes in this single-focus environment.","Notice how quickly clarity becomes possible when the environment stops competing for attention."]}
+    ],
+    'stressed': [
+      {title:"Stressor Audit",why:"Stress is amplified by unexamined demands. Bringing them into the light immediately reduces their power.",steps:["Write every stressor in 5 minutes — no filtering, everything that's weighing on you.","Categorize each: is it within your control today, or not?","Cross out everything outside your control — not because it doesn't matter, but because energy there produces nothing.","Pick the one controllable item with highest impact. Do one thing about it today."]},
+      {title:"Vagus Nerve Reset",why:"Extended exhale activates the parasympathetic nervous system — measurable physiological calm within 60 seconds.",steps:["Exhale for 8 full counts — push every bit of air out.","Inhale for 4 counts.","Repeat this 6:4 ratio for 6 cycles.","Do this before attempting to solve anything — stressed brain cannot think clearly."]}
+    ],
+    'restless': [
+      {title:"5-4-3-2-1 Grounding",why:"Forces the brain to process present sensory input, interrupting the anxious thought loop completely.",steps:["Name 5 things you can see right now — be specific about each one.","Name 4 things you can physically touch or feel (texture, temperature, weight).","Name 3 sounds you can hear in this moment — including subtle background sounds.","Name 2 smells, then 1 taste. Take one full slow breath. Notice the shift."]},
+      {title:"Physical Discharge",why:"Restlessness is adrenaline looking for an action to complete. Physical movement completes the biological stress cycle.",steps:["Do 20 jumping jacks, 15 pushups, or run up stairs twice.","This is not exercise — it is completing the biological cycle that anxiety triggered.","Notice the physical release in shoulders, jaw, and hands within 3 minutes.","Repeat whenever restlessness rebuilds — do not wait for it to peak."]}
+    ],
+    'grief': [
+      {title:"Allow and Contain Grief",why:"Grief moves when it is allowed to — suppression stores it, timed expression processes it.",steps:["Set aside 20 dedicated minutes for grief — not to solve it, but to feel it fully.","Write whatever comes — anger, sadness, longing, confusion. No editing.","When the timer ends, acknowledge: 'I have given this its time. I am moving forward now.'","Repeat daily as needed — grief processed in doses moves faster than grief suppressed."]},
+      {title:"Memory Honor Practice",why:"Grief contains unexpressed gratitude. Expressing it is both tribute and relief.",steps:["Write a letter to whoever or whatever was lost — tell them what they meant.","Be specific about what you will miss, what they gave you, what they changed.","Do not send it. Simply write it honestly.","Read it aloud to yourself once. Notice what shifts in your chest."]}
+    ]
+  };
+
+  var extra = specific[emotion] || [];
+  return extra.concat(common).slice(0, 5);
+}
+
+
+// ── DIAGNOSTIC ────────────────────────────────────────────────
+function renderDiag(node, path) {
+  var box = document.getElementById('diagBox');
+  box.innerHTML = '';
+  var prog = document.createElement('div');
+  prog.className = 'dprog';
+  prog.textContent = path.length > 0 ? 'Question ' + (path.length+1) + ' of ~4' : 'Question 1 of ~4';
+  box.appendChild(prog);
+
+  if (node.res) {
+    var r = document.createElement('div');
+    r.className = 'dres on';
+    r.innerHTML = '<div class="dres-title">' + esc(node.res.t) + '<\/div><div class="dres-text">' + esc(node.res.x) + '<\/div>';
+    box.appendChild(r);
+    if (path.length > 0) {
+      var rb = document.createElement('button');
+      rb.className = 'dback';
+      rb.textContent = '← Start Over';
+      rb.onclick = function() { renderDiag(DIAG, []); };
+      box.appendChild(rb);
+    }
+    return;
+  }
+
+  var q = document.createElement('div');
+  q.className = 'dq';
+  q.textContent = node.q;
+  box.appendChild(q);
+
+  var opts = document.createElement('div');
+  opts.className = 'dopts';
+  node.opts.forEach(function(opt) {
+    var b = document.createElement('button');
+    b.className = 'dopt';
+    b.textContent = opt.l;
+    b.onclick = function() {
+      var next = opt.next || opt;
+      renderDiag(next, path.concat([node]));
+    };
+    opts.appendChild(b);
+  });
+  box.appendChild(opts);
+
+  if (path.length > 0) {
+    var back = document.createElement('button');
+    back.className = 'dback';
+    back.textContent = '← Back';
+    back.onclick = function() { renderDiag(path[path.length-1], path.slice(0,-1)); };
+    box.appendChild(back);
+  }
+}
+
+// ── STREAK ────────────────────────────────────────────────────
+var streakData = JSON.parse(localStorage.getItem('ic_streak') || '[]');
+
+function doCheckin() {
+  var today = new Date().toDateString();
+  if (streakData.indexOf(today) === -1) { streakData.push(today); localStorage.setItem('ic_streak', JSON.stringify(streakData)); }
+  renderStreak();
+}
+
+function renderStreak() {
+  var today = new Date().toDateString();
+  var streak = 0;
+  var d = new Date();
+  for (var i = 0; i < 365; i++) {
+    if (streakData.indexOf(d.toDateString()) !== -1) { streak++; d.setDate(d.getDate()-1); } else break;
+  }
+  document.getElementById('streakN').textContent = streak;
+  var dots = document.getElementById('sdots');
+  dots.innerHTML = '';
+  for (var j = 29; j >= 0; j--) {
+    var day = new Date(); day.setDate(day.getDate()-j);
+    var dot = document.createElement('div');
+    dot.className = 'sdot' + (streakData.indexOf(day.toDateString()) !== -1 ? ' done' : '');
+    dots.appendChild(dot);
+  }
+  var btn = document.getElementById('ciBtn');
+  var done = streakData.indexOf(today) !== -1;
+  btn.disabled = done;
+  btn.textContent = done ? '✓ Checked In' : 'Check In ✓';
+  var ins = streak === 0 ? 'Begin your streak today. Every master was once a beginner with a first day.' :
+            streak < 7  ? streak + ' day' + (streak>1?'s':'') + ' in. The first week is the hardest to start and the most important to complete.' :
+            streak < 30 ? streak + ' days of consistent practice. You are in the building phase.' :
+                          streak + ' days. This is no longer a habit — it is becoming identity.';
+  document.getElementById('sinsight').textContent = ins;
+}
+
+// ── EMOTION LOG ───────────────────────────────────────────────
+var emoLog = JSON.parse(localStorage.getItem('ic_log') || '[]');
+
+function addLog() {
+  var text = document.getElementById('logTa').value.trim();
+  var emo  = document.getElementById('logEmo').value;
+  var int_ = document.getElementById('logInt').value;
+  if (!text) return;
+  emoLog.unshift({text:text, emo:emo, int:int_, ts:Date.now()});
+  localStorage.setItem('ic_log', JSON.stringify(emoLog));
+  document.getElementById('logTa').value = '';
+  loadLog(); updateTrigIns();
+}
+
+function loadLog() {
+  var list = document.getElementById('logList');
+  list.innerHTML = '';
+  if (!emoLog.length) {
+    var m = document.createElement('div'); m.className = 'empty-msg'; m.textContent = 'No entries yet.'; list.appendChild(m); return;
+  }
+  emoLog.forEach(function(entry, i) {
+    var eo = EMOTIONS.find(function(e) { return e.k === entry.emo; });
+    var d = new Date(entry.ts);
+    var ds = d.toLocaleDateString('en-IN',{day:'numeric',month:'short'}) + ' ' + d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    var badge = entry.int ? '<span class="int-badge int-' + entry.int + '">' + entry.int + '<\/span>' : '';
+    var div = document.createElement('div');
+    div.className = 'log-entry';
+    div.innerHTML = '<div class="log-head"><span class="log-emo">' + (eo ? eo.i+' '+eo.l : 'General') + badge + '<\/span><span style="display:flex;align-items:center;gap:8px"><span class="log-date">' + ds + '<\/span><button class="xbtn" data-i="' + i + '">×<\/button><\/span><\/div><div class="log-text">' + esc(entry.text) + '<\/div>';
+    list.appendChild(div);
+  });
+  list.addEventListener('click', function(e) {
+    var x = e.target.closest('[data-i]');
+    if (x) { emoLog.splice(+x.dataset.i,1); localStorage.setItem('ic_log',JSON.stringify(emoLog)); loadLog(); updateTrigIns(); }
+  });
+  updateStats();
+}
+
+// ── TRIGGER MAP ───────────────────────────────────────────────
+var triggers = JSON.parse(localStorage.getItem('ic_triggers') || '[]');
+
+function addTrigger() {
+  var text = document.getElementById('trigInput').value.trim();
+  var emo  = document.getElementById('trigEmo').value;
+  if (!text) return;
+  triggers.unshift({text:text, emo:emo, ts:Date.now()});
+  localStorage.setItem('ic_triggers', JSON.stringify(triggers));
+  document.getElementById('trigInput').value = '';
+  loadTriggers(); updateTrigIns();
+}
+
+function loadTriggers() {
+  var list = document.getElementById('trigList');
+  list.innerHTML = '';
+  if (!triggers.length) {
+    var m = document.createElement('div'); m.className = 'empty-msg'; m.textContent = 'No triggers mapped yet.'; list.appendChild(m); return;
+  }
+  triggers.forEach(function(t, i) {
+    var eo = EMOTIONS.find(function(e) { return e.k === t.emo; });
+    var div = document.createElement('div');
+    div.className = 'titem';
+    div.innerHTML = '<div style="flex:1"><div class="temo">' + (eo ? eo.i+' '+eo.l : 'General') + '<\/div><div class="ttext">' + esc(t.text) + '<\/div><\/div><button class="xbtn" data-i="' + i + '">×<\/button>';
+    list.appendChild(div);
+  });
+  list.addEventListener('click', function(e) {
+    var x = e.target.closest('[data-i]');
+    if (x) { triggers.splice(+x.dataset.i,1); localStorage.setItem('ic_triggers',JSON.stringify(triggers)); loadTriggers(); updateTrigIns(); }
+  });
+}
+
+function updateTrigIns() {
+  var panel = document.getElementById('trigInsPanel');
+  var all = triggers.concat(emoLog);
+  if (all.length < 3) { panel.style.display='none'; return; }
+  panel.style.display = 'block';
+  var freq = {};
+  all.forEach(function(e) { if (e.emo) freq[e.emo] = (freq[e.emo]||0)+1; });
+  var sorted = Object.entries(freq).sort(function(a,b){return b[1]-a[1];});
+  var html = '';
+  if (sorted.length) {
+    var eo = EMOTIONS.find(function(e){return e.k===sorted[0][0];});
+    html += '<p style="font-size:.92rem;color:var(--ink);line-height:1.6;margin-bottom:8px">Your most frequent pattern is <strong>' + (eo?eo.i+' '+eo.l:sorted[0][0]) + '<\/strong> — appearing ' + sorted[0][1] + ' time' + (sorted[0][1]>1?'s':'') + ' in your records. This is your primary emotional challenge area.<\/p>';
+  }
+  var high = emoLog.filter(function(e){return e.int==='high';}).length;
+  if (high) html += '<p style="font-size:.88rem;color:var(--ash);font-style:italic;line-height:1.55">' + high + ' high-intensity episode' + (high>1?'s':'') + ' logged. When intensity is consistently high, it signals the root cause is not yet being addressed.<\/p>';
+  document.getElementById('trigIns').innerHTML = html;
+}
+
+// ── EVENING ───────────────────────────────────────────────────
+var eveningLog = JSON.parse(localStorage.getItem('ic_evening') || '[]');
+
+function saveEvening() {
+  var qs = ['The Honest Moment','What Worked','What to Release','The Learning','Tomorrow\'s Intention'];
+  var filled = qs.map(function(q,i){return {q:q, a:(document.getElementById('evq'+i)||{}).value||''};}).filter(function(qa){return qa.a.trim();});
+  if (!filled.length) return;
+  eveningLog.unshift({qa:filled, ts:Date.now()});
+  localStorage.setItem('ic_evening', JSON.stringify(eveningLog));
+  qs.forEach(function(_,i){ var el=document.getElementById('evq'+i); if(el) el.value=''; });
+  var sv = document.getElementById('esaved');
+  sv.classList.add('on'); setTimeout(function(){sv.classList.remove('on');},2200);
+  renderElog();
+  updateStats();
+}
+
+function renderElog() {
+  var list = document.getElementById('elogList');
+  list.innerHTML = '';
+  if (!eveningLog.length) { list.innerHTML='<p style="color:var(--ash);font-style:italic;font-size:.88rem">No reflections yet.<\/p>'; return; }
+  eveningLog.forEach(function(entry, i) {
+    var d = new Date(entry.ts);
+    var ds = d.toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) + ' · ' + d.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
+    var qas = entry.qa.map(function(qa){return '<div style="margin-bottom:5px"><div style="font-family:\'DM Mono\',monospace;font-size:.54rem;color:var(--saffron);text-transform:uppercase;letter-spacing:.1em;margin-bottom:2px">' + esc(qa.q) + '<\/div><div class="elog-qa">' + esc(qa.a) + '<\/div><\/div>';}).join('');
+    var div = document.createElement('div');
+    div.className = 'elog-entry';
+    div.innerHTML = '<div class="elog-date"><span>' + ds + '<\/span><button class="xbtn" data-i="' + i + '">×<\/button><\/div>' + qas;
+    list.appendChild(div);
+  });
+  list.addEventListener('click', function(e) {
+    var x = e.target.closest('[data-i]');
+    if (x) { eveningLog.splice(+x.dataset.i,1); localStorage.setItem('ic_evening',JSON.stringify(eveningLog)); renderElog(); updateStats(); }
+  });
+}
+
+// ── STATS ─────────────────────────────────────────────────────
+function updateStats() {
+  document.getElementById('statT').textContent = emoLog.length;
+  document.getElementById('statD').textContent = 0;
+  document.getElementById('statL').textContent = emoLog.length;
+  document.getElementById('statN').textContent = eveningLog.length;
+}
+
+// ── ANCHORS ───────────────────────────────────────────────────
+function openAnchor(type) {
+  var a = ANCHORS[type];
+  document.getElementById('mtitle').textContent = a[0];
+  document.getElementById('mbody').textContent = a[1];
+  document.getElementById('modal').classList.add('on');
+}
+function closeModal() { document.getElementById('modal').classList.remove('on'); }
+
+// ── BREATHE ───────────────────────────────────────────────────
+var breatheInt = null;
+function openBreathe() {
+  document.getElementById('breatheOverlay').classList.add('on');
+  var txt = document.getElementById('btext');
+  var phases = ['Inhale…','Hold…','Exhale…','Hold…'];
+  var step = 0;
+  txt.textContent = phases[0];
+  breatheInt = setInterval(function() { step=(step+1)%4; txt.textContent=phases[step]; }, 4000);
+}
+function closeBreathe() {
+  document.getElementById('breatheOverlay').classList.remove('on');
+  if (breatheInt) { clearInterval(breatheInt); breatheInt=null; }
+}
+
+// ── EMERGENCY ─────────────────────────────────────────────────
+var emInt = null;
+function openEM() {
+  document.getElementById('emOverlay').classList.add('on');
+  var t = document.getElementById('emTimer');
+  var secs = 60;
+  t.textContent = secs;
+  emInt = setInterval(function() { secs--; t.textContent=secs; if(secs<=0){clearInterval(emInt);t.textContent='✓';} }, 1000);
+}
+function closeEM() {
+  document.getElementById('emOverlay').classList.remove('on');
+  if (emInt) { clearInterval(emInt); emInt=null; }
+}
+
+// ── GOOGLE SHEETS ─────────────────────────────────────────────
+// Write uses hidden iframe + form POST — bypasses CORS on file:// and any origin
+// Read uses script-tag JSONP — bypasses CORS entirely (no preflight)
+
+var SCRIPT_LINES = [
+  "// Inner Compass — Life Learnings · Google Apps Script",
+  "// Deploy: Web App | Execute as: Me | Access: Anyone",
+  "",
+  "const SHEET_NAME = 'Learnings';",
+  "",
+  "function getOrCreateSheet() {",
+  "  const ss = SpreadsheetApp.getActiveSpreadsheet();",
+  "  let sheet = ss.getSheetByName(SHEET_NAME);",
+  "  if (!sheet) {",
+  "    sheet = ss.insertSheet(SHEET_NAME);",
+  "    const h = sheet.getRange(1,1,1,5);",
+  "    h.setValues([['Date','Category','Incident','Learning','Timestamp']]);",
+  "    h.setFontWeight('bold');",
+  "    h.setBackground('#f5ede0');",
+  "    sheet.setFrozenRows(1);",
+  "    [110,140,320,320,160].forEach((w,i) => sheet.setColumnWidth(i+1,w));",
+  "  }",
+  "  return sheet;",
+  "}",
+  "",
+  "function doGet(e) {",
+  "  // Handle JSONP callback for cross-origin reading",
+  "  const callback = e.parameter.callback;",
+  "  const action   = e.parameter.action || 'read';",
+  "",
+  "  let result;",
+  "  if (action === 'write') {",
+  "    try {",
+  "      const sheet = getOrCreateSheet();",
+  "      const now   = new Date();",
+  "      const d     = Utilities.formatDate(now, Session.getScriptTimeZone(), 'dd MMM yyyy');",
+  "      sheet.appendRow([d, e.parameter.category||'', e.parameter.incident||'', e.parameter.learning||'', now.toISOString()]);",
+  "      result = {success: true};",
+  "    } catch(err) {",
+  "      result = {success: false, error: err.toString()};",
+  "    }",
+  "  } else {",
+  "    try {",
+  "      const sheet = getOrCreateSheet();",
+  "      const data  = sheet.getDataRange().getValues();",
+  "      if (data.length <= 1) {",
+  "        result = {success: true, rows: []};",
+  "      } else {",
+  "        const rows = data.slice(1)",
+  "          .filter(r => r[2] || r[3])",
+  "          .map(r => ({",
+  "            date:     String(r[0]||''),",
+  "            category: String(r[1]||''),",
+  "            incident: String(r[2]||''),",
+  "            learning: String(r[3]||''),",
+  "            ts:       String(r[4]||'')",
+  "          }))",
+  "          .reverse();",
+  "        result = {success: true, rows: rows};",
+  "      }",
+  "    } catch(err) {",
+  "      result = {success: false, error: err.toString()};",
+  "    }",
+  "  }",
+  "",
+  "  const json = JSON.stringify(result);",
+  "  // If callback provided, return JSONP so browsers can read cross-origin",
+  "  if (callback) {",
+  "    return ContentService",
+  "      .createTextOutput(callback + '(' + json + ')')",
+  "      .setMimeType(ContentService.MimeType.JAVASCRIPT);",
+  "  }",
+  "  return ContentService",
+  "    .createTextOutput(json)",
+  "    .setMimeType(ContentService.MimeType.JSON);",
+  "}",
+  "",
+  "// doPost handles form submissions from the hidden iframe",
+  "function doPost(e) {",
+  "  try {",
+  "    const p     = e.parameter;",
+  "    const sheet = getOrCreateSheet();",
+  "    const now   = new Date();",
+  "    const d     = Utilities.formatDate(now, Session.getScriptTimeZone(), 'dd MMM yyyy');",
+  "    sheet.appendRow([d, p.category||'', p.incident||'', p.learning||'', now.toISOString()]);",
+  "    return ContentService",
+  "      .createTextOutput(JSON.stringify({success:true}))",
+  "      .setMimeType(ContentService.MimeType.JSON);",
+  "  } catch(err) {",
+  "    return ContentService",
+  "      .createTextOutput(JSON.stringify({success:false, error:err.toString()}))",
+  "      .setMimeType(ContentService.MimeType.JSON);",
+  "  }",
+  "}"
+];
+
+function connectSheets() {
+  var raw = document.getElementById('sheetsUrl').value.trim();
+  if (!raw || raw.indexOf('script.google.com') === -1) {
+    showSS('Paste a valid Apps Script Web App URL', '#c8503c');
+    return;
+  }
+  var url = raw.split('?')[0].replace(/\/$/, '');
+  showSS('Verifying connection\u2026', 'var(--ash)');
+
+  // Test with JSONP — works even from file://
+  jsonpRead(url, function(data) {
+    if (data && data.success !== undefined) {
+      localStorage.setItem(SHEETS_KEY, url);
+      showSS('\u2713 Connected! ' + (data.rows ? data.rows.length + ' existing entries loaded.' : ''), '#3d6b4f');
+      revealSheets();
+      allLearnings = data.rows || [];
+      renderLearnings(allLearnings);
+    } else {
+      showSS('Script responded but returned unexpected data. Check deployment settings.', '#c8503c');
+    }
+  }, function() {
+    showSS('Could not reach script. Check the URL and ensure Access is set to Anyone.', '#c8503c');
+  });
+}
+
+function showSS(msg, color) {
+  var el = document.getElementById('sstatus');
+  el.style.display = 'block';
+  el.textContent  = msg;
+  el.style.color  = color;
+}
+
+function revealSheets() {
+  document.getElementById('sheetsSetup').style.display = 'none';
+  document.getElementById('lForm').style.display       = 'block';
+  document.getElementById('lList').style.display       = 'block';
+}
+
+// ── WRITE via hidden iframe form POST (bypasses CORS completely) ──
+function saveLearning() {
+  var incident = document.getElementById('incidentTa').value.trim();
+  var learning = document.getElementById('learningTa').value.trim();
+  var category = document.getElementById('lCat').value;
+  var url      = localStorage.getItem(SHEETS_KEY);
+
+  if (!incident || !learning) { showLM('Fill in both fields.', '#c8503c'); return; }
+  if (!url)  { showLM('Connect to Google Sheets first.', '#c8503c'); return; }
+
+  var btn = document.getElementById('lSaveBtn');
+  btn.disabled = true;
+  showLM('Saving to Google Sheets\u2026', 'var(--ash)');
+
+  // Method 1: JSONP GET write (most reliable — no preflight, works from file://)
+  var params = 'action=write'
+    + '&category=' + encodeURIComponent(category)
+    + '&incident=' + encodeURIComponent(incident)
+    + '&learning=' + encodeURIComponent(learning);
+
+  jsonpRequest(url + '?' + params, function(data) {
+    if (data && data.success) {
+      clearForm();
+      showLM('\u2713 Saved to Google Sheets', '#3d6b4f');
+      addLocalEntry(category, incident, learning);
+      setTimeout(function() { showLM('', ''); }, 3500);
+    } else {
+      showLM('Error: ' + (data && data.error ? data.error : 'Unknown error'), '#c8503c');
+    }
+    btn.disabled = false;
+  }, function() {
+    // JSONP failed — fall back to no-cors fetch (fire and forget)
+    fetch(url + '?' + params, { mode: 'no-cors' });
+    clearForm();
+    showLM('\u2713 Sent to Sheets (no confirmation available from file://)', '#3d6b4f');
+    addLocalEntry(category, incident, learning);
+    setTimeout(function() { showLM('', ''); }, 4000);
+    btn.disabled = false;
+  });
+}
+
+function clearForm() {
+  document.getElementById('incidentTa').value = '';
+  document.getElementById('learningTa').value = '';
+}
+
+function addLocalEntry(category, incident, learning) {
+  allLearnings.unshift({
+    date: new Date().toLocaleDateString('en-IN', {day:'numeric', month:'short', year:'numeric'}),
+    category: category, incident: incident, learning: learning,
+    ts: new Date().toISOString()
+  });
+  renderLearnings(allLearnings);
+}
+
+function showLM(msg, color) {
+  var el = document.getElementById('lSaveMsg');
+  el.textContent   = msg;
+  el.style.color   = color;
+  el.style.opacity = msg ? '1' : '0';
+}
+
+// ── READ via JSONP (works from file:// — no CORS) ──
+function loadLearnings() {
+  var url = localStorage.getItem(SHEETS_KEY);
+  if (!url) return;
+
+  document.getElementById('lLoading').style.display = 'block';
+  document.getElementById('lCards').innerHTML       = '';
+  document.getElementById('lEmpty').style.display   = 'none';
+  document.getElementById('lcount').textContent     = '';
+
+  jsonpRead(url, function(data) {
+    document.getElementById('lLoading').style.display = 'none';
+    allLearnings = data.rows || [];
+    renderLearnings(allLearnings);
+  }, function() {
+    document.getElementById('lLoading').style.display = 'none';
+    if (allLearnings.length > 0) {
+      renderLearnings(allLearnings);
+      document.getElementById('lcount').textContent = 'Showing cached entries.';
+    } else {
+      var el = document.getElementById('lEmpty');
+      el.style.display = 'block';
+      el.textContent   = 'Could not load from Sheets. Ensure deployment: Execute as Me, Access: Anyone. Then click \u21bb Refresh.';
+    }
+  });
+}
+
+// ── JSONP helpers ──
+function jsonpRead(url, onSuccess, onError) {
+  jsonpRequest(url + '?action=read', onSuccess, onError);
+}
+
+function jsonpRequest(url, onSuccess, onError) {
+  var cbName = '_ic_cb_' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+  var script = document.createElement('script');
+  var done   = false;
+  var timer  = setTimeout(function() {
+    if (!done) { done = true; cleanup(); if (onError) onError(); }
+  }, 12000);
+
+  window[cbName] = function(data) {
+    if (done) return;
+    done = true;
+    clearTimeout(timer);
+    cleanup();
+    if (onSuccess) onSuccess(data);
+  };
+
+  function cleanup() {
+    if (script.parentNode) script.parentNode.removeChild(script);
+    delete window[cbName];
+  }
+
+  // Append callback param
+  var sep = url.indexOf('?') !== -1 ? '&' : '?';
+  script.src = url + sep + 'callback=' + cbName;
+  script.onerror = function() {
+    if (!done) { done = true; clearTimeout(timer); cleanup(); if (onError) onError(); }
+  };
+  document.head.appendChild(script);
+}
+
+function renderLearnings(rows) {
+  var cards = document.getElementById('lCards');
+  var empty = document.getElementById('lEmpty');
+  if (!rows || !rows.length) {
+    cards.innerHTML = '';
+    empty.style.display = 'block';
+    empty.textContent = 'No learnings yet. Add your first one above.';
+    document.getElementById('lcount').textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('lcount').textContent = rows.length + ' wisdom entr' + (rows.length === 1 ? 'y' : 'ies') + ' captured';
+  cards.innerHTML = rows.map(function(row, i) {
+    return '<div class="lcard" data-idx="' + i
+      + '" data-cat="' + esc(row.category || '') + '"'
+      + ' data-text="' + esc(((row.incident || '') + ' ' + (row.learning || '')).toLowerCase()) + '">'
+      + '<div class="lcard-head">'
+      + '<span class="lcat">' + esc(row.category || 'General') + '<\/span>'
+      + '<span class="ldate">' + esc(row.date || '') + '<\/span>'
+      + '<\/div>'
+      + '<div class="llabel inc">The Incident<\/div>'
+      + '<div class="lincident">' + esc(row.incident || '') + '<\/div>'
+      + '<div class="llabel lrn">The Learning<\/div>'
+      + '<div class="llearning">' + esc(row.learning || '') + '<\/div>'
+      + '<\/div>';
+  }).join('');
+}
+
+function filterL() {
+  var search  = (document.getElementById('lSearch').value || '').toLowerCase().trim();
+  var cat     = document.getElementById('lFilter').value;
+  var visible = 0;
+  document.querySelectorAll('.lcard').forEach(function(card) {
+    var ok = (!cat || card.dataset.cat === cat) && (!search || card.dataset.text.includes(search));
+    card.classList.toggle('hidden', !ok);
+    if (ok) visible++;
+  });
+  document.getElementById('lcount').textContent = visible + ' of ' + allLearnings.length
+    + ' entr' + (allLearnings.length === 1 ? 'y' : 'ies') + ' shown';
+}
+
+// ── UTIL ──────────────────────────────────────────────────────
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/\x3C/g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── API KEY MANAGEMENT ───────────────────────────────────────
+function saveApiKey() {
+  var key = document.getElementById('apiKeyInput').value.trim();
+  if (!key) return;
+  localStorage.setItem('ic_api_key', key);
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('apiKeyStatus').textContent = '✓ Key saved';
+  setTimeout(function() { document.getElementById('apiKeyStatus').textContent = ''; }, 2500);
+}
+function clearApiKey() {
+  localStorage.removeItem('ic_api_key');
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('apiKeyStatus').textContent = 'Key cleared';
+  setTimeout(function() { document.getElementById('apiKeyStatus').textContent = ''; }, 2000);
+}
 </script>
+
 </body>
 </html>
