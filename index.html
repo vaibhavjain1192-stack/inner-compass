@@ -64,10 +64,15 @@ h1 em{color:var(--saffron);font-style:italic}
 .em-btn:hover{background:rgba(200,80,60,.16)}
 
 /* EMOTION GRID */
-.egrid{display:flex;flex-wrap:wrap;gap:8px}
-.ebtn{border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.95rem;color:var(--ink);padding:7px 13px;cursor:pointer;border-radius:1px;transition:all .2s;display:flex;align-items:center;gap:6px}
-.ebtn:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
+.egrid{display:flex;flex-direction:column;gap:16px}
+.egroup{display:flex;flex-direction:column;gap:8px}
+.egroup-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);padding-bottom:6px;border-bottom:1px solid var(--border-lt)}
+.egroup-row{display:flex;flex-wrap:wrap;gap:6px}
+.ebtn{border:1px solid var(--border);background:rgba(255,255,255,.5);color:var(--ink);padding:6px 11px;cursor:pointer;border-radius:1px;transition:all .2s;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.ebtn:hover{border-color:var(--saffron);background:var(--saffron-pale)}
 .ebtn.on{border-color:var(--saffron);background:var(--saffron);color:#fff}
+.eico{font-style:normal;font-size:1rem;flex-shrink:0;line-height:1}
+.elbl{font-family:'Cormorant Garamond',serif;font-size:.9rem;line-height:1.2}
 
 /* INTENSITY */
 .idots{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
@@ -286,6 +291,7 @@ h1 em{color:var(--saffron);font-style:italic}
         <select class="sel" id="trigEmo"></select>
         <button class="abtn2" onclick="addTrigger()">Add</button>
       </div>
+      <span id="trigStatus" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--green);opacity:0;transition:opacity .5s;display:block;margin-bottom:4px;min-height:16px"></span>
       <div id="trigList"><div class="empty-msg">No triggers mapped yet. Add your first one above.</div></div>
     </div>
   </div>
@@ -485,6 +491,15 @@ const HABITS = [
   {icon:"🤫", title:"Two-Minute Silence", desc:"Silence is the most productive state available.",
    steps:["Set 2-minute timer. Sit still. No phone, no music.","Let thoughts come — watch them pass, don't fight them.","Focus only on the physical sensation of breath.","When mind wanders, return. That return IS the practice."]}
 ];
+// Emotion groups for organised display
+var EMOTION_GROUPS = [
+  {label:"Anger & Frustration", emotions:["respect","ignored","intelligence","mistake","talking","badthings","anger_self"]},
+  {label:"Anxiety & Stress",    emotions:["stressed","overwhelmed","restless","future","failure","opinions","impatient"]},
+  {label:"Sadness & Loss",      emotions:["grief","loneliness","rejection","detached","burnout","boredom"]},
+  {label:"Self & Comparison",   emotions:["jealousy","comparison","shame","confusion","nomotiv"]},
+  {label:"Past & Rumination",   emotions:["past","betrayal","priority"]}
+];
+
 
 const ANCHORS = {
   present:["Root in the Now","Yesterday is memory; tomorrow is projection. Only this breath and action are real. Drop the story. Return to the task."],
@@ -495,7 +510,7 @@ const ANCHORS = {
 
 // ── SHEETS ───────────────────────────────────────────────────
 const SHEETS_KEY = 'ic_sheets_url';
-const HARDCODED_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxxGJEcim_iNVv_CBS5ZgBaMqmqXVynotcrXvFEkG0HxlTrCapjgSgFiVE2IOepSv18/exec';
+const HARDCODED_SHEETS_URL = '';
 // ↑ Paste your Apps Script URL between the quotes for cross-device sync
 let allLearnings = [];
 
@@ -534,20 +549,34 @@ var curEmotion = '';
     });
   });
 
-  // Emotion grid
+  // Emotion grid — grouped by category
   var eg = document.getElementById('egrid');
   if (eg) {
-    EMOTIONS.forEach(function(e) {
-      var b = document.createElement('button');
-      b.className = 'ebtn';
-      b.setAttribute('data-k', e.k);
-      b.innerHTML = '<span style="font-style:normal">' + e.i + '<\/span> ' + e.l;
-      b.addEventListener('click', function() {
-        document.querySelectorAll('.ebtn').forEach(function(x) { x.classList.remove('on'); });
-        b.classList.add('on');
-        selectEmotion(e.k, e.l);
+    EMOTION_GROUPS.forEach(function(group) {
+      var groupDiv = document.createElement('div');
+      groupDiv.className = 'egroup';
+      var lbl = document.createElement('div');
+      lbl.className = 'egroup-label';
+      lbl.textContent = group.label;
+      groupDiv.appendChild(lbl);
+      var row = document.createElement('div');
+      row.className = 'egroup-row';
+      group.emotions.forEach(function(k) {
+        var eoObj = EMOTIONS.find(function(e) { return e.k === k; });
+        if (!eoObj) return;
+        var b = document.createElement('button');
+        b.className = 'ebtn';
+        b.setAttribute('data-k', eoObj.k);
+        b.innerHTML = '<span class="eico">' + eoObj.i + '<\/span><span class="elbl">' + eoObj.l + '<\/span>';
+        b.addEventListener('click', function() {
+          document.querySelectorAll('.ebtn').forEach(function(x) { x.classList.remove('on'); });
+          b.classList.add('on');
+          selectEmotion(eoObj.k, eoObj.l);
+        });
+        row.appendChild(b);
       });
-      eg.appendChild(b);
+      groupDiv.appendChild(row);
+      eg.appendChild(groupDiv);
     });
   }
 
@@ -616,72 +645,110 @@ function selectEmotion(key, label) {
 function fetchWisdom(type) {
   if (!curEmotion) return;
   var emoObj = EMOTIONS.find(function(e) { return e.k === curEmotion; });
-  var label = emoObj ? emoObj.l : curEmotion;
-  var outId = type === 'gita' ? 'gitaOut' : 'stoicOut';
-  var btnId = type === 'gita' ? 'wbtn1' : 'wbtn2';
-  var out = document.getElementById(outId);
-  var btn = document.getElementById(btnId);
-  btn.disabled = true;
-  out.innerHTML = '<span class="spin"><\/span>Consulting the ancient texts\u2026';
-  var apiKey = localStorage.getItem('ic_api_key') || '';
-  if (!apiKey) {
-    renderWisdom(out, getWisdomFallback(curEmotion, type), btn);
-    return;
+  var label  = emoObj ? emoObj.l : curEmotion;
+  var outId  = type === 'gita' ? 'gitaOut' : 'stoicOut';
+  var btnId  = type === 'gita' ? 'wbtn1'   : 'wbtn2';
+  var out    = document.getElementById(outId);
+  var btn    = document.getElementById(btnId);
+
+  // Check localStorage cache first
+  var cacheKey = 'ic_w_' + curEmotion + '_' + type;
+  var cached   = localStorage.getItem(cacheKey);
+  if (cached) {
+    try {
+      var pool = JSON.parse(cached);
+      rotateAndShow(out, btn, pool, cacheKey);
+      return;
+    } catch(e2) { localStorage.removeItem(cacheKey); }
   }
-  var source = type === 'gita' ? 'Bhagavad Gita' : 'Stoic philosophy (Marcus Aurelius, Seneca, Epictetus)';
-  var prompt = 'A person is feeling "' + label + '". Give 2 deeply resonant quotes from ' + source + ' for this state.\nRespond ONLY as JSON array: [{"quote":"...","ref":"...","explanation":"..."}]\nNo markdown. JSON only.';
-  fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-allow-browser':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:800,messages:[{role:'user',content:prompt}]})
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    if (data.error) throw new Error(data.error.message);
-    var text = data.content.map(function(b){return b.text||'';}).join('').replace(/```json|```/g,'').trim();
-    renderWisdom(out, JSON.parse(text), btn);
-  })
-  .catch(function(){ renderWisdom(out, getWisdomFallback(curEmotion, type), btn); });
+
+  btn.disabled = true;
+  out.innerHTML = '<span class="spin"><\/span>Fetching wisdom\u2026';
+
+  var source = type === 'gita'
+    ? 'Bhagavad Gita (Krishna\u2019s teachings to Arjuna)'
+    : 'Stoic philosophy (Marcus Aurelius, Seneca, Epictetus, Zeno)';
+
+  var prompt = 'A person is experiencing the emotion: "' + label + '".\n\nGive exactly 10 deeply resonant quotes from ' + source + ' that speak directly to this emotional state.\n\nRespond ONLY as a valid JSON array with exactly 10 objects:\n[{"quote":"exact verse or saying","ref":"specific source reference","explanation":"2-3 sentences on why this speaks directly to their current emotional state"}]\n\nRules: Each quote must be unique. Each explanation must be specific to "' + label + '", not generic. No markdown. No preamble. Valid JSON array only.';
+
+  callAPI(prompt, 1200, function(items) {
+    if (!items || items.length < 2) throw new Error('bad response');
+    localStorage.setItem(cacheKey, JSON.stringify(items));
+    rotateAndShow(out, btn, items, cacheKey);
+  }, function() {
+    // Fallback: small built-in pool
+    var pool = getWisdomFallback(curEmotion, type);
+    localStorage.setItem(cacheKey, JSON.stringify(pool));
+    rotateAndShow(out, btn, pool, cacheKey);
+  });
 }
 
-function renderWisdom(out, items, btn) {
+// Shows 2 items at current index, advances on each Refresh
+function rotateAndShow(out, btn, pool, cacheKey) {
+  var idxKey = cacheKey + '_i';
+  var idx    = parseInt(localStorage.getItem(idxKey)) || 0;
+  var total  = pool.length;
+  var items  = [pool[idx % total], pool[(idx+1) % total]];
+  localStorage.setItem(idxKey, (idx + 2) % total);
+  renderWisdom(out, items, btn, total);
+}
+
+function renderWisdom(out, items, btn, total) {
   out.innerHTML = items.map(function(item) {
-    return '<div class="wisdom-out"><div class="quote">\u201c' + esc(item.quote) + '\u201d<\/div>'
+    return '<div class="wisdom-out">'
+      + '<div class="quote">\u201c' + esc(item.quote) + '\u201d<\/div>'
       + '<div class="src">' + esc(item.ref) + '<\/div>'
-      + '<div class="expl">' + esc(item.explanation) + '<\/div><\/div><hr class="wisdom-sep">';
+      + '<div class="expl">' + esc(item.explanation) + '<\/div>'
+      + '<\/div><hr class="wisdom-sep">';
   }).join('');
-  if (btn) { btn.textContent = '\u21bb Refresh'; btn.disabled = false; }
+  if (btn) {
+    btn.disabled = false;
+    var loaded = total || items.length;
+    btn.textContent = '\u21bb Next ' + (total ? '(' + loaded + ' loaded)' : '');
+  }
 }
 
 function fetchProtocols() {
   if (!curEmotion) return;
   var emoObj = EMOTIONS.find(function(e) { return e.k === curEmotion; });
-  var label = emoObj ? emoObj.l : curEmotion;
-  var list = document.getElementById('protoList');
-  var btn  = document.getElementById('protoBtn');
-  btn.disabled = true;
-  list.innerHTML = '<span class="spin"><\/span>Generating protocols\u2026';
-  var apiKey = localStorage.getItem('ic_api_key') || '';
-  if (!apiKey) {
-    renderProtocols(list, getProtocolFallback(curEmotion), btn, label);
-    return;
+  var label  = emoObj ? emoObj.l : curEmotion;
+  var list   = document.getElementById('protoList');
+  var btn    = document.getElementById('protoBtn');
+
+  // Check cache
+  var cacheKey = 'ic_p_' + curEmotion;
+  var cached   = localStorage.getItem(cacheKey);
+  if (cached) {
+    try {
+      var pool = JSON.parse(cached);
+      var pageKey = cacheKey + '_pg';
+      var page    = parseInt(localStorage.getItem(pageKey)) || 0;
+      var slice   = pool.slice(page * 5, page * 5 + 5);
+      if (!slice.length) { page = 0; slice = pool.slice(0, 5); }
+      localStorage.setItem(pageKey, page + 1);
+      renderProtocols(list, slice, btn, pool.length);
+      return;
+    } catch(e2) { localStorage.removeItem(cacheKey); }
   }
-  var prompt = 'A person is feeling "' + label + '". Give 5 practical recovery protocols drawing from psychology, Stoicism, and behavioral science.\nRespond ONLY as JSON array: [{"title":"...","why":"...","steps":["...","...","...","..."]}]\nNo markdown. JSON only.';
-  fetch('https://api.anthropic.com/v1/messages', {
-    method:'POST',
-    headers:{'Content-Type':'application/json','x-api-key':apiKey,'anthropic-version':'2023-06-01','anthropic-dangerous-allow-browser':'true'},
-    body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1200,messages:[{role:'user',content:prompt}]})
-  })
-  .then(function(r){return r.json();})
-  .then(function(data){
-    if (data.error) throw new Error(data.error.message);
-    var text = data.content.map(function(b){return b.text||'';}).join('').replace(/```json|```/g,'').trim();
-    renderProtocols(list, JSON.parse(text), btn, label);
-  })
-  .catch(function(){ renderProtocols(list, getProtocolFallback(curEmotion), btn, label); });
+
+  btn.disabled = true;
+  list.innerHTML = '<span class="spin"><\/span>Generating protocols for "' + label + '"\u2026';
+
+  var prompt = 'A person is experiencing "' + label + '".\n\nCreate exactly 10 highly specific, actionable recovery protocols tailored to THIS exact emotion. Draw from psychology, neuroscience, Stoicism, Ayurveda, CBT, somatic therapy, and behavioral science.\n\nRespond ONLY as a valid JSON array with exactly 10 objects:\n[{"title":"short name (3-5 words)","why":"1 sentence — why this specifically works for ' + label + '","steps":["specific step 1","specific step 2","specific step 3","specific step 4"]}]\n\nCritical: Every protocol must be SPECIFIC to "' + label + '" — not generic wellness advice. Each step must be concrete and actionable. No markdown. Valid JSON array only.';
+
+  callAPI(prompt, 1800, function(items) {
+    if (!items || items.length < 5) throw new Error('bad response');
+    localStorage.setItem(cacheKey, JSON.stringify(items));
+    localStorage.setItem(cacheKey + '_pg', 1);
+    renderProtocols(list, items.slice(0, 5), btn, items.length);
+  }, function() {
+    var fallback = getProtocolFallback(curEmotion);
+    localStorage.setItem(cacheKey, JSON.stringify(fallback));
+    renderProtocols(list, fallback, btn, fallback.length);
+  });
 }
 
-function renderProtocols(list, items, btn, label) {
+function renderProtocols(list, items, btn, total) {
   list.innerHTML = items.map(function(item, i) {
     var stepsHtml = item.steps.map(function(step) {
       return '<span class="pstep">' + esc(step) + '<\/span>';
@@ -691,58 +758,281 @@ function renderProtocols(list, items, btn, label) {
       + '<span class="pdesc">' + esc(item.why) + '<\/span>'
       + '<div class="psteps">' + stepsHtml + '<\/div><\/div><\/div>';
   }).join('');
-  if (btn) { btn.textContent = '\u21bb Refresh Protocols'; btn.disabled = false; }
+  if (btn) {
+    btn.disabled = false;
+    btn.textContent = total > 5
+      ? '\u21bb Next 5 Protocols (' + total + ' total)'
+      : '\u21bb Refresh Protocols';
+  }
 }
 
-// ── WISDOM FALLBACKS ─────────────────────────────────────────
+// ── Shared API caller ─────────────────────────────────────────
+function callAPI(prompt, maxTokens, onSuccess, onError) {
+  var apiKey = localStorage.getItem('ic_api_key') || '';
+  if (!apiKey) { onError(); return; }
+  fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-api-key': apiKey,
+      'anthropic-version': '2023-06-01',
+      'anthropic-dangerous-allow-browser': 'true'
+    },
+    body: JSON.stringify({
+      model: 'claude-sonnet-4-20250514',
+      max_tokens: maxTokens,
+      messages: [{role:'user', content:prompt}]
+    })
+  })
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    if (data.error) throw new Error(data.error.message);
+    var text = data.content.map(function(b){ return b.text||''; }).join('').replace(/```json|```/g,'').trim();
+    onSuccess(JSON.parse(text));
+  })
+  .catch(function(err) { onError(err); });
+}
+
+// ── Compact built-in fallbacks (2 per emotion, used when no API key) ──
 function getWisdomFallback(emotion, type) {
-  var gita = {
-    overwhelmed:[{quote:"The mind is restless and difficult to subdue, but it can be brought under control through practice and detachment.",ref:"Bhagavad Gita 6.35",explanation:"Krishna acknowledges that the scattered mind is the human condition, not a personal failure. The path is to practice returning to one point, one task, one breath at a time."},{quote:"Action is far better than inaction. Even to maintain your body, you must act.",ref:"Bhagavad Gita 3.8",explanation:"When overwhelmed the instinct is to freeze. The Gita says: begin — with anything, with the smallest step. Relief comes not from solving everything but from moving on one thing."}],
-    stressed:[{quote:"One who has control over the mind is tranquil in heat and cold, in pleasure and pain, in honor and dishonor.",ref:"Bhagavad Gita 6.7",explanation:"Equanimity is not the absence of stress but a trained capacity to remain stable within it. This stability is built through the repeated practice of returning to the present moment."},{quote:"Let right actions be your motive, not the fruit which comes from them.",ref:"Bhagavad Gita 2.47",explanation:"Much of our stress is future-facing — anxiety about outcomes we cannot control. Anchor your energy on the quality of present action and release the result."}],
-    anger:[{quote:"From anger comes delusion; from delusion, confused memory; from confused memory, the ruin of reason — and from that, one perishes.",ref:"Bhagavad Gita 2.63",explanation:"The Gita traces the cascade from anger to destruction with clinical precision. The 90-second pause is not weakness — it is the most intelligent possible response."},{quote:"The self is the friend of the controlled mind; the self is the enemy of the uncontrolled.",ref:"Bhagavad Gita 6.5-6",explanation:"Anger directed outward often begins with an internal wound. Choosing your response rather than being driven by your reaction is the deepest form of self-mastery."}],
-    failure:[{quote:"Abandon all attachment to the results of your actions and attain the supreme peace.",ref:"Bhagavad Gita 2.47-48",explanation:"Failure in the Gita's framework is what happens when we fuse identity with outcome. Detach the self from the result while remaining committed to the action, and failure becomes information rather than identity."},{quote:"Never consider yourself the cause of all results, and never be attached to not doing your duty.",ref:"Bhagavad Gita 2.47",explanation:"You are responsible for the quality of your effort, not every downstream result. This is not escape from accountability but a precise understanding of where your actual power ends."}],
-    restless:[{quote:"The lamp in a windless place does not flicker. This is the simile for the controlled mind.",ref:"Bhagavad Gita 6.19",explanation:"Restlessness is the mind in wind. The practice is not to eliminate the wind but to build a windless place inside — a stable core the external turbulence cannot reach."},{quote:"The wandering senses carry away wisdom as winds carry a boat on water.",ref:"Bhagavad Gita 2.67",explanation:"Restlessness is the natural pull of ungoverned senses. The Gita points not to suppression but to redirection — channeling that energy toward what actually matters."}],
-    grief:[{quote:"Never was there a time when I did not exist, nor you. Nor in the future shall any of us cease to be.",ref:"Bhagavad Gita 2.12",explanation:"The Gita does not ask you to suppress grief. It offers the largest possible frame — the continuity of the soul beyond any single form or life. Grieve within the widest context of meaning."},{quote:"The soul is not slain when the body is slain. It is eternal, ancient, unborn, undying.",ref:"Bhagavad Gita 2.20",explanation:"What you have lost was a form. The love that connected you to it is not subject to loss. Grief is love with nowhere to go — it always has somewhere to go."}],
-    future:[{quote:"The wise grieve neither for the living nor the dead.",ref:"Bhagavad Gita 2.11",explanation:"Fear of the future is the imagination placed in the service of catastrophe. You have navigated everything that brought you here. That capacity remains intact."},{quote:"Perform your duty and abandon all attachment to success or failure. Such equanimity is called yoga.",ref:"Bhagavad Gita 2.48",explanation:"The antidote to future fear is total present action. When your energy is entirely in what you are doing right now, the future becomes downstream of your present effort."}],
-    jealousy:[{quote:"No ill will toward any being. This is the mark of one who has transcended.",ref:"Bhagavad Gita 12.13",explanation:"When you genuinely wish well to the person you envy, you move from scarcity to abundance in your own experience. The abundance already exists — envy was hiding it."},{quote:"Better to perform one's own dharma imperfectly than another's perfectly.",ref:"Bhagavad Gita 18.47",explanation:"Your path is singular. The comparison is structurally invalid. Pursuing another's path — even perfectly — is both a spiritual error and a waste of your unique gifts."}],
-    loneliness:[{quote:"The soul that is one with Me, who sees Me everywhere — I am never separated from that soul.",ref:"Bhagavad Gita 6.30",explanation:"The Gita points to a connection available at the deepest level — one that no circumstance can sever. The practice of finding the universal in the particular interrupts the feeling of fundamental isolation."},{quote:"Let a person lift themselves by their own self. The self alone is the friend of the self.",ref:"Bhagavad Gita 6.5",explanation:"The most important relationship you can cultivate is the one with your own inner life. When you are genuinely at home within yourself, aloneness becomes solitude — a resource rather than a deprivation."}],
-    burnout:[{quote:"For one who eats too much or too little, who sleeps too much or too little — yoga is not possible.",ref:"Bhagavad Gita 6.16",explanation:"Sustainability is a spiritual requirement, not an indulgence. The discipline of rest and recovery is as spiritually mandatory as the discipline of work. Burnout is the consequence of violating this law."},{quote:"Do what is essential. Act from your duty with full presence.",ref:"Bhagavad Gita 3.8 synthesis",explanation:"Quality of presence matters more than quantity of output. The person who does one thing fully is more aligned with dharma than one who does ten things in exhaustion."}]
+  var G = {
+    default:[
+      {quote:"You have the right to perform your duties, but never to the fruits of your actions.",ref:"Bhagavad Gita 2.47",explanation:"Whatever you are facing, act with full commitment and release the outcome. Your peace lives in how fully you show up, not in how things turn out."},
+      {quote:"The self is the friend of the person who has mastered the self; the enemy of the one who has not.",ref:"Bhagavad Gita 6.5-6",explanation:"Every difficult emotion points at where your inner work lives — not as punishment, but as precise guidance toward the next layer of mastery."},
+      {quote:"The mind is restless and difficult to subdue, but it can be brought under control through practice and detachment.",ref:"Bhagavad Gita 6.35",explanation:"The scattered, reactive mind is not a personal failure — it is the human condition. The practice is not to stop the thoughts but to return, again and again, to your center."},
+      {quote:"When a person gives up all the desires of the mind and is satisfied in the self by the self, they are called a person of steady wisdom.",ref:"Bhagavad Gita 2.55",explanation:"Steady wisdom is not the absence of emotion but the capacity to remain stable within it — to feel fully without being defined or driven by what you feel."},
+      {quote:"The lamp in a windless place does not flicker. This is the simile for the controlled mind.",ref:"Bhagavad Gita 6.19",explanation:"You are building a windless place inside you — a stable core the external turbulence cannot reach. Every time you return to this practice, that flame grows steadier."}
+    ]
   };
-  var stoic = {
-    overwhelmed:[{quote:"If you seek tranquility, do less — or more accurately, do what is essential. Do less, better.",ref:"Marcus Aurelius, Meditations",explanation:"Marcus governed an empire and still identified doing less, better as the path to peace. Relief from overwhelm never comes from doing more — only from identifying what is truly essential."},{quote:"Confine yourself to the present.",ref:"Marcus Aurelius, Meditations",explanation:"Overwhelm is a future-facing experience — simultaneously holding everything that needs to happen. The present moment contains only one task. Confine yourself there and the pile disappears."}],
-    stressed:[{quote:"True happiness is to enjoy the present without anxious dependence upon the future.",ref:"Seneca, Letters",explanation:"Stress is almost always future-facing — a projection of what might go wrong. The present moment, examined honestly, almost always contains enough. The practice is to return here, again and again."},{quote:"It is not things that disturb us, but our judgments about things.",ref:"Epictetus, Enchiridion",explanation:"The stressor itself is neutral. The suffering is added by the story we tell about it. Change the story — deliberately and factually — and the experience of stress begins to dissolve."}],
-    anger:[{quote:"The best revenge is not to be like your enemy.",ref:"Marcus Aurelius, Meditations",explanation:"When someone else's wrong triggers anger that causes you to act badly, their error has now produced two errors. Respond to wrong with right — not because you owe it to them, but because your character is worth more than your reaction."},{quote:"How much better to heal than to remain angry. Anger is a punishment we give ourselves for another's mistake.",ref:"Seneca, On Anger",explanation:"Sustained anger keeps you in internal relationship with what harmed you even when the outer circumstance is over. Healing is reclaiming your own peace from the grip of what happened."}],
-    failure:[{quote:"Failure is a data point, not a verdict.",ref:"Seneca synthesis",explanation:"When failure is treated as information it becomes the engine of improvement. When treated as identity it becomes the prison of avoidance. The frame you choose determines what the failure produces."},{quote:"It is not what happens to you but how you react that matters.",ref:"Epictetus, Enchiridion",explanation:"Failure-the-event is genuinely neutral. The suffering is produced by the interpretation — and the interpretation is yours to choose. This is not denial; it is the precise location of your actual power."}],
-    restless:[{quote:"You have power over your mind, not over external events. Realize this and you will find strength.",ref:"Marcus Aurelius, Meditations",explanation:"The restless mind believes its peace depends on external circumstances being resolved. Peace is a capacity of the mind, not a product of circumstances. This is the most liberating realization."},{quote:"Begin at once to live and count each day as a separate life.",ref:"Seneca, Letters",explanation:"Restlessness is fundamentally about not being present — preparing to live rather than actually living. Begin now. The present moment is the only place where actual life occurs."}],
-    grief:[{quote:"It is folly to pull up what you have already harvested. Take the lessons and move on.",ref:"Seneca, Letters",explanation:"Seneca writes about grief with extraordinary tenderness but insists on the wider context: loss is built into the structure of existence. Grief is appropriate. Being destroyed by grief is unnecessary."},{quote:"Never say of anything I have lost it — say only I have returned it.",ref:"Epictetus, Enchiridion",explanation:"This reframe does not eliminate the pain of separation. It places loss in a context of genuine appreciation rather than bitter deprivation — making the grief possible to carry rather than impossible to survive."}],
-    future:[{quote:"We suffer more in imagination than in reality. Most of what you fear will never come. And what does come, you will handle.",ref:"Seneca, Letters",explanation:"We consistently overestimate how bad things will be and underestimate our own resilience. The imagination's threat-modeling is systematically more severe than actual events."},{quote:"The present moment is all we ever have.",ref:"Stoic synthesis",explanation:"Future fear requires you to leave the present and inhabit a scenario that does not yet exist. Every moment spent in that imagined future is a moment subtracted from building the actual one you want."}],
-    jealousy:[{quote:"He who competes with others is always looking sideways instead of forward.",ref:"Epictetus synthesis",explanation:"Every moment spent measuring yourself against another is a moment not moving forward on your own path. Envy is the most expensive form of distraction — it consumes your attention while producing nothing."},{quote:"Comparison is the thief of joy — and the engine of self-abandonment.",ref:"Stoic observation",explanation:"You measure your interior experience against their exterior presentation. The comparison is structurally unfair — you have access to all your doubts; they present only their highlights."}],
-    loneliness:[{quote:"Retire into yourself, but admit those who will improve you. Never be so alone that you stop being a friend to yourself.",ref:"Seneca, Letters",explanation:"Solitude is a resource, not a prison. The quality of your relationship with your own mind determines the quality of aloneness. When you are good company for yourself, the sting of loneliness loses its sharpness."},{quote:"Never say I have lost it — say I have returned it.",ref:"Epictetus, Enchiridion",explanation:"Connection given to us was lent, not owned. Return it with gratitude. This context makes grief possible to carry rather than impossible to survive."}],
-    burnout:[{quote:"If you seek tranquility, do less. Or more accurately, do what is essential.",ref:"Marcus Aurelius, Meditations",explanation:"Burnout is almost always the product of doing too much of the wrong things. The Stoic response: identify what is truly essential and eliminate everything else ruthlessly."},{quote:"Nothing is more active than a wise person — for their activity includes knowing when to rest.",ref:"Seneca synthesis",explanation:"The Stoics did not equate activity with virtue. They equated wisdom with knowing the right action at the right time. For an exhausted person, rest is the wisest possible action."}]
+  var S = {
+    default:[
+      {quote:"You have power over your mind, not over external events. Realize this and you will find strength.",ref:"Marcus Aurelius, Meditations",explanation:"Whatever is happening outside you, how you choose to respond remains entirely yours. This is the only power that matters and the one no circumstance can take from you."},
+      {quote:"It is not things that disturb us, but our judgments about things.",ref:"Epictetus, Enchiridion",explanation:"The stressor itself is neutral. The suffering is added by the story you tell about it. Change the story — deliberately and factually — and the experience begins to dissolve."},
+      {quote:"We suffer more in imagination than in reality. Most of what you fear will never come.",ref:"Seneca, Letters",explanation:"The imagination's threat-modeling is systematically more severe than actual events. What you are facing right now is almost certainly more survivable than it feels in this moment."},
+      {quote:"Begin at once to live and count each day as a separate life.",ref:"Seneca, Letters",explanation:"Restlessness, anxiety, and overwhelm are fundamentally about not being present. Begin now. The present moment is the only place where actual life occurs."},
+      {quote:"How much better to heal than to remain angry. Anger is a punishment we give ourselves for another's mistake.",ref:"Seneca, On Anger",explanation:"Sustained difficult emotion keeps you in internal relationship with what harmed you even when the outer circumstance is over. Healing is reclaiming your own peace from its grip."}
+    ]
   };
-  var defaultGita = [{quote:"You have the right to perform your duties, but never to the fruits of your actions.",ref:"Bhagavad Gita 2.47",explanation:"Whatever you are facing, the instruction is the same: act with full commitment, release the outcome. Your peace is not housed in how things turn out — it is housed in how fully and honestly you show up."},{quote:"The self is the friend of the person who has mastered the self.",ref:"Bhagavad Gita 6.6",explanation:"The feeling you are experiencing right now is a message from the part of you that needs mastering — not with suppression, but with understanding. Every difficult emotion points at where your inner work lives."}];
-  var defaultStoic = [{quote:"You have power over your mind, not over external events. Realize this and you will find strength.",ref:"Marcus Aurelius, Meditations",explanation:"Whatever is happening outside you, how you choose to respond remains entirely yours. This is not a small power — it is the only power that matters and the one no circumstance can take from you."},{quote:"It is not what happens to you but how you react that matters.",ref:"Epictetus, Enchiridion",explanation:"Between whatever triggered this feeling and your response to it, there is a space. That space is your freedom. The practice is to find that space and widen it — one breath, one pause, one deliberate choice at a time."}];
-  var map = type === 'gita' ? gita : stoic;
-  return map[emotion] || (type === 'gita' ? defaultGita : defaultStoic);
+  var map = type === 'gita' ? G : S;
+  return map[emotion] || map.default;
 }
 
 function getProtocolFallback(emotion) {
-  var common = [
-    {title:"Box Breathing Reset",why:"Activates the parasympathetic nervous system — moves you from reactive to responsive in 2 minutes.",steps:["Inhale through nose for 4 counts.","Hold — lungs full — for 4 counts.","Exhale fully for 4 counts.","Hold empty for 4 counts. Repeat 5–6 cycles."]},
-    {title:"Brain Dump on Paper",why:"The mind loops because it fears forgetting. Writing transfers the burden to paper, creating instant relief.",steps:["5-minute timer — write every looping thought without filtering.","Look at the list. Notice it is finite; your brain was treating it as infinite.","Underline only what is within your control today. Cross out the rest.","Pick ONE underlined item. Do one concrete thing about it right now."]},
-    {title:"Cold Water Reset",why:"Cold water activates the dive reflex — measurably slows heart rate and quiets nervous system within 30 seconds.",steps:["Splash cold water on your face, wrists, and back of neck.","Or hold something cold in your palms for 30 seconds.","Breathe slowly while the cold sensation occupies your attention.","Notice the shift in your nervous system within 60 seconds."]},
-    {title:"10-Minute Walk",why:"Discharges the adrenaline that emotions produce and creates new cognitive perspective.",steps:["Phone on silent — leave it or pocket it.","Walk at 10% slower than your instinct. No headphones.","No destination. Let your mind wander without feeding it input.","Return only when your breathing has naturally settled."]},
-    {title:"Gratitude Anchor",why:"Factual redirection of attention to what is working — measurably shifts neurological state.",steps:["Name one person who genuinely cares about you. Picture them specifically.","Name one capability your body has that you are grateful for.","Name one thing that went right in the last 24 hours — however small.","Hold each for 10 full seconds. Let it land before moving on."]}
-  ];
-  var specific = {
-    anger:[{title:"90-Second Anger Rule",why:"The chemical surge of anger lasts 90 seconds. After that you are choosing to continue it.",steps:["The moment you feel the surge — say nothing, do nothing for 90 full seconds.","Set a timer if needed. Let the wave pass without acting on it.","After 90 seconds ask: what outcome do I actually want from this?","Then respond from that answer — not from the original heat."]},{title:"Voice Calibration",why:"Lowering your voice 20% signals safety and reclaims psychological high ground without aggression.",steps:["Consciously lower your speaking volume by one notch.","Slow your pace of speech deliberately.","Take one full breath before each sentence.","Notice how the room dynamic shifts when you become quieter, not louder."]}],
-    overwhelmed:[{title:"Lead Domino Identification",why:"One task, when done, makes multiple others easier or irrelevant — this is the key to unblocking.",steps:["Write every open task and obligation in 3 minutes — no filtering.","Ask: if I could do only one thing today, which makes everything else easier?","Circle that task. That is your only job until it is meaningfully advanced.","Do not open any other task until the Lead Domino is complete."]},{title:"One-Tab Rule",why:"Digital overwhelm mirrors mental overwhelm — closing tabs creates measurable cognitive relief.",steps:["Close every browser tab and app except your current task.","Put your phone in another room or on airplane mode.","Give yourself 45 minutes in this single-focus environment.","Notice how quickly clarity becomes possible when the environment stops competing."]}],
-    stressed:[{title:"Stressor Audit",why:"Unexamined demands pile up invisibly. Bringing them into the light immediately reduces their power.",steps:["Write every stressor in 5 minutes — no filtering, everything weighing on you.","Categorize each: within your control today, or not?","Cross out everything outside your control — energy there produces nothing.","Pick the one controllable item with highest impact. Do one thing about it today."]},{title:"Vagus Nerve Exhale",why:"Extended exhale activates parasympathetic nervous system — measurable calm within 60 seconds.",steps:["Exhale for 8 full counts — push every bit of air out.","Inhale for 4 counts.","Repeat this 8:4 ratio for 6 cycles.","Do this before attempting to solve anything — the stressed brain cannot think clearly."]}],
-    restless:[{title:"5-4-3-2-1 Grounding",why:"Forces the brain to process present sensory input, interrupting the anxious thought loop completely.",steps:["Name 5 things you can see right now — be specific about each.","Name 4 things you can physically touch or feel (texture, temperature, weight).","Name 3 sounds you can hear — including subtle background sounds.","Name 2 smells, then 1 taste. Take one full slow breath. Notice the shift."]},{title:"Physical Discharge",why:"Restlessness is adrenaline looking for an action to complete. Movement completes the biological stress cycle.",steps:["Do 20 jumping jacks, 15 pushups, or run up stairs twice.","This is not exercise — it is completing the cycle that anxiety triggered.","Notice physical release in shoulders, jaw, and hands within 3 minutes.","Repeat whenever restlessness rebuilds — do not wait for it to peak."]}]
+  var P = {
+    // ── ANGER & FRUSTRATION ──────────────────────────────────
+    respect:[
+      {title:"The Internal Scorecard",why:"Disrespect only stings when your worth depends on their opinion — this protocol rebuilds the internal standard.",steps:["Write your 3 non-negotiable values that define you, regardless of anyone's opinion.","Ask honestly: did I act in accordance with those values today?","If yes: their opinion is irrelevant. If no: correct the action, not the feeling.","Read your values aloud once a day for 7 days until they become automatic."]},
+      {title:"90-Second Anger Interrupt",why:"The neurochemical surge of anger lasts exactly 90 seconds — after that, you are choosing to continue it.",steps:["The moment disrespect is felt — say nothing, do nothing for 90 seconds.","Set a silent timer. Breathe slowly. Let the wave crest and fall.","After 90 seconds ask: what outcome do I actually want from this situation?","Respond from that answer — not from the original heat."]},
+      {title:"Status Detachment Practice",why:"Chronic sensitivity to disrespect signals over-investment in social status — this loosens the grip.",steps:["Identify the specific action or word that felt disrespectful.","Ask: in 5 years, will this person's opinion matter to my actual life?","Write the answer. Most answers are no.","Practice responding to small slights with silence and internal calm — build this muscle daily."]},
+      {title:"Voice Calibration",why:"Responding to disrespect by lowering your volume paradoxically reclaims power without escalation.",steps:["Consciously lower your speaking volume by one full notch.","Slow your speech pace deliberately — one breath per sentence.","Maintain steady eye contact without aggression.","Notice how the room dynamic shifts when you become quieter, not louder."]},
+      {title:"Offer It Up",why:"Assigning spiritual meaning to slights converts wound-energy into equanimity.",steps:["Acknowledge the pain: 'I felt diminished by this. That is real.'","Mentally offer the slight to God, the universe, or your highest self.","Intend: 'I release my need to be seen by this person. I am seen by what matters.'","Return to your work. The offering is complete."]}
+    ],
+    ignored:[
+      {title:"Presence Reclaim",why:"The pain of being ignored is amplified by checking for acknowledgment — this breaks the loop.",steps:["Notice the urge to check if they responded or acknowledged you.","Each time the urge arises, redirect that attention to one concrete task.","Complete the task fully before allowing yourself to check.","Track how many redirections you make — each one is a victory."]},
+      {title:"Witness State Shift",why:"Moving from 'needing to be seen' to 'observing that I want to be seen' creates immediate distance from the pain.",steps:["Sit quietly. Notice the feeling of being ignored as a sensation in your body.","Name it precisely: 'There is tightness in my chest. This is the feeling of invisibility.'","Observe it as a temporary weather pattern, not a permanent verdict.","Ask: what would I do right now if this feeling were completely irrelevant?"]},
+      {title:"Contribution Audit",why:"Being ignored often triggers doubt about value — this protocol grounds you in evidence.",steps:["List 5 concrete contributions you made in the last 30 days — no matter how small.","List 3 people whose lives you've genuinely improved, even briefly.","Read the list aloud to yourself. This is what is real.","Your value is not a function of who noticed it."]},
+      {title:"Deliberate Self-Attention",why:"The antidote to not being seen is giving yourself the quality of attention you seek from others.",steps:["Spend 10 minutes doing something you genuinely enjoy — alone, for yourself.","Observe what you enjoy, what you notice, what delights you.","Write one sentence: what did I discover about myself in these 10 minutes?","This is the practice of being your own witness."]},
+      {title:"Selective Exposure",why:"Repeatedly placing yourself in environments where you are ignored is a form of self-harm — this corrects it.",steps:["Identify the specific person or context that most reliably ignores you.","Reduce exposure to that context by 50% this week.","Invest the reclaimed time in people who do see you.","Measure your baseline mood before and after the reduction."]}
+    ],
+    intelligence:[
+      {title:"Competence Evidence Log",why:"When intelligence is doubted externally, an internal evidence log prevents the doubt from taking root.",steps:["Open a notes file titled 'What I actually know'.","Write 5 things you understand deeply that most people don't.","Write 3 problems you've solved in the last 90 days.","Read this before any meeting where you feel underestimated."]},
+      {title:"The Underestimation Advantage",why:"Being underestimated is strategically valuable — this protocol reframes it as leverage.",steps:["Name the person who underestimated you.","Ask: how does their underestimation lower their guard and reduce their competitive intensity?","Decide one specific area where you will quietly outperform their expectations.","Execute without announcing. Let results speak."]},
+      {title:"Strategic Silence",why:"The desire to prove intelligence often backfires — silence and precise action are more convincing.",steps:["Resist the urge to explain, justify, or over-demonstrate competence.","In the next interaction with this person, speak less than you think you should.","Let your one most precise insight be your entire contribution.","Observe how restraint commands more respect than volume."]},
+      {title:"Curiosity Pivot",why:"Shifting from 'proving I'm right' to 'understanding why they see it differently' neutralises the threat response.",steps:["Ask the person a genuine question about their perspective — not to refute, to understand.","Listen without preparing your counter.","Find the one thing in their view that is actually valid.","Respond to that valid part first. This is intellectual confidence."]},
+      {title:"Source Identification",why:"Pain at having intelligence overlooked usually tracks to a specific wound — naming it reduces its charge.",steps:["When was the first time your intelligence was dismissed that really mattered?","Write about that situation for 5 minutes without editing.","Ask: how much of today's pain is actually about that original wound?","Recognise you are now an adult with the power to define your own standard."]}
+    ],
+    mistake:[
+      {title:"Error Autopsy Protocol",why:"Guilt at mistakes is healthy when it produces learning, toxic when it produces only self-attack.",steps:["Write exactly what happened — factual, no self-judgment.","Write what you would do differently. Be specific — one concrete behavioural change.","Ask: have I extracted the lesson? If yes, the guilt has done its work.","Declare the case closed. The mistake happened. The lesson is captured. Move forward."]},
+      {title:"Self-Compassion Interrupt",why:"You would never speak to a friend the way you speak to yourself after a mistake — this corrects the double standard.",steps:["Write down exactly what you are saying to yourself right now.","Ask: would I say this to someone I care about who made the same mistake?","Rewrite the self-talk as if speaking to that person — with firmness but without cruelty.","Read the rewritten version aloud. This is the tone you deserve."]},
+      {title:"Evidence-Based Reassessment",why:"One mistake is frequently generalised into a false verdict about competence — this challenges that logic.",steps:["Name the mistake specifically and concretely.","List 10 things you did correctly in the same period.","Ask: does one data point override the other 10? No.","A mistake is a data point. It is not a diagnosis."]},
+      {title:"Immediate Repair Action",why:"The fastest way out of guilt is repair — action metabolises the feeling.",steps:["Identify the single most important thing you can do to repair or correct this mistake.","Do that one thing within the next 24 hours.","Notify anyone affected, simply and without excessive self-flagellation.","Once repair action is complete, the emotion has fulfilled its purpose."]},
+      {title:"Failure Re-Definition",why:"Redefining failure as feedback dissolves the shame that makes mistakes unbearable.",steps:["Write at the top of a page: 'This mistake taught me:'","Fill the page. No minimum — write until there is nothing left.","Identify the one insight you will carry forward.","File this as your most recent piece of education."]}
+    ],
+    talking:[
+      {title:"The Listening Contract",why:"Anger while listening is almost always about feeling unheard yourself — this interrupts the cycle.",steps:["Before the conversation, set an intention: 'My only job for the next 5 minutes is to understand.'","Do not prepare your response while they are speaking.","Summarise what they said before adding anything of your own.","Notice how much of your anger was actually about not yet being heard."]},
+      {title:"Physiological Downshift",why:"Anger during listening creates a fight-or-flight state that makes comprehension impossible — reset first.",steps:["Excuse yourself for 90 seconds if possible. Use the bathroom, get water.","Splash cold water on wrists and back of neck.","Take 3 slow exhales — longer than your inhales.","Re-enter the conversation from a lower physiological state."]},
+      {title:"Trigger Identification",why:"Anger while listening is usually triggered by a specific word, tone, or topic — knowing which one gives you control.",steps:["After the conversation, write: what specific moment triggered my anger?","Was it their tone, a specific word, the topic, or a feeling of being dismissed?","Name it precisely. Vague anger has no antidote. Named anger does.","Next time you feel that trigger, name it internally before reacting."]},
+      {title:"Perspective Assumption",why:"Assuming the most charitable possible interpretation reduces reactive anger significantly.",steps:["Assume the person speaking has good intentions even if their delivery is poor.","Ask: what would they need to believe for this statement to make sense?","Find that belief. You may disagree with it — but you can now respond to it.","Responding to the belief is 10 times more effective than reacting to the words."]},
+      {title:"The Pause Prescription",why:"A deliberate pause before responding gives the prefrontal cortex time to override the amygdala.",steps:["Adopt a personal rule: never respond within 3 seconds of feeling anger.","Fill the gap with a breath and a single question: 'What do I actually want to achieve here?'","Let that question — not the anger — guide your words.","Practice this in low-stakes conversations first until it becomes automatic."]}
+    ],
+    badthings:[
+      {title:"Circle of Influence Triage",why:"Anger at bad ethics is righteous but exhausting when directed at things outside your control.",steps:["Write every ethical wrong that is bothering you.","Sort them: within my direct influence, within my indirect influence, completely outside my control.","Eliminate the third category from your mental bandwidth entirely.","Spend your energy only on the first category — this is where change is possible."]},
+      {title:"Constructive Anger Channelling",why:"Righteous anger is a powerful fuel when directed into specific action.",steps:["Name the specific ethical violation that is triggering this anger.","Identify one concrete action within your power to address it.","Take that action today — write the email, have the conversation, make the decision.","Repeat: channelled anger builds things. Unprocessed anger destroys the person carrying it."]},
+      {title:"Grief Acknowledgment",why:"Anger at injustice often has grief underneath it — acknowledging the grief releases the pressure.",steps:["Beneath the anger, what are you actually grieving? The loss of trust? Fairness? Safety?","Write about that grief for 10 minutes without switching to anger.","Allow the sadness. It is appropriate. Things are sometimes genuinely wrong.","Grief processes. Anger on its own loops."]},
+      {title:"Values Clarification",why:"Clear personal values create a stable internal compass that is less destabilised by external ethical violations.",steps:["Write your 5 core values in one sentence each.","For each: name one specific way you will live this value this week.","Your identity is not what others do — it is what you do.","Return to this list whenever external wrongdoing threatens to define your inner state."]},
+      {title:"Strategic Disengagement",why:"Sometimes the most ethical response to unethical environments is to reduce your exposure.",steps:["Assess honestly: is my presence in this environment making it better or just costing me peace?","If your influence on the ethics is minimal, consider reducing involvement.","This is not surrender — it is resource management.","Redirect your integrity toward environments where it can actually change things."]}
+    ],
+    anger_self:[
+      {title:"Accountability Without Cruelty",why:"Self-anger is useful only if it produces correction — beyond that point it is self-harm.",steps:["Write exactly what you are angry at yourself for.","Ask: what is the one thing I need to do or change as a result?","Do that thing. Or plan it specifically.","Declare: I have accounted for this. Continued self-punishment serves no one."]},
+      {title:"The Friend Standard",why:"You apply a harsher standard to yourself than you would ever apply to someone you love — this corrects it.",steps:["Imagine your closest friend did the exact same thing you did.","What would you say to them? Write it.","Now say that to yourself, aloud if possible.","The tone you use with your friend is the tone you deserve."]},
+      {title:"Root Cause vs. Symptom",why:"Self-anger is often a symptom of an unmet need or unexamined standard — finding the root dissolves it.",steps:["What expectation of yourself were you trying to meet?","Is that expectation realistic? Who set it?","Was it set by you, or was it inherited from someone else?","Adjust the standard. Not downward out of laziness — downward out of reality."]},
+      {title:"Forgiveness as Decision",why:"Forgiving yourself is not condoning the action — it is deciding to stop paying for it after the lesson is taken.",steps:["Write: I made a mistake. I have examined it. I have extracted the lesson.","Write: I choose to release this. Not because it didn't matter, but because I have learned.","Sign it with today's date.","Return to this if the self-anger resurfaces. The case is closed."]},
+      {title:"Redirect to Action",why:"Self-anger that cannot be converted into action is wasted energy — find the action.",steps:["Ask: what specific behaviour change would prevent this from happening again?","Make that change concrete and immediate — one action, this week.","Schedule it. Write it. Tell someone.","Action metabolises the anger that rumination only amplifies."]}
+    ],
+    // ── ANXIETY & STRESS ────────────────────────────────────
+    stressed:[
+      {title:"Stressor Triage",why:"Stress is amplified by the illusion that everything demands equal urgent attention.",steps:["Write every stressor in 5 minutes — no filtering.","Sort each: urgent+important, important+not urgent, urgent+not important, neither.","The 'urgent+not important' category is almost always someone else's emergency. Deprioritise it.","Focus only on urgent+important today. Everything else gets a scheduled slot or gets dropped."]},
+      {title:"Vagus Nerve Activation",why:"The extended exhale activates the parasympathetic nervous system — measurable calm within 60 seconds.",steps:["Exhale for 8 full counts — push every last bit of air out.","Inhale for 4 counts.","Repeat this 8:4 ratio for 6 full cycles.","Do not attempt to solve anything until after this — the stressed brain cannot think clearly."]},
+      {title:"Context Zoom-Out",why:"Chronic stress narrows attention to immediate threats — zooming out restores perspective.",steps:["Ask: in 10 years, which of my current stressors will still matter?","For each that will still matter: it deserves focused attention.","For each that will not: it is borrowing urgency from the future. Release it.","The ones that matter in 10 years deserve calm, planned action — not frantic energy."]},
+      {title:"One-Task Commitment",why:"Multitasking under stress increases cortisol and decreases output quality — single focus reverses this.",steps:["Choose the single most important task for the next 90 minutes.","Close every other tab, app, and notification.","Work on only that task until the timer ends.","Then stop. Even incomplete forward movement on one thing beats scattered motion on many."]},
+      {title:"Physical Stress Discharge",why:"Stress hormones are designed to be metabolised through physical movement — sitting with them amplifies them.",steps:["Do 20 jumping jacks, 15 pushups, or walk briskly for 10 minutes.","This is not exercise — it is completing the biological stress cycle.","Notice the physical release in shoulders, jaw, and hands within 3 minutes.","Return to work. Your nervous system is now better prepared to think."]}
+    ],
+    overwhelmed:[
+      {title:"Lead Domino Identification",why:"One task, when done, makes multiple others easier or irrelevant — identifying it collapses overwhelm.",steps:["Write every open obligation in 3 minutes — no filtering, no order.","Ask: if I could do only one thing today, which makes the most others easier?","Circle that task only. That is your entire job until it is meaningfully advanced.","Do not open any other task. The list will still be there. The domino must fall first."]},
+      {title:"Context Narrowing",why:"Overwhelm is a wide-angle problem — narrowing to the next 2 hours dissolves most of it.",steps:["Close everything except what you are working on right now.","Ask: what is the single next physical action on this task?","Not 'finish the project' — 'write the first sentence' or 'open the file' or 'send one email'.","Smallest possible next action. Just that."]},
+      {title:"Completion List",why:"The brain under overwhelm discounts what has been done — a completion list recalibrates the sense of progress.",steps:["Before listing what remains, list everything you have completed in the last 7 days.","Include small things. Make it long.","Read the list. You have been doing more than it feels like.","Now look at what remains with that context. The size changes."]},
+      {title:"Permission to Stop",why:"Overwhelm is often sustained by the belief that stopping is failure — this corrects that belief.",steps:["Set a deliberate stopping time for today — and honour it fully.","Understand: rest is not the opposite of productivity. It is the precondition for it.","When you stop, do not think about work. Actually stop.","Notice how the quality of tomorrow's work changes when today has a real ending."]},
+      {title:"Delegation or Deletion Audit",why:"Overwhelm is frequently caused by tasks that were never yours to own.",steps:["Review your full task list. For each item ask: does this need to be done by me?","If no: delegate it, delay it, or delete it entirely.","If yes: estimate the realistic time it actually requires.","Most overwhelm shrinks by 40% when tasks are honestly assessed for necessity and ownership."]}
+    ],
+    restless:[
+      {title:"5-4-3-2-1 Grounding",why:"Forces the brain to process present sensory input, completely interrupting the restless thought loop.",steps:["Name 5 things you can see right now — be specific (not 'table', but 'the grain pattern on this table').","Name 4 things you can physically feel — texture, temperature, pressure, weight.","Name 3 sounds you can hear, including background sounds you usually filter out.","Name 2 smells, then 1 taste. Take one full slow breath."]},
+      {title:"Physical Energy Discharge",why:"Restlessness is adrenaline looking for a physical action to complete — movement completes the cycle.",steps:["Do 20 jumping jacks, 15 pushups, or sprint up stairs twice.","This is not exercise — it is completing the biological cycle anxiety triggered.","Notice the physical release in your shoulders, jaw, chest, and hands.","Repeat whenever restlessness rebuilds — do not wait for it to peak."]},
+      {title:"Restlessness Journal",why:"Naming what you are restless about converts vague agitation into specific, addressable concerns.",steps:["Write at the top: 'I am restless because...'","Write without stopping for 10 minutes. Do not edit. Let everything come out.","Circle the items that are real and within your influence.","The act of naming dissolves much of the energy that restlessness was carrying."]},
+      {title:"Deliberate Constraint",why:"Restlessness expands when given unlimited space — a tight constraint paradoxically creates calm focus.",steps:["Choose one activity and commit to it for exactly 25 minutes.","During those 25 minutes, only that activity. Phone face-down, notifications off.","When the 25 minutes end, take a 5-minute break.","The constraint gives the restless mind something to push against productively."]},
+      {title:"Cold Water Immersion",why:"Cold water activates the dive reflex, which immediately overrides the anxiety-driven nervous system state.",steps:["Splash very cold water on your face, wrists, and back of neck for 30 seconds.","Or hold ice cubes in your palms for 30 seconds.","Focus entirely on the cold sensation while it lasts.","Notice the autonomic shift within 60 seconds — slower heartbeat, cleared mind."]}
+    ],
+    future:[
+      {title:"Probability Audit",why:"Fear of the future inflates the likelihood of bad outcomes — examining actual probabilities deflates it.",steps:["Write the specific feared outcome in one sentence.","Assign a realistic probability: 0-100%. Be honest, not pessimistic.","Ask: what is the most likely outcome if I do nothing? If I act wisely?","Most feared outcomes are less likely than they feel — and the likely outcome is survivable."]},
+      {title:"Pre-Mortem + Pre-Triumph",why:"Most people only imagine bad futures — balancing with good ones restores neural equilibrium.",steps:["Write the feared worst case in detail. How likely is it? What would you do?","Now write the realistic best case. How likely is it? What would you do?","Now write the most probable case.","You have just surveyed the full landscape. The ground is more solid than it felt in the dark."]},
+      {title:"Present Action Inventory",why:"Fear of the future is only useful if it generates present action — this channels the fear productively.",steps:["Ask: what specific action can I take today that would reduce the likelihood of the feared outcome?","Write it. Make it concrete.","Do it, or schedule it with a specific time.","Fear that produces action is intelligence. Fear that produces rumination is waste."]},
+      {title:"Evidence of Resilience",why:"Future fear underestimates your capacity to handle what comes — past evidence corrects this systematically.",steps:["List 5 difficult things you have already survived or navigated.","For each: what capacity did it reveal in you?","Ask: the person who navigated those things — can they handle what I am afraid of?","You have more evidence of your resilience than you are currently holding."]},
+      {title:"Containment Window",why:"Giving future worry a scheduled time prevents it from colonising all waking hours.",steps:["Designate one 15-minute window daily as your designated worry time.","Outside that window, when worry arises, say: 'I will address this at [time].'","During the window, write the worry, evaluate it, decide one response.","Outside the window, the mind has permission to be fully present."]}
+    ],
+    failure:[
+      {title:"Failure Autopsy",why:"Untreated failure becomes narrative; analysed failure becomes data.",steps:["Write exactly what happened — factual, no self-judgment.","Write what external factors were outside your control.","Write what you would do differently. Specific. Behavioural.","Declare: the lesson is captured. The case is closed."]},
+      {title:"Identity-Outcome Separation",why:"The fusion of 'I failed' with 'I am a failure' is the source of the pain — separating them removes it.",steps:["Write: 'I failed at [specific thing].' Full stop.","Write: 'This means I am...' — examine what verdict you are drawing.","Ask: is that verdict warranted by one outcome? No verdict ever is.","You are not your outcomes. You are the person who keeps showing up after them."]},
+      {title:"What Worked Review",why:"Post-failure attention fixates on what didn't work — this rebalances the evidence.",steps:["In the same project or attempt that failed, list 5 things you did well or correctly.","List 3 things you learned that you didn't know before.","Ask: was this really a failure, or was it the most expensive lesson in your education?","Education always costs something. The question is whether you enrolled fully."]},
+      {title:"Re-Entry Protocol",why:"The most important recovery from failure is the speed and quality of re-engagement.",steps:["Identify the single smallest step that would constitute forward movement.","Not 'fix everything' — the smallest viable re-entry point.","Do that step within 24 hours.","Movement breaks the paralysis. The first step doesn't have to be big. It has to happen."]},
+      {title:"Failure Inventory of Masters",why:"Every person you admire has a long list of failures — this protocol makes that concrete.",steps:["Choose 3 people you deeply admire in any field.","Research one significant failure each of them experienced.","Ask: how does knowing this change your view of their success?","Your failure is not evidence you are different from them. It is evidence that you are exactly like them."]}
+    ],
+    impatient:[
+      {title:"Patience Reframe",why:"Impatience treats delay as waste — this protocol redefines it as part of the process.",steps:["Name what you are waiting for.","Ask: what is actually happening during this delay that needs to happen?","Most delays are incubation, not obstruction.","Write one thing you can do with quality attention while the delay resolves itself."]},
+      {title:"Present Task Immersion",why:"Impatience is always future-facing — complete absorption in a present task is its direct antidote.",steps:["Choose one task that requires full attention.","Set 25 minutes. No phone, no checking.","Give yourself fully to the task — not the outcome.","Notice that impatience evaporates when attention is fully occupied."]},
+      {title:"Pace vs. Quality Trade-off",why:"Most impatience sacrifices quality for speed — making this trade-off visible changes the calculus.",steps:["Ask: if I got what I want right now, at this pace, what quality would it be?","Ask: if I wait the right amount of time, what quality becomes possible?","Write both answers.","Most of the time, patience is not about delay — it is about not wanting to pay the full price of excellence."]},
+      {title:"Expectation Calibration",why:"Impatience is the gap between expected timeline and real timeline — adjusting the expectation closes the gap.",steps:["Write your expected timeline for what you are waiting for.","Research or ask: what is the realistic timeline for this?","Adjust your expectation to the realistic.","Notice that most impatience dissolves when the expectation is accurate."]},
+      {title:"Physical Reset",why:"Impatience has a physiological component — the body is revved — and movement discharges it.",steps:["Stand up. Shake out your hands and arms for 30 seconds.","Walk around the space you are in twice.","Roll your shoulders backward 5 times.","Return to the situation with a body that is physiologically less urgent."]}
+    ],
+    // ── SADNESS & LOSS ───────────────────────────────────────
+    grief:[
+      {title:"Timed Grief Container",why:"Grief needs to be felt, not avoided — but contained grief moves. Uncontained grief loops.",steps:["Set aside 20 dedicated minutes for grief — not to solve it, to feel it fully.","Write everything that comes — anger, sadness, longing, confusion. No editing.","When the timer ends, close the notebook. Acknowledge: 'I have given this its time.'","Repeat daily. Grief processed in doses moves faster than grief avoided."]},
+      {title:"Memory Honour Practice",why:"Grief contains unexpressed gratitude — expressing it converts pain into tribute.",steps:["Write a letter to whoever or whatever was lost. Tell them what they meant.","Be specific: what you will miss, what they gave you, what they changed in you.","Do not send it. Simply write it completely and honestly.","Read it aloud once. Notice what shifts in your chest."]},
+      {title:"Continuity Identification",why:"Grief focuses on what was lost — this protocol identifies what was not lost.",steps:["Ask: what did this person, relationship, or time give me that I still carry?","Write the qualities, lessons, memories, and capacities that remain.","Ask: how is the love that connected me to this still alive in how I act?","Love does not end. It changes form. Grief is the process of finding the new form."]},
+      {title:"Witness Permission",why:"Many people grieve in isolation because they believe they should be 'over it' — this challenges that.",steps:["Tell one safe person: 'I am still grieving and I need to be witnessed.'","Allow them to sit with you without fixing.","You do not need advice. You need presence.","Being witnessed converts private pain into shared humanity."]},
+      {title:"Physical Grief Release",why:"Grief is stored in the body — particularly the chest and throat — and needs physical expression.",steps:["Find a private space.","Allow whatever sounds or movements want to come — crying, sighing, movement.","Do not judge or suppress.","After the release, drink water, breathe slowly, and rest. The body has done real work."]}
+    ],
+    loneliness:[
+      {title:"Quality over Quantity Connection",why:"Loneliness is not about number of people — it is about depth of connection. One real conversation cures it.",steps:["Identify one person you feel genuine connection with — not convenience, genuine.","Reach out with a specific question about their actual life: not 'how are you', but 'what's been on your mind lately?'","Give the conversation your full attention. No phone.","Notice how one real conversation changes the quality of an entire day."]},
+      {title:"Inner Life Cultivation",why:"The capacity to be genuinely at home within yourself eliminates the sharp edge of loneliness.",steps:["Spend 30 minutes on something you find genuinely meaningful — reading, creating, thinking.","Do it alone, without background stimulation.","After: write one sentence about what you discovered or noticed.","A rich inner life converts aloneness from deprivation into solitude."]},
+      {title:"Contribution Act",why:"Loneliness is partly about feeling disconnected from meaning — contributing to others restores the connection.",steps:["Identify one small thing you can do today for someone else — without being asked.","Do it. No announcement necessary.","Notice the shift in your sense of connectedness when you are useful to someone.","Contribution is one of the most reliable antidotes to the specific pain of loneliness."]},
+      {title:"Digital Replacement Audit",why:"Digital social contact creates the sensation of connection while deepening loneliness — this interrupts it.",steps:["Notice how much of your social contact this week has been through screens.","Identify one interaction that could be upgraded from text to voice or voice to in-person.","Make that upgrade happen this week.","Quality of contact matters more than frequency."]},
+      {title:"Self-Compassion Letter",why:"Lonely people often lack access to the warmth they need from others — this generates it from within.",steps:["Write a letter to yourself from the perspective of someone who loves you unconditionally.","Address your loneliness directly: 'I see that you are lonely right now and I am here.'","Write what that loving presence would want you to know.","Read it slowly. Receive it."]}
+    ],
+    rejection:[
+      {title:"Rejection Evidence Audit",why:"Rejection activates catastrophic thinking — examining the actual evidence prevents generalisation.",steps:["Write exactly what was rejected: the specific action, application, or offer.","Ask: does this rejection say anything about my value as a person? Logically, no.","List 3 contexts where you have been accepted, chosen, or valued.","One rejection does not override a lifetime of acceptance."]},
+      {title:"Source Assessment",why:"Not all rejections are equal — the source determines the weight it deserves.",steps:["Ask: do I deeply respect this person or institution's judgment in general?","If no: their rejection carries proportionally less information.","If yes: what specifically would help me understand their perspective?","The weight of rejection should be calibrated to the quality of the source."]},
+      {title:"Redirection Hypothesis",why:"Many significant life redirections began as rejection — this protocol opens that possibility.",steps:["Write the thing that was rejected.","Ask: what might I do with my energy that this rejection has now made possible?","Write 3 possibilities that would not have existed if you had been accepted.","History suggests the most important doors often open after a specific door closes."]},
+      {title:"Self-Rejection Inventory",why:"External rejection is amplified by internal self-rejection — identifying internal critics reduces the external impact.",steps:["Ask: what part of the rejection confirms something you already feared about yourself?","That fear — not their decision — is the real source of the pain.","Write about that fear directly. Where did it come from?","Healing that fear removes the amplification that external rejection creates."]},
+      {title:"Immediate Re-Engagement",why:"The fastest recovery from rejection is a new bid — waiting amplifies the wound.",steps:["Identify one place, person, or opportunity where you could make a similar bid.","Make that bid within 48 hours of the rejection.","This is not recklessness — it is refusing to let one no define your next move.","Momentum is the antidote to the paralysis that rejection wants to create."]}
+    ],
+    detached:[
+      {title:"Sensory Anchoring",why:"Emotional numbness disconnects from bodily sensation — deliberate sensory input reconnects.",steps:["Hold something cold or textured in your hands for 60 seconds.","Focus entirely on the sensation — temperature, texture, weight.","Taste something strong (lemon, strong tea, dark chocolate).","Ask: what am I noticing? Name each sensation aloud."]},
+      {title:"Micro-Emotion Hunting",why:"Full emotional numbing is progressive — small emotions remain before large ones can — finding them is the reentry.",steps:["Ask: in the last 24 hours, was there anything that created even a slight positive sensation? Curiosity? A moment of comfort?","Amplify that memory. Stay with it for 2 minutes.","Ask: is there anything I am mildly looking forward to, even vaguely?","Numbness retreats in the direction of whatever small warmth you can find."]},
+      {title:"Nervous System Nutrition",why:"Emotional detachment is often the nervous system's response to chronic depletion — the cure is physiological.",steps:["Sleep 8 hours tonight — non-negotiable.","Eat one warm, complete meal today.","Drink 1 litre of water before noon.","Move your body for 20 minutes. These are not suggestions — they are the medicine."]},
+      {title:"Permitted Non-Doing",why:"Detachment is often the result of over-extension — allowing genuine rest without guilt is the primary cure.",steps:["Give yourself permission to do less today than you think you should.","This is not laziness — it is the organism shutting down for repair.","Cancel one non-essential obligation.","Rest with intention: 'I am resting because I need to repair, not because I am giving up.'"]},
+      {title:"Tiny Engagement Experiment",why:"Waiting to feel motivated before acting is the trap — small action precedes feeling, not the other way around.",steps:["Identify the smallest possible version of something you once enjoyed.","Commit to 10 minutes — not because you feel like it, but as an experiment.","Notice any flicker of engagement, however small.","That flicker is the pilot light. You don't need the full flame — you need to protect the flicker."]}
+    ],
+    burnout:[
+      {title:"Depletion Inventory",why:"Burnout is invisible until it is sudden — a systematic inventory identifies the drain before collapse.",steps:["List everything that currently drains your energy. Be exhaustive.","List everything that currently restores your energy. Be honest.","Compare the two lists. Is the balance sustainable?","The gap between the lists is the size of your burnout."]},
+      {title:"Non-Negotiable Rest",why:"Burnout cannot be worked through — it can only be rested through.",steps:["Identify the minimum rest required: sleep, meals, movement.","Make these non-negotiable. They are not rewards. They are maintenance.","Remove one commitment from this week. Not a person — a task.","Repeat next week."]},
+      {title:"Meaning Triage",why:"Burnout is often the result of spending energy on things that don't mean anything — this identifies them.",steps:["List your current primary responsibilities.","For each: does this matter to me? Does this matter to anyone I care about?","Anything that answers no to both questions is a candidate for elimination.","Energy spent on meaningless tasks accelerates burnout faster than workload alone."]},
+      {title:"Pace Recalibration",why:"The pace that caused burnout was unsustainable by definition — establishing a new one is the structural fix.",steps:["Calculate: at the pace you have been going, how long could you sustain this?","Establish a pace you could sustain for 5 years.","What changes? Write them.","Implement one pace change this week. One. Not all."]},
+      {title:"Recovery Activity Scheduling",why:"Recovery requires planning — it does not happen spontaneously in a busy life.",steps:["Identify one genuinely restorative activity (not passive consumption — active restoration).","Schedule it as a fixed appointment this week. It cannot be moved.","Protect it the way you protect your most important meeting.","If you cannot protect one restoration appointment, you cannot sustain the work that makes everything else possible."]}
+    ],
+    boredom:[
+      {title:"Boredom as Signal Reading",why:"Boredom is frequently the soul's signal that current activity is misaligned with capacity or values.",steps:["Ask: am I under-challenged, disconnected from meaning, or simply avoiding something harder?","Write the honest answer.","Under-challenge: find a harder version of what you are doing.","Disconnection: identify one meaningful thing you could do today instead."]},
+      {title:"Creation over Consumption",why:"Boredom created by passive consumption is cured by making something — anything.",steps:["Put down whatever you are consuming.","Make something: write a paragraph, draw something, cook, build, solve a problem.","The act of making activates engagement that consuming cannot.","10 minutes of creation generates more satisfaction than an hour of scrolling."]},
+      {title:"Curiosity Assignment",why:"Boredom is the absence of curiosity — deliberately assigning a curiosity object restores it.",steps:["Pick any topic you know nothing about.","Spend 20 minutes learning one genuinely interesting thing about it.","No productivity requirement — just genuine curiosity.","Curiosity is a skill. It needs practice like any other."]},
+      {title:"Physical Environment Change",why:"Boredom is context-dependent — changing the environment changes the neurological state.",steps:["Go to a different physical space for the next hour.","A different room, a cafe, outside.","New environments generate mild novelty that reactivates attention.","This is not procrastination — it is using environmental design to restore engagement."]},
+      {title:"Future Self Letter",why:"Boredom often accompanies disconnection from long-term purpose — this reconnects immediately.",steps:["Write a letter from your future self (10 years from now) to your present self.","What would that person want you to do with today?","What would they consider a good use of the specific time you have right now?","Read it. Then do one thing it recommends."]}
+    ],
+    // ── SELF & COMPARISON ────────────────────────────────────
+    jealousy:[
+      {title:"Envy as Information",why:"Envy is not a character flaw — it is a precise signal about what you actually want. Use it.",steps:["Name specifically what you envy: the achievement, the recognition, the relationship, the freedom?","Ask: do I actually want that thing, or do I want the feeling it seems to produce?","If you want the thing: it is a clear goal. Write one step toward it.","If you want the feeling: what else could produce that feeling that is within your reach?"]},
+      {title:"Race Lane Commitment",why:"Envy requires you to be on someone else's track — returning to your own dissolves it.",steps:["Write your singular unique advantages, context, history, and trajectory.","Ask: am I comparing the entirety of their situation to a partial view of mine?","Write one thing you have right now that you would not trade.","Your race is genuinely incomparable to theirs. The metric you are using is not valid."]},
+      {title:"Celebration Practice",why:"The capacity to genuinely celebrate others' success is an advanced skill — it eliminates envy permanently.",steps:["Find something about the person you envy that is genuinely admirable.","Write it. Then think of one thing you genuinely wish for them.","Notice: wishing them well does not reduce what is available to you.","Scarcity is the frame that makes envy possible. Abundance is the frame that makes it irrelevant."]},
+      {title:"Progress Inventory",why:"Envy is often about comparing your progress to others' — comparing your progress to your own past self is more accurate.",steps:["Write where you were 1 year ago on the dimension you are feeling envious about.","Write where you are now.","Measure your trajectory, not your position.","You are likely further along your own path than the envy acknowledges."]},
+      {title:"Values Alignment Check",why:"Envy that persists is often a signal that you are pursuing the wrong goals for the wrong reasons.",steps:["Ask: do I actually value what the envied person has? Or do I value what I think it signals?","Write your 3 deepest values.","Ask: is what I envy aligned with those values?","If not, the envy is not about them — it is about a misalignment in your own direction."]}
+    ],
+    comparison:[
+      {title:"Comparison Filter Installation",why:"Comparison is usually between incompatible things — installing a filter prevents the invalid metric.",steps:["Notice the comparison you are making.","Ask: am I comparing my inside to their outside? My whole story to their highlight?","The comparison is structurally unfair. Name this explicitly.","Replace the comparison with a question: 'What would forward movement look like for me specifically today?'"]},
+      {title:"Your Unique Variable Inventory",why:"Comparison assumes equal starting conditions — documenting the differences exposes the flaw in the comparison.",steps:["Write your specific starting conditions: background, resources, obstacles, timeline.","Write the other person's as far as you know them.","Identify at least 3 ways your situations differ significantly.","The comparison was never valid. Your path is not theirs and cannot be measured against theirs."]},
+      {title:"Metrics Redesign",why:"Comparison is always within a specific metric — choosing a different metric changes the entire landscape.",steps:["What metric are you using to compare? (wealth, status, success, appearance)","Ask: who chose this metric? Is it actually the most important one to you?","Write one metric that would make you, specifically, more satisfied — that is yours, not borrowed.","Measure yourself against that."]},
+      {title:"Absorption Practice",why:"Comparison requires attention on others — sustained attention on one's own work dissolves it naturally.",steps:["Choose one thing you are building, practicing, or creating.","Give it 45 minutes of complete attention — no checking anyone else.","Notice at the end: did comparison arise while you were genuinely absorbed?","Full engagement is the structural antidote to comparison."]},
+      {title:"Gratitude for Their Success",why:"Genuine happiness at others' success is the ultimate freedom from comparison.",steps:["Write one sentence genuinely celebrating the person you have been comparing yourself to.","Find the thing that is actually admirable — not out of performance, but honestly.","Wish them continued success.","Notice: their success does not diminish yours. Scarcity is the illusion. Your path expands as you commit to it."]}
+    ],
+    shame:[
+      {title:"Shame vs. Guilt Separation",why:"Shame ('I am bad') and guilt ('I did something bad') require different responses — separating them is the first move.",steps:["Ask: am I feeling 'what I did was wrong' or 'I am fundamentally flawed'?","If guilt: identify the action, extract the learning, make repair if possible.","If shame: recognise that the feeling is not evidence of your character.","One action does not constitute a character verdict."]},
+      {title:"Secrecy Interruption",why:"Shame thrives in secrecy and dies in safe disclosure — this is neurologically documented.",steps:["Identify one trusted person who is capable of receiving this without judgment.","Tell them one thing you are ashamed of — the smallest version if that feels safer.","Notice what happens to the shame in the moment of being received.","Shame that is witnessed and not condemned loses most of its charge."]},
+      {title:"Common Humanity Recognition",why:"Shame creates the illusion of isolated defect — recognising universality dissolves the isolation.",steps:["Write the thing you are ashamed of.","Ask: is there any other human being who has experienced something similar?","The answer is always yes.","You are not uniquely flawed. You are human. This is what being human contains."]},
+      {title:"Origin Tracing",why:"Most deep shame was instilled by someone else's reaction — tracing the origin separates their judgment from objective truth.",steps:["When was the first time you felt shame about this specific aspect of yourself?","Whose reaction or words created it?","Ask: was that person an objective, kind, and wise assessor of your worth? Almost certainly not.","Their judgment was never a verdict. It was their limitation."]},
+      {title:"Self-Disclosure Letter",why:"Writing about shame with self-compassion reduces its neurological charge even without sharing it.",steps:["Write about the thing you are ashamed of as if explaining it to someone who loves you unconditionally.","Include the context, the circumstances, the reasons you did or felt what you did.","End with: 'And I forgive myself for this, because I was doing the best I could with what I had.'","Read it once. Keep it, or destroy it. Either way, the writing has done the work."]}
+    ],
+    confusion:[
+      {title:"Question Clarification",why:"Confusion is often about asking the wrong question — clarifying the actual question dissolves most of the confusion.",steps:["Write the question you are confused about.","Ask: is this actually the question, or is it a symptom of a deeper question?","Write the deeper question.","Most confusion clears when the right question is finally identified."]},
+      {title:"Constraint Addition",why:"Confusion expands in unlimited space — adding a specific constraint forces clarity.",steps:["Give yourself one constraint: you must decide by end of today, or you must choose between only 2 options.","The constraint is artificial, but its effect on clarity is real.","Write your answer within the constraint.","Then evaluate: is this actually right? Often, yes."]},
+      {title:"Values Navigation",why:"When everything is confusing, values provide a fixed point — decisions aligned with values are rarely regretted.",steps:["Write your 3 core values.","For each option you are confused about, ask: which one is more aligned with these values?","The values-aligned option is almost always the right one, even if it is not the easiest one.","Values clarity converts confusion into difficult-but-clear."]},
+      {title:"Information Inventory",why:"Some confusion is actually insufficient information — and some is decision paralysis despite sufficient information.",steps:["Ask: what information do I actually need to decide?","For each item: can I get this information? How?","If yes: get it.","If you have enough information and are still confused, the confusion is not about information — it is about courage."]},
+      {title:"Trusted Counsel",why:"Confusion is often clarified by articulating the problem to someone outside it.",steps:["Identify one person whose judgment you trust in this domain.","Explain your confusion to them fully — not to get their answer, but to hear yourself explain it.","Often the act of articulation produces clarity before they even respond.","Then ask one specific question you want their input on."]}
+    ],
+    nomotiv:[
+      {title:"Motivation vs. Action Inversion",why:"Motivation follows action — it does not precede it. This is the most important insight about motivation.",steps:["Stop waiting to feel motivated.","Choose the smallest possible action related to what you should be doing.","Do it for 5 minutes only.","Notice that motivation almost always begins to appear after you start, never before."]},
+      {title:"Why Reconnection",why:"No motivation means the connection to purpose is broken — reconnecting it restores the energy.",steps:["Write: why did I originally start this? What mattered about it?","Write: who benefits, even slightly, from me doing this well?","Write: who is a version of myself that I would be proud of? What would they do today?","Read the answers. Then begin."]},
+      {title:"Environment Redesign",why:"Motivation is heavily influenced by environment — changing the environment changes the state.",steps:["Move to a different physical space for your work.","Remove the 3 biggest distractions from your immediate environment.","Add one element that you associate with your best working state (music, object, ritual).","Start before you feel ready. The environment will carry you further than willpower."]},
+      {title:"Progress Visibility",why:"No motivation is often disguised progress invisibility — making progress visible restores momentum.",steps:["Write down every small thing you have done on this project or area in the last 7 days.","Make it visual — a list, a chart, a timeline.","Notice: you have been moving, even when it felt like nothing.","Visible progress generates its own motivation. Invisible progress feels like none."]},
+      {title:"Accountability Architecture",why:"Motivation is social — adding a human witness changes everything.",steps:["Tell one person what you intend to do today and when you will have it done.","Not a goal — a specific deliverable with a specific time.","Check in with them at that time.","The act of being witnessed creates a level of motivation that pure self-will cannot manufacture."]}
+    ],
+    // ── PAST & RUMINATION ────────────────────────────────────
+    past:[
+      {title:"Closure Writing",why:"Rumination about the past is often unfinished processing — writing to completion finishes it.",steps:["Write about the past event fully — what happened, how you felt, what you wish had been different.","Write what you needed at the time that you didn't get.","Write what you know now that you didn't know then.","Write: 'This is now complete. I carry the learning. I release the event.'"]},
+      {title:"Present Inventory",why:"Dwelling on the past means the present is not fully occupied — filling the present crowds out the past.",steps:["List 3 things that are genuinely good about your current life.","List 3 things you are actively building toward.","List one thing you can engage with right now with full attention.","Do that thing. The past recedes when the present is occupied."]},
+      {title:"Learning Extraction",why:"The mind revisits the past when it believes the lesson hasn't been captured — capturing it releases the grip.",steps:["Ask: what is my mind trying to work out by replaying this?","Write the answer.","Write the lesson explicitly and clearly.","Declare: the lesson is captured. The event no longer needs to be replayed."]},
+      {title:"Forgiveness as Release",why:"Unforgiveness of yourself or others keeps you neurologically in the past — forgiveness returns you to the present.",steps:["Write the name of who you need to forgive (including yourself if applicable).","Write: forgiving you does not mean what happened was acceptable.","Write: it means I choose to release the energy I am spending on carrying this.","Forgiveness is not for them. It is for your own access to the present."]},
+      {title:"Identity Update",why:"Sometimes dwelling on the past reflects a static identity — updating who you are now resolves it.",steps:["Ask: who was I when that happened? What did I believe about myself then?","Ask: who am I now? What do I believe now?","Write the update explicitly: 'I am no longer [past identity]. I am [current identity].'","The past was a different person's story. You are writing a new one."]}
+    ],
+    betrayal:[
+      {title:"Betrayal Grief Protocol",why:"Betrayal is a form of loss and needs to be grieved — skipping to anger or forgiveness bypasses necessary processing.",steps:["Name specifically what was lost: trust, safety, the relationship as you knew it, your sense of the person.","Write about each loss directly and without minimising.","Allow the grief. It is appropriate. Something real was taken.","Grief that is felt moves. Grief that is bypassed becomes chronic anger."]},
+      {title:"Expectation Source Examination",why:"Betrayal requires an expectation that was violated — examining that expectation honestly reduces part of the pain.",steps:["What did you expect from this person?","Was that expectation explicit (agreed to) or implicit (assumed)?","If implicit: did they know you had this expectation?","This is not to excuse them — it is to locate exactly what was violated."]},
+      {title:"Trust Inventory",why:"Betrayal by one person frequently contaminates trust in all people — this prevents that generalisation.",steps:["List 5 people who have not betrayed you.","List 3 ways you can be discerning about trust without becoming closed.","Distinguishing between this person and all people is the most important cognitive task after betrayal.","This person's actions speak to their character, not to human nature."]},
+      {title:"Boundaries Redesign",why:"Betrayal reveals a boundary that needed to exist — building it is more empowering than rehearsing the wound.",steps:["Ask: what boundary, had it been in place, would have prevented this or reduced the damage?","Write that boundary clearly and concretely.","Decide how you will apply this boundary going forward.","This is the gift inside the betrayal: the map of what you need."]},
+      {title:"Long-Game Perspective",why:"Betrayal in the short term often redirects toward better relationships or situations in the long term.",steps:["Write what you had before this betrayal.","Ask: was that situation as good as you now believe it was?","Often: no. The betrayal revealed what was already not working.","Ask: what does this make possible that wasn't possible before? Write genuinely."]}
+    ],
+    priority:[
+      {title:"Not-To-Do List",why:"Inability to prioritise is usually an inability to say no — a not-to-do list makes the cuts explicit.",steps:["List every current obligation.","For each: what happens if it doesn't get done today? Tomorrow? This week?","Cross out everything where the honest answer is 'nothing significant'.","What remains is your actual priority list."]},
+      {title:"3-Item Daily Focus",why:"The brain performs prioritisation poorly with long lists — constraining to 3 items dramatically improves execution.",steps:["Each morning, write only 3 things that matter today.","Not a wish list — 3 things that, if done, would make today genuinely successful.","Do the hardest one first.","Everything else is bonus."]},
+      {title:"Energy Audit",why:"What seems like a priority problem is often an energy allocation problem.",steps:["List the tasks competing for your attention.","Rate each from 1-10: how much energy does this require from me?","Rate each: how much does this matter to my actual goals?","High-energy + low-value tasks are priority thieves. Reduce them first."]},
+      {title:"Clarity Question",why:"Confusion about priorities often reflects confusion about goals — the question below resolves both.",steps:["Ask: if I could only accomplish one thing in the next 90 days, what would create the most meaningful change?","Write the answer.","Ask: am I spending my current energy on things that support this?","If not: that is your priority problem. The solution is not a better system — it is a clearer goal."]},
+      {title:"Delegation or Deletion Review",why:"Not all priorities are yours — this protocol identifies which ones aren't.",steps:["List everything competing for your attention.","For each: does this require me specifically? Or could someone else do it?","Could: delegate.","Must be me + truly important: do it.","Must be me + not truly important: schedule it for later or delete it."]}
+    ],
+    opinions:[
+      {title:"Opinion Source Calibration",why:"Not all opinions deserve equal weight — calibrating which ones matter is the primary skill.",steps:["Ask: does this person have skin in the game? Do they have expertise I respect?","Ask: would I trade places with them? Do I respect their life and choices?","If no to both: their opinion is data about them, not about you.","If yes: their concern deserves consideration, not automatic acceptance."]},
+      {title:"Worst Case Realisation",why:"Fear of opinions is almost always about imagined consequences — examining the actual worst case reduces it.",steps:["Write the worst case: they think badly of me. They express it. People hear it.","Ask: and then what actually happens to my life?","Most feared outcomes are social discomfort, not actual damage.","Social discomfort is survivable. Your capacity to bear it is greater than it feels right now."]},
+      {title:"Approval Independence Practice",why:"Like any skill, tolerance for disapproval is built through deliberate practice in low-stakes situations.",steps:["This week, make one small decision based entirely on what you want, not what others expect.","Notice the discomfort. Don't act to resolve it.","The discomfort is not danger — it is the feeling of becoming more yourself.","Practice this weekly. The capacity grows."]},
+      {title:"Values Anchor",why:"Fear of opinions is least when identity is most grounded — anchoring in values provides this.",steps:["Write your 3 core values.","Ask: am I acting in alignment with these right now?","If yes: what others think is genuinely irrelevant to whether you are living correctly.","Your values are your internal compass. External opinions are weather."]},
+      {title:"Audience Audit",why:"Trying to manage the opinions of everyone is impossible — identifying whose opinions actually matter frees you.",steps:["Write the names of 5 people whose good opinion you actively want.","For each: why does their opinion matter?","Notice: this is a short list. Most of the opinions you worry about aren't on it.","Manage only this list. Release the rest."]}
+    ]
   };
-  var extra = (specific[emotion] || []);
-  return extra.concat(common).slice(0, 5);
+  // Default: 5 evidence-based protocols applicable to any difficult emotion
+  var DEFAULT = [
+    {title:"Box Breathing Reset",why:"Activates the parasympathetic nervous system within 90 seconds — the fastest physiological intervention available.",steps:["Inhale through your nose for exactly 4 counts.","Hold your breath — lungs full — for 4 counts.","Exhale fully through your mouth for 4 counts.","Hold empty — lungs still — for 4 counts. Repeat 5–6 full cycles."]},
+    {title:"Brain Dump on Paper",why:"The mind loops because it fears forgetting — writing transfers the burden from working memory to paper instantly.",steps:["Set a 5-minute timer and write every looping thought — no filtering, no order.","Look at the list. Notice it is finite. Your brain was experiencing it as infinite.","Underline only what is within your control today. Cross out everything else.","Pick ONE underlined item and do one concrete thing about it right now."]},
+    {title:"Physical Discharge",why:"Difficult emotions are incomplete biological stress cycles — movement is how they complete.",steps:["Do 20 jumping jacks, 15 pushups, or walk briskly for 10 minutes.","This is not exercise — it is completing the cycle that the emotion triggered.","Notice the physical release in shoulders, jaw, hands, and chest within 3 minutes.","Return to the situation. Your nervous system is now more capable of handling it."]},
+    {title:"Gratitude Anchor",why:"Gratitude is not positive thinking — it is factual redirection of attention to what is already working, which shifts neurological state.",steps:["Name one person who genuinely cares about you. Picture their face specifically.","Name one thing your body can do that you are grateful for.","Name one thing that went right in the last 24 hours, however small.","Hold each for 10 full seconds. Let each one land before moving on."]},
+    {title:"Cognitive Distance",why:"Fusing with difficult thoughts amplifies them — creating distance reduces their grip without suppression.",steps:["Identify the dominant painful thought.","Rephrase it: instead of 'I am overwhelmed', say 'I am noticing a thought that says I am overwhelmed'.","Ask: is this thought definitely true? What would a trusted friend say about it?","You are not your thoughts. You are the one noticing them."]}
+  ];
+  return P[emotion] || DEFAULT;
 }
+
+
 
 // ── ANCHORS ──────────────────────────────────────────────────
 function openAnchor(type) {
@@ -783,60 +1073,52 @@ function closeEM() {
 
 // ── GOOGLE SHEETS ────────────────────────────────────────────
 var SCRIPT_LINES = [
-  "// Inner Compass \u2014 Life Learnings \u00b7 Google Apps Script",
+  "// Inner Compass — Life Learnings + Trigger Map · Google Apps Script",
   "// Deploy: Web App | Execute as: Me | Access: Anyone",
   "",
-  "const SHEET_NAME = 'Learnings';",
-  "function getOrCreateSheet() {",
+  "function getSheet(name, headers, widths) {",
   "  const ss = SpreadsheetApp.getActiveSpreadsheet();",
-  "  let sheet = ss.getSheetByName(SHEET_NAME);",
-  "  if (!sheet) {",
-  "    sheet = ss.insertSheet(SHEET_NAME);",
-  "    const h = sheet.getRange(1,1,1,5);",
-  "    h.setValues([['Date','Category','Incident','Learning','Timestamp']]);",
-  "    h.setFontWeight('bold'); sheet.setFrozenRows(1);",
-  "    [110,140,320,320,160].forEach((w,i) => sheet.setColumnWidth(i+1,w));",
+  "  let sh = ss.getSheetByName(name);",
+  "  if (!sh) {",
+  "    sh = ss.insertSheet(name);",
+  "    const h = sh.getRange(1,1,1,headers.length);",
+  "    h.setValues([headers]); h.setFontWeight('bold'); h.setBackground('#f5ede0'); sh.setFrozenRows(1);",
+  "    widths.forEach((w,i)=>sh.setColumnWidth(i+1,w));",
   "  }",
-  "  return sheet;",
+  "  return sh;",
   "}",
+  "",
   "function doGet(e) {",
-  "  const callback = e.parameter.callback;",
-  "  const action   = e.parameter.action || 'read';",
+  "  const cb=e.parameter.callback, action=e.parameter.action||'read', type=e.parameter.type||'learnings';",
   "  let result;",
-  "  if (action === 'write') {",
+  "  if (action==='write') {",
   "    try {",
-  "      const sheet = getOrCreateSheet();",
-  "      const now = new Date();",
-  "      const d = Utilities.formatDate(now, Session.getScriptTimeZone(), 'dd MMM yyyy');",
-  "      sheet.appendRow([d, e.parameter.category||'', e.parameter.incident||'', e.parameter.learning||'', now.toISOString()]);",
-  "      result = {success: true};",
-  "    } catch(err) { result = {success: false, error: err.toString()}; }",
+  "      const now=new Date(), d=Utilities.formatDate(now,Session.getScriptTimeZone(),'dd MMM yyyy');",
+  "      if (type==='trigger') {",
+  "        const sh=getSheet('Triggers',['Date','Emotion','Trigger','Timestamp'],[110,160,400,160]);",
+  "        sh.appendRow([d,e.parameter.emotion||'',e.parameter.trigger||'',now.toISOString()]);",
+  "      } else {",
+  "        const sh=getSheet('Learnings',['Date','Category','Incident','Learning','Timestamp'],[110,140,320,320,160]);",
+  "        sh.appendRow([d,e.parameter.category||'',e.parameter.incident||'',e.parameter.learning||'',now.toISOString()]);",
+  "      }",
+  "      result={success:true};",
+  "    } catch(err){result={success:false,error:err.toString()};}",
   "  } else {",
   "    try {",
-  "      const sheet = getOrCreateSheet();",
-  "      const data = sheet.getDataRange().getValues();",
-  "      if (data.length <= 1) { result = {success: true, rows: []}; }",
-  "      else {",
-  "        const rows = data.slice(1).filter(r=>r[2]||r[3])",
-  "          .map(r=>({date:String(r[0]||''),category:String(r[1]||''),incident:String(r[2]||''),learning:String(r[3]||''),ts:String(r[4]||'')})).reverse();",
-  "        result = {success: true, rows: rows};",
+  "      if (type==='trigger') {",
+  "        const sh=getSheet('Triggers',['Date','Emotion','Trigger','Timestamp'],[110,160,400,160]);",
+  "        const data=sh.getDataRange().getValues();",
+  "        result=data.length<=1?{success:true,rows:[]}:{success:true,rows:data.slice(1).filter(r=>r[2]).map(r=>({date:String(r[0]||''),emotion:String(r[1]||''),trigger:String(r[2]||''),ts:String(r[3]||'')})).reverse()};",
+  "      } else {",
+  "        const sh=getSheet('Learnings',['Date','Category','Incident','Learning','Timestamp'],[110,140,320,320,160]);",
+  "        const data=sh.getDataRange().getValues();",
+  "        result=data.length<=1?{success:true,rows:[]}:{success:true,rows:data.slice(1).filter(r=>r[2]||r[3]).map(r=>({date:String(r[0]||''),category:String(r[1]||''),incident:String(r[2]||''),learning:String(r[3]||''),ts:String(r[4]||'')})).reverse()};",
   "      }",
-  "    } catch(err) { result = {success: false, error: err.toString()}; }",
+  "    } catch(err){result={success:false,error:err.toString()};}",
   "  }",
-  "  const json = JSON.stringify(result);",
-  "  if (callback) return ContentService.createTextOutput(callback+'('+json+')').setMimeType(ContentService.MimeType.JAVASCRIPT);",
+  "  const json=JSON.stringify(result);",
+  "  if(cb) return ContentService.createTextOutput(cb+'('+json+')').setMimeType(ContentService.MimeType.JAVASCRIPT);",
   "  return ContentService.createTextOutput(json).setMimeType(ContentService.MimeType.JSON);",
-  "}",
-  "function doPost(e) {",
-  "  try {",
-  "    const p = e.parameter; const sheet = getOrCreateSheet();",
-  "    const now = new Date();",
-  "    const d = Utilities.formatDate(now, Session.getScriptTimeZone(), 'dd MMM yyyy');",
-  "    sheet.appendRow([d, p.category||'', p.incident||'', p.learning||'', now.toISOString()]);",
-  "    return ContentService.createTextOutput(JSON.stringify({success:true})).setMimeType(ContentService.MimeType.JSON);",
-  "  } catch(err) {",
-  "    return ContentService.createTextOutput(JSON.stringify({success:false,error:err.toString()})).setMimeType(ContentService.MimeType.JSON);",
-  "  }",
   "}"
 ];
 
@@ -987,6 +1269,25 @@ function addTrigger() {
   localStorage.setItem('ic_triggers', JSON.stringify(triggers));
   document.getElementById('trigInput').value = '';
   renderTriggers();
+  var url = getSheetsUrl();
+  if (url) {
+    var eoObj = EMOTIONS.find(function(e2) { return e2.k === emo; });
+    var emoLabel = eoObj ? eoObj.l : (emo || 'General');
+    var params = 'action=write&type=trigger&emotion=' + encodeURIComponent(emoLabel) + '&trigger=' + encodeURIComponent(text);
+    jsonpRequest(url + '?' + params, function(data) {
+      showTrigStatus(data && data.success ? '✓ Saved to Sheet' : '✓ Saved locally');
+    }, function() {
+      fetch(url + '?' + params, {mode:'no-cors'});
+      showTrigStatus('✓ Sent to Sheet');
+    });
+  }
+}
+
+function showTrigStatus(msg) {
+  var el = document.getElementById('trigStatus');
+  if (!el) return;
+  el.textContent = msg; el.style.opacity = '1';
+  setTimeout(function(){ el.style.opacity = '0'; }, 3000);
 }
 
 function renderTriggers() {
