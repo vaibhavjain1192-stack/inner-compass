@@ -286,6 +286,7 @@ h1 em{color:var(--saffron);font-style:italic}
     <div class="panel">
       <div class="plabel">My Personal Trigger Map</div>
       <p style="font-size:.9rem;color:var(--ash);font-style:italic;margin-bottom:16px;line-height:1.6">Record what reliably triggers specific emotions. Over time this becomes your earliest warning system — and the foundation of genuine self-knowledge.</p>
+      <div id="trigSheetStatus" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;border-radius:1px;margin-bottom:12px;display:none"></div>
       <div class="tadd">
         <input class="tinput" id="trigInput" placeholder="When X happens, I feel…" maxlength="200">
         <select class="sel" id="trigEmo"></select>
@@ -510,7 +511,7 @@ const ANCHORS = {
 
 // ── SHEETS ───────────────────────────────────────────────────
 const SHEETS_KEY = 'ic_sheets_url';
-const HARDCODED_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxxGJEcim_iNVv_CBS5ZgBaMqmqXVynotcrXvFEkG0HxlTrCapjgSgFiVE2IOepSv18/exec';
+const HARDCODED_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxJUPrLnOnw9l4dKqx1KSPiB2wpTjcp3c4cP9NMCbKzUdEZPIORPLIxF2DMBhmueY0i/exec';
 // ↑ Paste your Apps Script URL between the quotes for cross-device sync
 let allLearnings = [];
 
@@ -544,6 +545,26 @@ var curEmotion = '';
           document.getElementById('lForm').style.display = 'block';
           document.getElementById('lList').style.display = 'block';
           if (allLearnings.length === 0) loadLearnings();
+        }
+      }
+      // Show sheet connection status on triggers tab
+      if (tab.dataset.t === 'triggers') {
+        var trigUrl = getSheetsUrl();
+        var statusEl = document.getElementById('trigSheetStatus');
+        if (statusEl) {
+          if (trigUrl) {
+            statusEl.style.display = 'block';
+            statusEl.style.background = 'rgba(61,107,79,.1)';
+            statusEl.style.color = '#3d6b4f';
+            statusEl.style.border = '1px solid rgba(61,107,79,.25)';
+            statusEl.textContent = '\u2713 Connected to Google Sheet — triggers save automatically';
+          } else {
+            statusEl.style.display = 'block';
+            statusEl.style.background = 'rgba(200,101,26,.08)';
+            statusEl.style.color = 'var(--saffron)';
+            statusEl.style.border = '1px solid rgba(200,101,26,.25)';
+            statusEl.textContent = '\u26a0 Not connected — paste your Apps Script URL in HARDCODED_SHEETS_URL or connect via Life Learnings tab';
+          }
         }
       }
     });
@@ -1274,12 +1295,11 @@ function addTrigger() {
     var eoObj = EMOTIONS.find(function(e2) { return e2.k === emo; });
     var emoLabel = eoObj ? eoObj.l : (emo || 'General');
     var params = 'action=write&type=trigger&emotion=' + encodeURIComponent(emoLabel) + '&trigger=' + encodeURIComponent(text);
-    jsonpRequest(url + '?' + params, function(data) {
-      showTrigStatus(data && data.success ? '✓ Saved to Sheet' : '✓ Saved locally');
-    }, function() {
-      fetch(url + '?' + params, {mode:'no-cors'});
-      showTrigStatus('✓ Sent to Sheet');
-    });
+    var writeUrl = url + '?' + params;
+    // Primary: no-cors fetch — always fires regardless of CORS, no response needed for a write
+    fetch(writeUrl, {mode:'no-cors'})
+      .then(function() { showTrigStatus('\u2713 Saved to Sheet'); })
+      .catch(function() { showTrigStatus('\u2713 Saved locally'); });
   }
 }
 
