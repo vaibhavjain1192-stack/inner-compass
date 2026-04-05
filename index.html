@@ -118,20 +118,6 @@ h1 em{color:var(--saffron);font-style:italic}
 .hsteps li{font-size:.82rem;color:var(--ink);line-height:1.5;padding:2px 0 2px 13px;position:relative}
 .hsteps li::before{content:'·';position:absolute;left:0;color:var(--saffron);font-weight:700}
 
-/* TRIGGER MAP */
-.tadd{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:stretch}
-.tinput{flex:1;min-width:160px;border:1px solid var(--border);background:rgba(255,255,255,.55);font-family:'Cormorant Garamond',serif;font-size:.97rem;color:var(--ink);padding:9px 12px;outline:none;border-radius:1px;transition:border-color .2s}
-.tinput:focus{border-color:var(--saffron)}
-.tinput::placeholder{color:var(--ash);font-style:italic}
-.sel{border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.06em;color:var(--ink);padding:8px 10px;outline:none;border-radius:1px;cursor:pointer}
-.sel:focus{border-color:var(--saffron)}
-.titem{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:11px 14px;border:1px solid var(--border-lt);background:rgba(255,255,255,.45);border-radius:1px;margin-bottom:7px;animation:fadeIn .25s ease}
-.temo{font-family:'DM Mono',monospace;font-size:.56rem;color:var(--saffron);text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
-.ttext{font-size:.93rem;color:var(--ink);line-height:1.5;flex:1}
-.xbtn{background:none;border:none;color:var(--border);cursor:pointer;font-size:1rem;line-height:1;transition:color .2s;flex-shrink:0;padding:0 2px}
-.xbtn:hover{color:#c8503c}
-.empty-msg{text-align:center;padding:20px 16px;color:var(--ash);font-style:italic;font-size:.9rem;border:1px dashed var(--border-lt);border-radius:1px;line-height:1.5}
-
 /* LEARNINGS */
 .lcard{border:1px solid var(--border);border-radius:2px;padding:14px 16px;margin-bottom:10px;background:rgba(255,255,255,.45);animation:fadeIn .3s ease}
 .lcard.hidden{display:none}
@@ -185,6 +171,62 @@ h1 em{color:var(--saffron);font-style:italic}
 .lsearch:focus{border-color:var(--saffron)}
 .lcount{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin:10px 0 0}
 
+.ctag{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;padding:3px 8px;border:1px solid rgba(200,101,26,.3);background:rgba(200,101,26,.07);color:var(--saffron);border-radius:1px;white-space:nowrap}
+.ctag-blue{border-color:rgba(42,63,111,.3);background:rgba(42,63,111,.07);color:var(--blue)}
+.atag{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.08em;padding:2px 6px;border:1px solid rgba(200,101,26,.25);background:rgba(200,101,26,.06);color:var(--saffron);border-radius:1px;white-space:nowrap;display:inline-block;margin:1px 2px}
+.atag-blue{border-color:rgba(42,63,111,.25);background:rgba(42,63,111,.06);color:var(--blue)}
+.atag-green{border-color:rgba(61,107,79,.25);background:rgba(61,107,79,.06);color:var(--green)}
+.atag-amber{border-color:rgba(146,64,14,.25);background:rgba(146,64,14,.06);color:#92400e}
+.atag-red{border-color:rgba(200,80,60,.25);background:rgba(200,80,60,.06);color:#c8503c}
+.atag-purple{border-color:rgba(109,40,217,.25);background:rgba(109,40,217,.06);color:#6d28d9}
+.pritem-tags{margin-top:5px;line-height:2}
+.dasha-bar{background:rgba(42,63,111,.06);border:1px solid rgba(42,63,111,.2);border-radius:2px;padding:12px 16px;margin-bottom:14px}
+.dasha-bar-title{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:8px}
+.dasha-row{display:flex;gap:8px;align-items:flex-start;padding:5px 0;border-bottom:1px dotted var(--border-lt)}
+.dasha-row:last-child{border-bottom:none}
+.dasha-period{font-family:'DM Mono',monospace;font-size:.56rem;color:var(--blue);min-width:110px;padding-top:2px}
+.dasha-desc{font-size:.87rem;color:var(--ink);line-height:1.5;font-style:italic}
+.warn-box{background:rgba(200,80,60,.05);border:1px solid rgba(200,80,60,.2);border-radius:2px;padding:12px 16px;margin-top:10px}
+.warn-box-title{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:#c8503c;margin-bottom:8px}
+.good-box{background:rgba(61,107,79,.05);border:1px solid rgba(61,107,79,.2);border-radius:2px;padding:12px 16px;margin-top:10px}
+.good-box-title{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--green);margin-bottom:8px}
+
+/* PRINCIPLES */
+.prin-nav{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+.prtab{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 11px;border:1px solid var(--border);background:rgba(255,255,255,.5);color:var(--ash);cursor:pointer;border-radius:1px;transition:all .2s;display:flex;align-items:center;gap:5px}
+.prtab:hover{border-color:var(--saffron);color:var(--saffron)}
+.prtab.on{border-color:var(--saffron);background:var(--saffron);color:#fff}
+.prsec{display:none}
+.prsec.on{display:block;animation:fadeIn .25s ease}
+.prcard{background:var(--panel);border:1px solid var(--border);border-radius:2px;padding:0;margin-bottom:14px;overflow:hidden;position:relative}
+.prcard-head{padding:16px 20px 12px;border-bottom:1px solid var(--border-lt);display:flex;align-items:center;gap:10px}
+.prcard-ico{font-size:1.2rem;line-height:1}
+.prcard-title{font-size:1.05rem;font-weight:600;color:var(--ink);flex:1}
+.prcard-num{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--saffron);letter-spacing:.1em}
+.prcard-body{padding:16px 20px}
+.pritem{padding:9px 0;border-bottom:1px dashed var(--border-lt);display:flex;flex-direction:column;gap:3px}
+.pritem:last-child{border-bottom:none;padding-bottom:0}
+.pritem-rule{font-size:.97rem;font-weight:600;color:var(--ink);line-height:1.4}
+.pritem-sub{font-size:.87rem;color:var(--ash);font-style:italic;line-height:1.55}
+.pr-accent{display:inline-block;width:3px;height:100%;background:var(--saffron);position:absolute;top:0;left:0;bottom:0}
+.prcard.blue .pr-accent,.prcard.blue .prcard-num{color:var(--blue)}
+.prcard.blue::before,.prcard.green::before,.prcard.amber::before,.prcard.red::before,.prcard.purple::before,.prcard.teal::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:2px 0 0 2px;opacity:.7}
+.prcard::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--saffron);border-radius:2px 0 0 2px;opacity:.7}
+.prcard.blue::before{background:var(--blue)}
+.prcard.green::before{background:var(--green)}
+.prcard.amber::before{background:#92400e}
+.prcard.red::before{background:#c8503c}
+.prcard.purple::before{background:#6d28d9}
+.prcard.teal::before{background:#0f766e}
+.prin-master{background:rgba(200,101,26,.06);border:1px solid rgba(200,101,26,.25);border-radius:2px;padding:18px 20px;margin-top:6px}
+.prin-master-title{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:12px}
+.prin-row{display:flex;gap:8px;padding:6px 0;border-bottom:1px dotted var(--border-lt);align-items:flex-start}
+.prin-row:last-child{border-bottom:none}
+.prin-domain{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);min-width:80px;padding-top:2px}
+.prin-text{font-size:.88rem;color:var(--ink);line-height:1.5;font-style:italic}
+.prin-one{text-align:center;padding:20px;background:rgba(200,101,26,.05);border:1px solid rgba(200,101,26,.2);border-radius:2px;margin-top:14px}
+.prin-one p{font-size:1.1rem;font-style:italic;color:var(--ink);line-height:1.65;font-weight:300}
+
 /* SPINNER */
 .spin{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -213,6 +255,7 @@ h1 em{color:var(--saffron);font-style:italic}
     <button class="tab" data-t="habits">🌿 Foundation</button>
     <button class="tab" data-t="triggers">⚡ Trigger Map</button>
     <button class="tab" data-t="learnings">📖 Life Learnings</button>
+    <button class="tab" data-t="principles">📜 My Principles</button>
   </div>
 
   <!-- RIGHT NOW -->
@@ -389,6 +432,547 @@ h1 em{color:var(--saffron);font-style:italic}
     </details>
 
   </div>
+
+  <!-- PRINCIPLES TAB -->
+  <div class="tsec" id="tab-principles">
+
+    <!-- Chart snapshot banner -->
+    <div style="background:rgba(200,101,26,.06);border:1px solid rgba(200,101,26,.22);border-radius:2px;padding:14px 18px;margin-bottom:16px">
+      <div style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--saffron);margin-bottom:8px">My Chart at a Glance</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px">
+        <span class="ctag">Pisces ASC ♓</span><span class="ctag">Sun Gemini 4H ♊</span><span class="ctag">Moon Scorpio 9H ♏</span><span class="ctag">Mars Aries 2H ♈</span><span class="ctag">Venus Cancer 5H ♋</span><span class="ctag">Mercury Cancer 5H ♋</span><span class="ctag">Jupiter Leo 6H ♌</span><span class="ctag">Saturn Capricorn 11H ♑</span><span class="ctag">Rahu Sagittarius 10H ♐</span><span class="ctag">Ketu Gemini 4H</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:6px">
+        <span class="ctag ctag-blue">VE-ME Dasha 2026–28</span><span class="ctag ctag-blue">Sun Mahadasha 2030–36</span><span class="ctag ctag-blue">SU-RA Breakthrough 2031</span><span class="ctag ctag-blue">Freedom Age 43</span>
+      </div>
+    </div>
+
+    <!-- Sub-nav -->
+    <div class="prin-nav">
+      <button class="prtab on" onclick="switchPr(this,'finances')">💰 Finances</button>
+      <button class="prtab" onclick="switchPr(this,'career')">💼 Career</button>
+      <button class="prtab" onclick="switchPr(this,'relationships')">❤️ Relationships</button>
+      <button class="prtab" onclick="switchPr(this,'health')">🌿 Health</button>
+      <button class="prtab" onclick="switchPr(this,'family')">👨‍👩‍👧 Family</button>
+      <button class="prtab" onclick="switchPr(this,'emotions')">🌊 Emotions</button>
+      <button class="prtab" onclick="switchPr(this,'dasha')">🪐 Dasha Map</button>
+      <button class="prtab" onclick="switchPr(this,'master')">📋 Master Card</button>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ FINANCES -->
+    <div class="prsec on" id="pr-finances">
+      <div class="prcard">
+        <div class="prcard-head"><span class="prcard-ico">💰</span><span class="prcard-title">Financial Principles</span><span class="prcard-num">10 LAWS</span></div>
+        <div class="prcard-body">
+
+          <div class="pritem">
+            <div class="pritem-rule">Automate before you think</div>
+            <div class="pritem-sub">Money that doesn't touch your account gets invested. Set it up once. Never override it. Your 12th house leakage is automatic — your savings must match it.</div>
+            <div class="pritem-tags"><span class="atag-red atag">12th house SAV 22</span><span class="atag-red atag">Money leakage</span><span class="atag atag">Pisces ASC</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Never speculate. Ever. The lesson is paid in full.</div>
+            <div class="pritem-sub">Options trading, F&O, crypto — your 5th house SAV 23 makes speculation structurally loss-making. The 10-month trading failure was Saturn in 11th own sign delivering its mandatory lesson. One lesson. Course closed. Never reopen.</div>
+            <div class="pritem-tags"><span class="atag-red atag">5th house SAV 23</span><span class="atag-red atag">8th house SAV 19</span><span class="atag atag">Saturn 11H Capricorn</span><span class="atag atag">VE-SA lesson complete</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Know your freedom number — ₹8–10 crore corpus</div>
+            <div class="pritem-sub">Not ₹100 crore. Not Forbes. Your actual slow morning life costs ₹8–10 crore generating ₹55–80 lakh passive income annually. Every financial decision — does this build toward that number?</div>
+            <div class="pritem-tags"><span class="atag atag">Saturn 11H own sign</span><span class="atag-green atag">2nd house SAV 33</span><span class="atag-green atag">11th house SAV 33</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Earn boldly — Mars in Aries says ask for what you deserve</div>
+            <div class="pritem-sub">Mars in own sign in your 2nd house (wealth and income) gives you the planetary energy to negotiate assertively. Never accept the first salary offer. Never underprice. Your chart supports 50–60% above current income in 2026.</div>
+            <div class="pritem-tags"><span class="atag-green atag">Mars Aries 2H own sign</span><span class="atag atag">2nd cusp Star Lord Venus</span><span class="atag-blue atag">VE-ME-ME Dasha</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Build wealth in this order — no deviations</div>
+            <div class="pritem-sub">Career income → Business equity (OperionAI) → Long-term SIP → Property. This sequence is prescribed by your 2nd house (33), 11th house (33), and Saturn in 11th own sign. Everything outside this sequence is a Rahu-driven detour.</div>
+            <div class="pritem-tags"><span class="atag-green atag">2nd house SAV 33</span><span class="atag-green atag">11th house SAV 33</span><span class="atag atag">Rahu 10H Sagittarius</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Corpus before luxury — Saturn enforces this</div>
+            <div class="pritem-sub">Property only when corpus ≥ 3x value. Mercedes only when net worth exceeds ₹8 crore. Foreign vacation capped at 5% of annual income. Saturn retrograde on D-10 Ascendant punishes luxury before stability severely.</div>
+            <div class="pritem-tags"><span class="atag atag">Saturn® D-10 ASC</span><span class="atag-red atag">12th house SAV 22</span><span class="atag atag">4th house SAV 29</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Income rises — lifestyle grows at half the rate</div>
+            <div class="pritem-sub">Every salary increase: 50% invested, 50% lifestyle. Every OperionAI revenue increase: same rule. Your 12th house weakness (22) means unchecked lifestyle inflation is your single biggest wealth destroyer.</div>
+            <div class="pritem-tags"><span class="atag-red atag">12th house SAV 22</span><span class="atag-red atag">8th house SAV 19</span><span class="atag atag">Rahu restlessness</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Saturn in 11th own sign is your compounding machine — feed it</div>
+            <div class="pritem-sub">Saturn in Capricorn in its own sign in the 11th house of gains is the single strongest slow-wealth indicator in your chart. It does not do exciting wealth. It does permanent wealth. Trust the slow path — it delivers more than any shortcut ever has.</div>
+            <div class="pritem-tags"><span class="atag-green atag">Saturn Capricorn 11H ♑</span><span class="atag atag">Own sign — Swakshetra</span><span class="atag-green atag">11th house SAV 33</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">₹30 crore by 45 is 65–70% probable — if you execute</div>
+            <div class="pritem-sub">The chart supports it but requires: serious OperionAI (not a hobby), disciplined saving from 2026, and capitalising on the SU-RA breakthrough window (Feb 2031–Jan 2032). The 30% failure scenario is not bad luck — it is three avoidable behaviours: speculation, scattered focus, mediocre job change.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">SU-RA 2031–32</span><span class="atag atag">Sun Mahadasha 2030</span><span class="atag atag">Jupiter D-10 10H</span><span class="atag atag">Rahu® D-10 10H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">The 8th house (19) demands an emergency fund — always</div>
+            <div class="pritem-sub">Your weakest Ashtakvarga house score. Sudden unexpected financial events are more likely for your chart than average. Always maintain 6 months liquid before any property or business investment. Never let the corpus dip below safety level.</div>
+            <div class="pritem-tags"><span class="atag-red atag">8th house SAV 19</span><span class="atag atag">Ashtakvarga weak</span><span class="atag-red atag">Sudden loss indicator</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ CAREER -->
+    <div class="prsec" id="pr-career">
+      <div class="prcard blue">
+        <div class="prcard-head"><span class="prcard-ico">💼</span><span class="prcard-title">Career Principles</span><span class="prcard-num" style="color:var(--blue)">10 LAWS</span></div>
+        <div class="prcard-body">
+
+          <div class="pritem">
+            <div class="pritem-rule">The job is the vehicle. OperionAI is the destination.</div>
+            <div class="pritem-sub">Saturn retrograde on D-10 Ascendant means conventional employment is always a temporary structure for you. Your professional destiny is independent authority — not climbing someone else's ladder. The job funds the foundation. The business delivers the freedom.</div>
+            <div class="pritem-tags"><span class="atag atag">Saturn® D-10 ASC</span><span class="atag atag">Ketu® D-10 4H</span><span class="atag atag">Rahu 10H Sagittarius</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">May 15–28 is your single best interview window of 2026</div>
+            <div class="pritem-sub">Sun enters your 3rd house (SAV 35 — highest in chart). Mars settles in Aries 2nd (own sign). Mercury direct. Venus in 3rd. VE-ME-ME Pratyantardasha. All 4 KP career cusps simultaneously activated. This convergence appears once in several years. Be ready.</div>
+            <div class="pritem-tags"><span class="atag-green atag">3rd house SAV 35</span><span class="atag atag">Sun transit 3H</span><span class="atag-blue atag">VE-ME-ME Pratyantardasha</span><span class="atag atag">KP 10th cusp Sub Lord Venus</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Communication is your 3rd house superpower — use it daily</div>
+            <div class="pritem-sub">3rd house SAV 35 is the highest score in your entire Ashtakvarga chart. This house governs speech, writing, courage, and communication. Every rupee invested in how you speak, write, and present returns more than any other investment you can make.</div>
+            <div class="pritem-tags"><span class="atag-green atag">3rd house SAV 35 ★</span><span class="atag atag">Mercury Cancer 5H</span><span class="atag atag">Sun Gemini 4H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">One thing. Deep. Rahu in 10th cannot scatter.</div>
+            <div class="pritem-sub">Rahu in Sagittarius 10th house shows you every opportunity simultaneously — every direction seems exciting and more promising than what you have. Rahu retrograde in D-10 10th punishes scattered energy severely. OperionAI needs your full obsession. Not three businesses. One.</div>
+            <div class="pritem-tags"><span class="atag atag">Rahu Sagittarius 10H ♐</span><span class="atag atag">Rahu® D-10 10H</span><span class="atag atag">Obsession trap</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Global from day one — Mars D-10 9th prescribes it</div>
+            <div class="pritem-sub">Mars in D-10 9th house means professional fortune comes through international expansion and foreign connections. Rahu in Sagittarius (most travel-oriented sign) in 10th confirms this. Sun + Moon in D-10 11th says your biggest recognition comes from beyond India. First international OperionAI client by 2027 — not aspirational, prescribed.</div>
+            <div class="pritem-tags"><span class="atag atag">Mars D-10 9H</span><span class="atag atag">Rahu Sagittarius</span><span class="atag atag">Sun+Moon D-10 11H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Build permanently — Saturn® D-10 ASC demands it</div>
+            <div class="pritem-sub">Revenue over valuation. Reputation over recognition. Depth over breadth. Saturn retrograde on D-10 Ascendant specifically rewards permanence and punishes shortcuts. The business that lasts is the one worth building. OperionAI should be profitable before it is funded.</div>
+            <div class="pritem-tags"><span class="atag atag">Saturn® D-10 ASC</span><span class="atag atag">D-10 Dasamsa</span><span class="atag-blue atag">Jupiter D-10 10H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Sun Mahadasha (2030–2036) is your peak — prepare for it now</div>
+            <div class="pritem-sub">Your natal Sun in Gemini 4th house. Sun is the natural Karaka (significator) of the 10th house of career. 6 years of Sun Mahadasha arriving at ages 37–43 — prime professional years. Everything before 2030 is foundation. Everything from 2030 is delivery.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">Sun Mahadasha 2030</span><span class="atag atag">Sun Gemini 4H</span><span class="atag atag">10th house Karaka</span><span class="atag atag">10th house SAV 31</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">SU-RA (Feb 2031–Jan 2032) is your career defining window</div>
+            <div class="pritem-sub">Sun Mahadasha + Rahu sub-period. Rahu is in your natal 10th house. When Rahu runs as sub-period under Sun, it activates its own natal position with maximum force. Jupiter + Rahu in D-10 10th house both activated simultaneously. This 11-month window is the single most explosive career and business period in your entire 10-year outlook. Be ready for it.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">SU-RA 2031–32 ★</span><span class="atag atag">Rahu 10H natal</span><span class="atag atag">Jupiter D-10 10H</span><span class="atag atag">Rahu® D-10 10H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">The one mandatory setback is coming — 2028–2030</div>
+            <div class="pritem-sub">VE-KE Antardasha (Nov 2028–Jan 2030). Ketu sits in your 4th house natally. Saturn® retrograde on D-10 Ascendant guarantees one significant professional challenge before peak success. It will involve OperionAI or the new career direction. Build financial reserves before 2028. Do not make permanent decisions during the setback.</div>
+            <div class="pritem-tags"><span class="atag-red atag">VE-KE 2028–30</span><span class="atag atag">Saturn® D-10 ASC</span><span class="atag atag">Ketu 4H natal</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Leave every role with grace — your network is your Rahu fuel</div>
+            <div class="pritem-sub">Rahu in 10th creates friction with authority figures and conventional structures. The temptation to exit dramatically is real. Resist it. Your boAt network is OperionAI's first potential client and referral base. Every graceful exit compounds your professional reputation for decades.</div>
+            <div class="pritem-tags"><span class="atag atag">Rahu 10H authority friction</span><span class="atag atag">Mercury D-10 7H partnerships</span><span class="atag-green atag">10th house SAV 31</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ RELATIONSHIPS -->
+    <div class="prsec" id="pr-relationships">
+      <div class="prcard red">
+        <div class="prcard-head"><span class="prcard-ico">❤️</span><span class="prcard-title">Relationship Principles</span><span class="prcard-num" style="color:#c8503c">8 LAWS</span></div>
+        <div class="prcard-body">
+
+          <div class="pritem">
+            <div class="pritem-rule">Your wife's instinct is your second internal compass</div>
+            <div class="pritem-sub">She has been right every time. The boAt pitch — she said no. Your Scorpio Moon said no. Both were right simultaneously. Moon in Scorpio 9th house gives you extraordinary intuition — and your life partner reflects that same quality. This is not dependency. This is your chart's most reliable decision system.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H ♏</span><span class="atag atag">Pisces ASC intuition</span><span class="atag atag">7th house SAV 28</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Saturn in 7th (D-10) demands serious, integrity-based partnerships</div>
+            <div class="pritem-sub">Mercury in D-10 7th house — business partnerships and client relationships are a wealth multiplier when right, a wealth destroyer when wrong. Evaluate partners on behaviour under pressure, not enthusiasm during good times. Every business partnership needs a formal agreement — friendship does not replace documentation.</div>
+            <div class="pritem-tags"><span class="atag atag">Mercury D-10 7H</span><span class="atag atag">7th house SAV 28</span><span class="atag atag">Partnership axis</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Protect the private relationship from the public Rahu ambition</div>
+            <div class="pritem-sub">Rahu in 10th creates insatiable professional drive that will always suggest one more hour of work matters more than one hour at home. It is usually wrong. One protected screen-free evening per week — non-negotiable. No career milestone justifies depleting the relationship that makes the slow morning life worth having.</div>
+            <div class="pritem-tags"><span class="atag atag">Rahu 10H obsession</span><span class="atag atag">Venus Cancer 5H</span><span class="atag atag">Moon Scorpio 9H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Celebrate every win together — Venus in 5th demands shared joy</div>
+            <div class="pritem-sub">Venus in Cancer in your 5th house (the house of joy and love) means shared celebration is not optional sentimentality — it is how your chart maintains relational health. Your Scorpio Moon processes privately. Counter this deliberately. Mark every milestone together.</div>
+            <div class="pritem-tags"><span class="atag atag">Venus Cancer 5H ♋</span><span class="atag atag">5th house joy Purva Punya</span><span class="atag atag">Moon Scorpio suppression</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Your social circle shapes your Rahu trajectory</div>
+            <div class="pritem-sub">Pisces Ascendant absorbs energy from those around you more than most signs. Rahu in 10th amplifies whoever is in your close orbit. Choose people who are building, thinking, and growing with integrity. Distance gently from those who drain or diminish. You become the average of your five closest relationships.</div>
+            <div class="pritem-tags"><span class="atag atag">Pisces ASC absorption</span><span class="atag atag">Rahu 10H amplification</span><span class="atag atag">Jupiter 6H influence</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Marriage strengthens your D-10 business destiny</div>
+            <div class="pritem-sub">In the Navamsa and D-10 reading, the 7th house Muntha year (2034–2035) specifically indicates partnerships — including marriage — amplifying business results. Rahu in 10th of Navamsa: these natives attract more wealth and fame through their partner. Your wife is not just your companion — she is your karmic business amplifier.</div>
+            <div class="pritem-tags"><span class="atag atag">Muntha 7H 2034–35</span><span class="atag atag">Rahu Navamsa 10H</span><span class="atag atag">Mercury D-10 7H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Don't bring work energy to the dinner table every night</div>
+            <div class="pritem-sub">Career conversations have a time limit at home. Your Scorpio Moon and Pisces Ascendant both absorb and hold emotional tone. If work stress dominates the home atmosphere, your nervous system never fully resets — and your gut health (Cancer planets) pays the price.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio emotional hold</span><span class="atag atag">Pisces ASC absorption</span><span class="atag atag">Cancer planets gut health</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Be the same person in every room — Rahu's integrity test</div>
+            <div class="pritem-sub">Rahu in 10th creates the temptation to manage perception and be whoever the room needs. Saturn retrograde on D-10 Ascendant punishes inauthenticity in professional life severely. The shortcuts Rahu suggests — Saturn bills later with interest. The person at home and the person in the boardroom must be identical.</div>
+            <div class="pritem-tags"><span class="atag atag">Rahu 10H perception</span><span class="atag atag">Saturn® D-10 ASC integrity</span><span class="atag atag">Ketu dharma 4H</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ HEALTH -->
+    <div class="prsec" id="pr-health">
+      <div class="prcard green">
+        <div class="prcard-head"><span class="prcard-ico">🌿</span><span class="prcard-title">Health Principles</span><span class="prcard-num" style="color:var(--green)">9 LAWS</span></div>
+        <div class="prcard-body">
+
+          <div class="pritem">
+            <div class="pritem-rule">Emotional processing is physical medicine — Cancer planets demand it</div>
+            <div class="pritem-sub">Mercury and Venus in Cancer 5th house + Moon in Scorpio. Cancer rules stomach, chest, and digestion. When you suppress emotion — your gut shows it first. Acidity, bloating, IBS-type symptoms during stress periods are your body's Cancer planet warning system. Process feelings or your body processes them for you.</div>
+            <div class="pritem-tags"><span class="atag atag">Mercury-Venus Cancer 5H ♋</span><span class="atag atag">Moon Scorpio suppression</span><span class="atag atag">Cancer rules stomach</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Sleep before midnight — Scorpio Moon's repair window</div>
+            <div class="pritem-sub">Moon in Scorpio processes emotional content deepest between 10pm and 2am. Being awake during this window means your nervous system and emotional body do not get their deepest repair cycle. 7 hours minimum. Before midnight. Non-negotiable. No business milestone is worth chronic nervous system depletion.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H ♏</span><span class="atag atag">Mercury nervous system</span><span class="atag atag">Pisces ASC sensitivity</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Morning routine before the phone — Pisces ASC needs clean starts</div>
+            <div class="pritem-sub">Your Pisces Ascendant (ruled by Jupiter) is one of the most psychically absorbent placements in the zodiac. The first 20 minutes of your day program your entire nervous system. The phone immediately after waking fills your system with others' urgency before you have heard your own voice. 20 minutes minimum — walk, stretch, breathe, journal.</div>
+            <div class="pritem-tags"><span class="atag atag">Pisces ASC ♓</span><span class="atag atag">Jupiter rules ASC</span><span class="atag atag">Neptune Sagittarius 10H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Move your body to move your Scorpio emotions</div>
+            <div class="pritem-sub">Moon in Scorpio holds emotional tension in the physical body. Evening walks are not leisure for your chart — they are emotional regulation prescribed by your Moon placement. Rhythm-based exercise specifically: walking, swimming, yoga. These match your Cancer-Pisces water energy. 30 minutes daily converts unprocessed emotion into physical release.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H</span><span class="atag atag">Pisces ASC water sign</span><span class="atag atag">Cancer planets 5H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Gut health is your body's primary stress indicator</div>
+            <div class="pritem-sub">Sun in Gemini rules lungs and nervous system. Venus-Mercury in Cancer rules digestion. Scorpio Moon rules elimination. Three different sensitive body systems converging on your chart. When stressed: digestion first, then nervous system, then immunity. Warm water with meals. No cold drinks. Regular eating times. Never skip meals during pressure periods.</div>
+            <div class="pritem-tags"><span class="atag atag">Sun Gemini lungs/nerves</span><span class="atag atag">Cancer planets digestion</span><span class="atag atag">Scorpio Moon elimination</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Annual checkup — 8th house SAV 19 is non-negotiable</div>
+            <div class="pritem-sub">Your 8th house Ashtakvarga score of 19 is your weakest score in the chart. The 8th house governs sudden health events, chronic conditions, and hidden medical matters. Sudden illness is more likely for your chart than average. Prevention is not optional — it is actuarial strategy. Blood pressure, blood sugar, vitamin D, thyroid — know your numbers annually.</div>
+            <div class="pritem-tags"><span class="atag-red atag">8th house SAV 19 ★</span><span class="atag atag">6th house SAV 24</span><span class="atag atag">Sudden events indicator</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Saturn in Capricorn 11th — protect joints and skeletal health</div>
+            <div class="pritem-sub">Capricorn rules joints, knees, bones, and skin. Saturn here means skeletal and joint health need preventive care as you move through your 30s. Not an immediate crisis — a long-term management responsibility. Weight-bearing exercise, calcium and vitamin D intake, posture awareness especially with desk work. Build these habits now before they become problems.</div>
+            <div class="pritem-tags"><span class="atag atag">Saturn Capricorn 11H</span><span class="atag atag">Capricorn rules joints</span><span class="atag atag">Long-term Saturn care</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Peak performance periods need deliberate nervous system protection</div>
+            <div class="pritem-sub">Before every important interview, presentation, or business meeting: light meal 2 hours before, 10-minute walk immediately before, no caffeine after 2pm on high-stakes days. Your Gemini Sun + Mercury in 5th means your nervous system is your performance instrument — it must be tuned deliberately, not exhausted into peak performance.</div>
+            <div class="pritem-tags"><span class="atag atag">Sun Gemini nervous system</span><span class="atag atag">Mercury Cancer 5H</span><span class="atag-blue atag">VE-ME peak windows</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Health improves dramatically after job change — VE-SA weight lifts</div>
+            <div class="pritem-sub">Much of your current physical stress — digestive issues, low energy, sleep disruption — is directly connected to the VE-SA Antardasha pressure and career frustration. VE-SA ended January 2026. VE-ME is running. When the job changes in May–August 2026, expect a visible and rapid improvement in physical wellbeing. The chart and the body are one system.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">VE-SA ended Jan 2026</span><span class="atag-blue atag">VE-ME-ME running</span><span class="atag atag">Stress-health axis</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ FAMILY -->
+    <div class="prsec" id="pr-family">
+      <div class="prcard amber">
+        <div class="prcard-head"><span class="prcard-ico">👨‍👩‍👧</span><span class="prcard-title">Family Principles</span><span class="prcard-num" style="color:#92400e">8 LAWS</span></div>
+        <div class="prcard-body">
+
+          <div class="pritem">
+            <div class="pritem-rule">Build the financial foundation before expanding the family</div>
+            <div class="pritem-sub">5th house SAV 23 is one of your weakest scores — children require patience and planning. First property secured. Emergency fund intact. OperionAI generating supplementary income. Financial readiness is not selfishness — it is responsible parenting that begins before the children arrive. First child window: 2028–2031.</div>
+            <div class="pritem-tags"><span class="atag-red atag">5th house SAV 23</span><span class="atag atag">Venus Cancer 5H ♋</span><span class="atag atag">Mercury Cancer 5H</span><span class="atag-blue atag">First child 2028–31</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Two children — Mercury and Venus in 5th indicate this</div>
+            <div class="pritem-sub">Mercury (dual planet) and Venus (governs pairs and even numbers) both sitting in your 5th house (house of children) together suggests two children. Jupiter in Leo 6th — as Putrakaraka (natural significator of children) in the 6th house — moderates the number away from three or more. Patience in conception may be required — 5th house SAV 23 and Jupiter in 6th both suggest this.</div>
+            <div class="pritem-tags"><span class="atag atag">Mercury 5H dual nature</span><span class="atag atag">Venus 5H even numbers</span><span class="atag atag">Jupiter 6H Putrakaraka</span><span class="atag atag">5th house SAV 23</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">The slow morning life is a family gift — not just personal</div>
+            <div class="pritem-sub">Ketu retrograde in D-10 4th house says your deepest professional satisfaction comes from inner alignment and family freedom — not external achievement. A present, unhurried, financially free parent is worth more to children than an achieving, absent, stressed one. Build the freedom life for the family — not just for yourself.</div>
+            <div class="pritem-tags"><span class="atag atag">Ketu® D-10 4H</span><span class="atag atag">4th house SAV 29</span><span class="atag atag">Moon 9H freedom</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Protect family time from Rahu's professional obsession</div>
+            <div class="pritem-sub">Rahu in 10th will always suggest that one more hour of work matters more than one hour at home. It is usually wrong. The business can wait one evening. The moment your child takes their first step cannot be rescheduled. Rahu's karmic lesson is specifically about learning that achievement without presence is hollow.</div>
+            <div class="pritem-tags"><span class="atag atag">Rahu 10H obsession</span><span class="atag atag">Ketu 4H home karmic</span><span class="atag atag">Rahu-Ketu axis 4H–10H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Your parents and elders are your karmic anchor — Ketu in 4th</div>
+            <div class="pritem-sub">Ketu in the 4th house natally indicates deep past-life connections to home, roots, and ancestral lineage. Neglecting parental relationships creates subtle karmic friction that shows up in the 8th house (sudden events) and 12th house (losses). Maintain these relationships consciously — even when career and business pull you away.</div>
+            <div class="pritem-tags"><span class="atag atag">Ketu Gemini 4H</span><span class="atag atag">4th house roots ancestry</span><span class="atag-red atag">8th house SAV 19</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Your children will inherit your Saturn discipline — or your Rahu restlessness</div>
+            <div class="pritem-sub">Moon in Scorpio 9th — children absorb depth and intensity from you. Mercury-Venus in Cancer 5th — they will be emotionally intelligent and intellectually sharp. The habits you build now — financial discipline, emotional processing, communication — are what they inherit unconsciously. Live the principles. Don't just recite them.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H</span><span class="atag atag">Mercury-Venus Cancer 5H</span><span class="atag atag">Saturn 11H discipline</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Be the financial example your family needs — generational wealth</div>
+            <div class="pritem-sub">Saturn in Capricorn 11th own sign is not just building your corpus — it is establishing your family's relationship with money for the next generation. The financial principles you practice become your children's default operating system. You are building generational wealth patterns, not just a retirement fund.</div>
+            <div class="pritem-tags"><span class="atag-green atag">Saturn Capricorn 11H own sign</span><span class="atag-green atag">11th house SAV 33</span><span class="atag atag">Generational Karma</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Home and property are 4th house gifts — build them deliberately</div>
+            <div class="pritem-sub">4th house SAV score 29 — good. Jupiter in D-10 10th aspects the 4th house. First property most likely 2028–2030 when Muntha moves to 2nd house and Sun Mahadasha begins. Second property 2033–2035 during Muntha 7th house year. Property is Saturn-approved wealth — permanent, tangible, and compound.</div>
+            <div class="pritem-tags"><span class="atag atag">4th house SAV 29</span><span class="atag atag">Muntha 2H 2029–30</span><span class="atag atag">Jupiter D-10 10H aspect</span><span class="atag-blue atag">First property 2028–30</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ EMOTIONS -->
+    <div class="prsec" id="pr-emotions">
+      <div class="prcard purple">
+        <div class="prcard-head"><span class="prcard-ico">🌊</span><span class="prcard-title">Emotional Principles</span><span class="prcard-num" style="color:#6d28d9">9 LAWS</span></div>
+        <div class="prcard-body">
+
+          <div class="pritem">
+            <div class="pritem-rule">Say it when it is 2 — not when Scorpio Moon makes it 9</div>
+            <div class="pritem-sub">Scorpio Moon in 9th house is the world champion of holding things in. You process deeply, feel intensely, and share rarely. This creates slow-building resentment that erupts disproportionately. Express dissatisfaction when it is level 2. A 2-minute honest conversation beats a 2-hour explosion every time. Your most important relationships depend on this.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H ♏</span><span class="atag atag">Scorpio suppression pattern</span><span class="atag atag">Pisces ASC absorption</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Distinguish Rahu restlessness from Scorpio Moon intuition</div>
+            <div class="pritem-sub">You will regularly feel a strong pull toward something new — new business, new city, new direction. This can be genuine Scorpio Moon knowing OR Rahu's restless hunger. The test: genuine intuition feels quiet and certain (Moon). Rahu's restlessness feels urgent and exciting (Rahu). Wait 30 days. One fades. The other doesn't. This distinction has saved you from major mistakes and will again.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio intuition</span><span class="atag atag">Rahu 10H restlessness</span><span class="atag atag">30-day decision rule</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Your Pisces sensitivity is data — not weakness</div>
+            <div class="pritem-sub">Pisces Ascendant ruled by Jupiter absorbs environmental and emotional energy more than almost any other Ascendant. You will sometimes feel inexplicably drained, heavy, or anxious without clear cause. This is not irrational — it is your antenna picking up real signals about people, places, and situations. Honor it. Protect your energy deliberately. Not every room deserves your presence.</div>
+            <div class="pritem-tags"><span class="atag atag">Pisces ASC ♓</span><span class="atag atag">Jupiter rules ASC</span><span class="atag atag">Neptune Sagittarius 10H</span><span class="atag atag">Psychic absorption</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Process before deciding — wait 24 hours minimum</div>
+            <div class="pritem-sub">Scorpio Moon makes the worst decisions under emotional flooding. When something triggers strong emotion — anger, fear, excitement, hurt — the Scorpio Moon activates intensity that distorts judgment. Wait 24 hours before responding. Wait 72 hours before deciding anything permanent. The emotion is real and valid. The decision made inside it is rarely right.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio intensity</span><span class="atag atag">8th house SAV 19 sudden</span><span class="atag atag">Mars Aries impulsive</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Grieve the failures fully — Scorpio Moon requires complete release</div>
+            <div class="pritem-sub">The trading failure. The lost year. The forced restart. Scorpio Moon needs to feel loss completely and honestly before it can release it. Rushed recovery is suppression in disguise — it stores in the body (Cancer planets) and creates physical symptoms later. Feel it. Learn from it. Release it. Never repeat it. This is the Scorpio Moon's most important operating instruction.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H</span><span class="atag atag">VE-SA losses processed</span><span class="atag atag">Cancer planets body storage</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Solitude is Scorpio Moon's maintenance — protect it daily</div>
+            <div class="pritem-sub">Moon in Scorpio in 9th house needs regular time completely alone — not passive scrolling, not background Netflix. Genuine silence. 30 minutes daily minimum. This is where your best ideas form, your deepest intuitions surface, and your nervous system resets. It is the source from which everything else flows. Guard it like an appointment.</div>
+            <div class="pritem-tags"><span class="atag atag">Moon Scorpio 9H ♏</span><span class="atag atag">9th house philosophy</span><span class="atag atag">Pisces ASC inner world</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Joy deserves as much attention as analysis</div>
+            <div class="pritem-sub">Scorpio Moon and Pisces Ascendant both naturally gravitate toward depth, complexity, and emotional intensity. You spend more time analysing problems than savouring victories. Venus in Cancer 5th house specifically governs joy, creativity, and emotional pleasure — this planet needs regular nourishment. The job offer deserves celebration. The first OperionAI client deserves a moment. Joy ignored becomes hard to access.</div>
+            <div class="pritem-tags"><span class="atag atag">Venus Cancer 5H joy</span><span class="atag atag">5th house Purva Punya</span><span class="atag atag">Moon Scorpio depth bias</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Your peak is ahead — Saturn's compression is complete</div>
+            <div class="pritem-sub">3.5 years of VE-SA (Venus-Saturn Antardasha) compressed you — the trading failure, forced restart, Mumbai move, career frustration, 6 months of failed job applications. VE-SA ended January 2026. The spring does not compress forever. You are not behind. You are not recovering from failure. You are launching from the foundation Saturn built.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">VE-SA ended Jan 2026 ★</span><span class="atag-blue atag">VE-ME-ME now running</span><span class="atag atag">Saturn compression law</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Authority conflict is Rahu's karma — navigate strategically not impulsively</div>
+            <div class="pritem-sub">Rahu in 10th + Saturn retrograde D-10 Ascendant creates specific friction with bosses, institutions, and conventional authority. You will frequently disagree with how organisations are run. This is accurate perception — not arrogance. The strategy: strategic patience until your own exit, not dramatic confrontation. Pick battles that matter. Leave every room intact.</div>
+            <div class="pritem-tags"><span class="atag atag">Rahu 10H authority friction</span><span class="atag atag">Saturn® D-10 ASC</span><span class="atag atag">Strategic patience</span></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ DASHA MAP -->
+    <div class="prsec" id="pr-dasha">
+      <div class="prcard teal">
+        <div class="prcard-head"><span class="prcard-ico">🪐</span><span class="prcard-title">My Dasha Roadmap</span><span class="prcard-num" style="color:#0f766e">2026–2040</span></div>
+        <div class="prcard-body">
+
+          <div class="dasha-bar">
+            <div class="dasha-bar-title">Vimshottari Mahadasha Sequence</div>
+            <div class="dasha-row"><span class="dasha-period">Now–Jan 2030</span><span class="dasha-desc"><strong>Venus Mahadasha</strong> — VE-ME Antardasha running. Peak communication and creative period. Job change window. OperionAI foundation. Income jump.</span></div>
+            <div class="dasha-row"><span class="dasha-period">Jan 2030–Jan 2036</span><span class="dasha-desc"><strong>Sun Mahadasha</strong> — Peak career authority. Thought leadership explodes. SU-RA breakthrough (2031). Business scales. ₹25–35Cr wealth window.</span></div>
+            <div class="dasha-row"><span class="dasha-period">Jan 2036–Jan 2046</span><span class="dasha-desc"><strong>Moon Mahadasha</strong> — Emotional mastery. Public recognition. Slow morning life funded. Generational wealth consolidation.</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">VE-ME-ME (Now — May 29, 2026) — Peak interview window</div>
+            <div class="pritem-sub">Pure Mercury energy at all sub-levels. Mercury is Star Lord + Sub Lord of your 1st KP cusp. Personal impression on interviewers is at maximum. May 15–28 is your single best interview window. The communication blockage of VE-SA is completely gone.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">VE-ME-ME now ★</span><span class="atag atag">Mercury 1st cusp Star+Sub Lord</span><span class="atag-green atag">3rd house SAV 35</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">VE-ME-KE (May 29 — July 28, 2026) — Endings and fated events</div>
+            <div class="pritem-sub">Ketu Pratyantardasha brings sudden completions and unexpected developments. Jupiter enters exaltation Cancer June 2. Sign any offer before June 25 (Mercury retrograde June 30). This window supports resignation and karmic endings of what no longer serves you.</div>
+            <div class="pritem-tags"><span class="atag atag">VE-ME-KE</span><span class="atag atag">Jupiter exalted Cancer Jun 2</span><span class="atag-red atag">Mercury retrograde Jun 30</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">VE-ME-VE (July 28, 2026 — Jan 17, 2027) — Peak period</div>
+            <div class="pritem-sub">Venus at all 3 Dasha levels simultaneously. Venus controls 10th cusp (career), 11th cusp (gains), and 2nd cusp (income) in KP. Rahu exits 12th house July 26 — 18-month blockage fully cleared. New Varshphal year begins July 11 with Muntha in 11th (gains). Best joining window.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">VE-ME-VE peak ★</span><span class="atag atag">Rahu exits 12H Jul 26</span><span class="atag atag">Muntha 11H Jul 2026</span><span class="atag atag">KP all 4 cusps Venus</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">VE-KE (Nov 2028 — Jan 2030) — The mandatory setback</div>
+            <div class="pritem-sub">Ketu Antardasha within Venus Mahadasha. The D-10 Saturn setback window. Business or career faces a serious challenge. Build financial reserves before this period. Do not make permanent decisions from temporary pain. This setback contains the exact lesson that unlocks Sun Mahadasha peak success.</div>
+            <div class="pritem-tags"><span class="atag-red atag">VE-KE setback</span><span class="atag atag">Saturn® D-10 ASC lesson</span><span class="atag atag">Ketu 4H natal</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">SU-SU (Jan 2030) — Sun Mahadasha ignition</div>
+            <div class="pritem-sub">The Mahadasha opens with pure Sun energy. New chapter begins with unmistakable professional clarity. Leadership identity crystallises. The person who emerges from VE-KE's lessons is the person capable of building what Sun Mahadasha promises. Identity shift from employee to founder completes.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">Sun Mahadasha 2030 ★</span><span class="atag atag">Sun Gemini 4H</span><span class="atag atag">10th Karaka activated</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">SU-RA (Feb 2031 — Jan 2032) — Career defining breakthrough</div>
+            <div class="pritem-sub">The single most important 11-month window in your entire 10-year outlook. Sun authority + Rahu unconventional disruption. Rahu in your natal 10th activates its own position through the sub-period. Jupiter + Rahu in D-10 10th both delivering maximum force. Funding event, major enterprise client, acquisition interest, or dramatic public recognition — at least one non-linear event almost certain.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">SU-RA Feb 2031 ★★</span><span class="atag atag">Rahu 10H natal activated</span><span class="atag atag">Jupiter D-10 10H</span><span class="atag atag">Rahu® D-10 10H</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">SU-JU (Jan 2032 — Nov 2032) — Wisdom and institutional recognition</div>
+            <div class="pritem-sub">Jupiter sub-period within Sun Mahadasha. Teaching, mentoring, thought leadership roles emerge. Business enters mature growth phase. International expansion deepens. Jupiter in Leo 6H natal — in the service house — means wisdom delivered as service to others becomes a major professional theme and income source.</div>
+            <div class="pritem-tags"><span class="atag-blue atag">SU-JU 2032</span><span class="atag atag">Jupiter Leo 6H</span><span class="atag atag">Thought leadership peak</span></div>
+          </div>
+
+          <div class="pritem">
+            <div class="pritem-rule">Varshphal Muntha sequence — annual career theme engine</div>
+            <div class="pritem-sub">Muntha advances one sign per year from Pisces Ascendant. Current year (2025–26): Muntha 10th — career transformation. July 2026–27: Muntha 11th — financial gains. July 2027–28: Muntha 12th — international groundwork. July 2028–29: Muntha 1st — identity reinvention. July 2029–30: Muntha 2nd — wealth foundation. July 2030–31: Muntha 3rd — communication explosion.</div>
+            <div class="pritem-tags"><span class="atag atag">Muntha 10H now ★</span><span class="atag atag">Muntha 11H Jul 2026</span><span class="atag atag">Muntha 3H Jul 2030</span><span class="atag atag">Varshphal annual map</span></div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Ashtakvarga scores reference -->
+      <div class="prcard" style="margin-top:14px">
+        <div class="prcard-head"><span class="prcard-ico">📊</span><span class="prcard-title">Ashtakvarga House Scores</span><span class="prcard-num">SAV CHART</span></div>
+        <div class="prcard-body">
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px">
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">1H SELF</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">31</div><div style="font-size:.7rem;color:var(--green)">Strong</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">2H WEALTH</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">33</div><div style="font-size:.7rem;color:var(--green)">Excellent</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid rgba(200,101,26,.4);border-radius:2px;background:rgba(200,101,26,.08)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--saffron);letter-spacing:.1em">3H COMM ★</div><div style="font-size:1.4rem;font-weight:600;color:var(--saffron)">35</div><div style="font-size:.7rem;color:var(--saffron)">Highest</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">4H HOME</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">29</div><div style="font-size:.7rem;color:var(--green)">Good</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid rgba(200,80,60,.3);border-radius:2px;background:rgba(200,80,60,.05)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:#c8503c;letter-spacing:.1em">5H LOVE</div><div style="font-size:1.4rem;font-weight:600;color:#c8503c">23</div><div style="font-size:.7rem;color:#c8503c">Weak</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid rgba(200,80,60,.3);border-radius:2px;background:rgba(200,80,60,.05)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:#c8503c;letter-spacing:.1em">6H WORK</div><div style="font-size:1.4rem;font-weight:600;color:#c8503c">24</div><div style="font-size:.7rem;color:#c8503c">Below avg</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">7H PARTNER</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">28</div><div style="font-size:.7rem;color:var(--ash)">Average</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid rgba(200,80,60,.4);border-radius:2px;background:rgba(200,80,60,.08)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:#c8503c;letter-spacing:.1em">8H SUDDEN ★</div><div style="font-size:1.4rem;font-weight:600;color:#c8503c">19</div><div style="font-size:.7rem;color:#c8503c">Weakest</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">9H LUCK</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">29</div><div style="font-size:.7rem;color:var(--green)">Good</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">10H CAREER</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">31</div><div style="font-size:.7rem;color:var(--green)">Strong</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid var(--border);border-radius:2px;background:rgba(255,255,255,.4)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);letter-spacing:.1em">11H GAINS</div><div style="font-size:1.4rem;font-weight:600;color:var(--ink)">33</div><div style="font-size:.7rem;color:var(--green)">Excellent</div></div>
+            <div style="text-align:center;padding:8px;border:1px solid rgba(200,80,60,.3);border-radius:2px;background:rgba(200,80,60,.05)"><div style="font-family:'DM Mono',monospace;font-size:.56rem;color:#c8503c;letter-spacing:.1em">12H LOSS</div><div style="font-size:1.4rem;font-weight:600;color:#c8503c">22</div><div style="font-size:.7rem;color:#c8503c">Weak</div></div>
+          </div>
+          <div class="good-box">
+            <div class="good-box-title">Strength Zones — Lean In</div>
+            <p style="font-size:.87rem;color:var(--ink);line-height:1.6;font-style:italic">3H Communication (35★), 2H Wealth (33), 11H Gains (33), 1H Self (31), 10H Career (31) — Your career, communication, and wealth houses are genuinely strong. These are your natural lanes.</p>
+          </div>
+          <div class="warn-box">
+            <div class="warn-box-title">Caution Zones — Manage Deliberately</div>
+            <p style="font-size:.87rem;color:var(--ink);line-height:1.6;font-style:italic">8H Sudden Events (19★), 12H Leakage (22), 5H Speculation (23), 6H Daily Work (24) — These require conscious management. Emergency fund, no speculation, discipline in daily routines, watch unexpected events.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- KP Cusps reference -->
+      <div class="prcard" style="margin-top:14px">
+        <div class="prcard-head"><span class="prcard-ico">🔑</span><span class="prcard-title">KP Career Cusps — Why Venus Rules</span><span class="prcard-num">KP SYSTEM</span></div>
+        <div class="prcard-body">
+          <div class="pritem"><div class="pritem-rule">10th cusp (Career) — Sign: Sagittarius, Star Lord: Venus, Sub Lord: Venus</div><div class="pritem-sub">Both Star Lord and Sub Lord of your career house are Venus. You are in Venus Mahadasha. Career matters are cosmically live and activated.</div><div class="pritem-tags"><span class="atag atag">10th cusp Sub Lord Venus</span><span class="atag-blue atag">VE-ME Dasha</span></div></div>
+          <div class="pritem"><div class="pritem-rule">11th cusp (Gains) — Sign: Capricorn, Star Lord: Sun, Sub Lord: Venus</div><div class="pritem-sub">Gains house Sub Lord is Venus. Sun is Star Lord — Sun Mahadasha (2030) activates gains directly. Venus Dasha activates gains now.</div><div class="pritem-tags"><span class="atag atag">11th cusp Sub Lord Venus</span><span class="atag-blue atag">Sun Mahadasha 2030</span></div></div>
+          <div class="pritem"><div class="pritem-rule">6th cusp (Employment) — Sign: Leo, Star Lord: Ketu, Sub Lord: Jupiter</div><div class="pritem-sub">Jupiter is Sub Lord of employment house. Jupiter exalted in Cancer from June 2 — directly supercharges employment cusp. Job change in June–August 2026 has maximum KP support.</div><div class="pritem-tags"><span class="atag atag">6th cusp Sub Lord Jupiter</span><span class="atag atag">Jupiter exalted Cancer Jun 2</span></div></div>
+          <div class="pritem"><div class="pritem-rule">2nd cusp (Income) — Sign: Aries, Star Lord: Venus, Sub Lord: Saturn</div><div class="pritem-sub">Income change is Venus Star Lord activated. Saturn Sub Lord means income restructuring is slow but permanent. Every income change sticks and compounds.</div><div class="pritem-tags"><span class="atag atag">2nd cusp Star Lord Venus</span><span class="atag atag">Saturn Sub Lord permanent</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ MASTER CARD -->
+    <div class="prsec" id="pr-master">
+      <div class="prin-master">
+        <div class="prin-master-title">Master Summary — One Line Per Domain</div>
+        <div class="prin-row"><span class="prin-domain">Finances</span><span class="prin-text">Automate (12H 22) → Never speculate (5H 23, 8H 19) → ₹8–10Cr corpus → Earn bold (Mars Aries 2H) → Career→Business→SIP→Property → Corpus before luxury (Saturn® D-10) → Income up, lifestyle half → Saturn 11H compounding machine → ₹30Cr by 45 is 65% → Emergency fund always (8H 19)</span></div>
+        <div class="prin-row"><span class="prin-domain">Career</span><span class="prin-text">Job = vehicle, OperionAI = destination (Saturn® D-10 ASC) → May 15–28 interview window (3H SAV 35 + Sun) → Communication is superpower (3H 35★) → One thing deep (Rahu 10H) → Global first (Mars D-10 9H) → Build permanent (Saturn® D-10) → Sun Mahadasha 2030 peak → SU-RA 2031 breakthrough → VE-KE 2028–30 setback coming → Exit with grace</span></div>
+        <div class="prin-row"><span class="prin-domain">Relationships</span><span class="prin-text">Wife + gut = compass (Moon Scorpio 9H) → Partners on pressure not promises (Mercury D-10 7H) → Protect private from Rahu (Rahu 10H) → Celebrate together (Venus Cancer 5H) → Social circle shapes Rahu trajectory → Marriage amplifies business (Muntha 7H 2034) → Same person everywhere (Saturn® integrity) → Work time limit at home</span></div>
+        <div class="prin-row"><span class="prin-domain">Health</span><span class="prin-text">Emotions = physical medicine (Cancer planets) → Sleep before midnight (Moon Scorpio) → Morning routine first (Pisces ASC) → Move to process emotions (Moon Scorpio 9H) → Gut = stress indicator (Cancer 5H) → Annual checkup mandatory (8H SAV 19★) → Joints long-term (Saturn Capricorn) → Protect peak performance (Gemini Sun + Mercury)</span></div>
+        <div class="prin-row"><span class="prin-domain">Family</span><span class="prin-text">Foundation before children (5H SAV 23) → Two children (Mercury+Venus 5H) → First child 2028–31 → Slow morning = family gift (Ketu® D-10 4H) → Protect family from Rahu → Honor elders (Ketu 4H karmic) → Children inherit Saturn or Rahu → First property 2028–30 → Generational wealth (Saturn 11H own sign)</span></div>
+        <div class="prin-row"><span class="prin-domain">Emotions</span><span class="prin-text">Say it at 2 not 9 (Moon Scorpio suppression) → Rahu restless vs Moon intuition → Sensitivity = data (Pisces ASC) → Process before deciding (Scorpio intensity) → Grieve fully then release → Solitude = Moon maintenance → Joy needs attention (Venus 5H) → Peak is ahead (VE-SA complete Jan 2026) → Authority friction = Rahu karma</span></div>
+        <div class="prin-row"><span class="prin-domain">Dasha Now</span><span class="prin-text">VE-ME-ME → May 15–28 interview → Sign Jun 5–25 → Resign Jun 15–20 → Join Aug 1–31 → VE-ME-VE Jul 28 peak → VE-KE 2028–30 setback → Sun Mahadasha Jan 2030 → SU-RA Feb 2031 breakthrough → ₹30Cr by 45 → Slow morning age 43</span></div>
+      </div>
+      <div class="prin-one">
+        <p>"Build the life first in your mind. Then build it brick by brick in reality. Trust the instinct that designed it. Protect the relationship that makes it worth having. And never confuse the building phase for the destination."</p>
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--saffron);margin-top:12px">The One Principle That Contains All Others</div>
+      </div>
+      <div style="background:rgba(200,101,26,.05);border:1px solid var(--border-lt);border-radius:2px;padding:16px 20px;margin-top:14px">
+        <div style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ash);margin-bottom:10px;text-align:center">Chart Basis — Every Principle Derived From</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center">
+          <span class="ctag">Pisces ASC ♓</span><span class="ctag">Sun Gemini 4H ♊</span><span class="ctag">Moon Scorpio 9H ♏</span><span class="ctag">Mars Aries 2H ♈</span><span class="ctag">Venus Cancer 5H ♋</span><span class="ctag">Mercury Cancer 5H ♋</span><span class="ctag">Jupiter Leo 6H ♌</span><span class="ctag">Saturn Capricorn 11H ♑</span><span class="ctag">Rahu Sagittarius 10H ♐</span><span class="ctag">Ketu Gemini 4H</span><span class="ctag-blue ctag">3H SAV 35★</span><span class="ctag-blue ctag">8H SAV 19★</span><span class="ctag-blue ctag">VE-ME-ME now</span><span class="ctag-blue ctag">Sun Mahadasha 2030</span><span class="ctag-blue ctag">SU-RA 2031★</span><span class="ctag-blue ctag">Freedom age 43</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end tab-principles -->
 
 </div>
 
@@ -645,6 +1229,15 @@ var curEmotion = '';
     if (ks) ks.textContent = '\u2713 API key active';
   }
 })();
+
+// ── PRINCIPLES SUB-NAV ───────────────────────────────────────
+function switchPr(btn, id) {
+  document.querySelectorAll('.prtab').forEach(function(b) { b.classList.remove('on'); });
+  document.querySelectorAll('.prsec').forEach(function(s) { s.classList.remove('on'); });
+  btn.classList.add('on');
+  var sec = document.getElementById('pr-' + id);
+  if (sec) sec.classList.add('on');
+}
 
 // ── EMOTION SELECTION ────────────────────────────────────────
 function selectEmotion(key, label) {
@@ -1277,75 +1870,6 @@ function clearApiKey() {
   localStorage.removeItem('ic_api_key');
   document.getElementById('apiKeyInput').value='';
   var fb=document.getElementById('apiKeyStatus'); fb.textContent='Cleared'; setTimeout(function(){fb.textContent='';},2000);
-}
-
-// ── TRIGGER MAP ──────────────────────────────────────────────
-var triggers = JSON.parse(localStorage.getItem('ic_triggers') || '[]');
-
-function addTrigger() {
-  var text = document.getElementById('trigInput').value.trim();
-  var emo  = document.getElementById('trigEmo').value;
-  if (!text) return;
-  triggers.unshift({text:text, emo:emo, ts:Date.now()});
-  localStorage.setItem('ic_triggers', JSON.stringify(triggers));
-  document.getElementById('trigInput').value = '';
-  renderTriggers();
-  var url = getSheetsUrl();
-  if (url) {
-    var eoObj = EMOTIONS.find(function(e2) { return e2.k === emo; });
-    var emoLabel = eoObj ? eoObj.l : (emo || 'General');
-    var params = 'action=write&type=trigger&emotion=' + encodeURIComponent(emoLabel) + '&trigger=' + encodeURIComponent(text);
-    var writeUrl = url + '?' + params;
-    // Primary: no-cors fetch — always fires regardless of CORS, no response needed for a write
-    fetch(writeUrl, {mode:'no-cors'})
-      .then(function() { showTrigStatus('\u2713 Saved to Sheet'); })
-      .catch(function() { showTrigStatus('\u2713 Saved locally'); });
-  }
-}
-
-function showTrigStatus(msg) {
-  var el = document.getElementById('trigStatus');
-  if (!el) return;
-  el.textContent = msg; el.style.opacity = '1';
-  setTimeout(function(){ el.style.opacity = '0'; }, 3000);
-}
-
-function renderTriggers() {
-  var list = document.getElementById('trigList');
-  if (!list) return;
-  if (!triggers.length) {
-    list.innerHTML = '<div class="empty-msg">No triggers mapped yet. Add your first one above.<\/div>';
-    return;
-  }
-  list.innerHTML = triggers.map(function(t, i) {
-    var eo = EMOTIONS.find(function(e) { return e.k === t.emo; });
-    return '<div class="titem">'
-      + '<div style="flex:1"><div class="temo">' + (eo ? eo.i+' '+eo.l : 'General') + '<\/div>'
-      + '<div class="ttext">' + esc(t.text) + '<\/div><\/div>'
-      + '<button class="xbtn" onclick="deleteTrigger(' + i + ')">×<\/button><\/div>';
-  }).join('');
-}
-
-function deleteTrigger(i) {
-  triggers.splice(i, 1);
-  localStorage.setItem('ic_triggers', JSON.stringify(triggers));
-  renderTriggers();
-}
-
-
-function copyScriptText() {
-  var ta = document.getElementById('scriptTextarea');
-  ta.select();
-  if (navigator.clipboard && window.isSecureContext) {
-    navigator.clipboard.writeText(ta.value).then(function() {
-      var btn = event.target; btn.textContent = '✓ Copied!'; btn.style.background = '#3d6b4f';
-      setTimeout(function(){ btn.textContent = 'Copy to Clipboard'; btn.style.background = 'var(--saffron)'; }, 2000);
-    });
-  } else {
-    try { document.execCommand('copy'); } catch(e) {}
-    var btn = event.target; btn.textContent = '✓ Copied!'; btn.style.background = '#3d6b4f';
-    setTimeout(function(){ btn.textContent = 'Copy to Clipboard'; btn.style.background = 'var(--saffron)'; }, 2000);
-  }
 }
 
 
