@@ -2,12 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="The Inner Compass — a personal emotional wellness app with Gita and Stoic wisdom, life learnings, trigger map, principles, thoughts and videos.">
+<meta name="theme-color" content="#c8651a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Inner Compass">
+<meta property="og:title" content="The Inner Compass">
+<meta property="og:description" content="A personal emotional wellness app with Gita and Stoic wisdom.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧭</text></svg>">
 <title>The Inner Compass</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -227,6 +234,32 @@ h1 em{color:var(--saffron);font-style:italic}
 .prin-one{text-align:center;padding:20px;background:rgba(200,101,26,.05);border:1px solid rgba(200,101,26,.2);border-radius:2px;margin-top:14px}
 .prin-one p{font-size:1.1rem;font-style:italic;color:var(--ink);line-height:1.65;font-weight:300}
 
+/* THOUGHTS */
+.tv-field{margin-bottom:13px}
+.tv-label{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:5px;display:block}
+.tv-label.blue{color:var(--blue)}
+.tv-ta{width:100%;border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.97rem;color:var(--ink);padding:10px 12px;outline:none;border-radius:1px;resize:none;line-height:1.65;min-height:82px;transition:border-color .2s}
+.tv-ta:focus{border-color:var(--saffron)}
+.tv-input{width:100%;border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.97rem;color:var(--ink);padding:9px 12px;outline:none;border-radius:1px;transition:border-color .2s}
+.tv-input:focus{border-color:var(--blue)}
+.tcard{border:1px solid var(--border);border-radius:2px;padding:14px 16px;margin-bottom:10px;background:rgba(255,255,255,.45);animation:fadeIn .3s ease}
+.tcard.hidden{display:none}
+.tcard-head{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.tcat-badge{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(200,101,26,.3);color:var(--saffron);border-radius:1px;background:rgba(200,101,26,.06)}
+.tdate{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--ash);margin-left:auto}
+.tthought{font-size:.97rem;color:var(--ink);line-height:1.65;font-style:italic;white-space:pre-wrap}
+/* VIDEOS */
+.vcard-item{border:1px solid rgba(42,63,111,.25);border-radius:2px;padding:14px 16px;margin-bottom:10px;background:rgba(42,63,111,.03);animation:fadeIn .3s ease}
+.vcard-item.hidden{display:none}
+.vcard-head{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;border-bottom:1px solid var(--border-lt);padding-bottom:8px}
+.vcat-badge{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(42,63,111,.3);color:var(--blue);border-radius:1px;background:rgba(42,63,111,.06)}
+.vemo-badge{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(61,107,79,.3);color:var(--green);border-radius:1px;background:rgba(61,107,79,.06)}
+.vdate{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--ash);margin-left:auto}
+.vdesc{font-size:.92rem;color:var(--ink);line-height:1.6;font-style:italic;margin-bottom:8px}
+.vplay-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 16px;background:var(--blue);color:#fff;border:none;border-radius:1px;font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.1em;cursor:pointer;text-decoration:none;transition:opacity .2s}
+.vplay-btn:hover{opacity:.85}
+.vurl-text{font-family:'DM Mono',monospace;font-size:.58rem;color:var(--ash);word-break:break-all;margin-top:6px;opacity:.7}
+
 /* SPINNER */
 .spin{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -256,6 +289,8 @@ h1 em{color:var(--saffron);font-style:italic}
     <button class="tab" data-t="triggers">⚡ Trigger Map</button>
     <button class="tab" data-t="learnings">📖 Life Learnings</button>
     <button class="tab" data-t="principles">📜 My Principles</button>
+    <button class="tab" data-t="thoughts">💭 My Thoughts</button>
+    <button class="tab" data-t="videos">🎬 My Videos</button>
   </div>
 
   <!-- RIGHT NOW -->
@@ -974,6 +1009,122 @@ h1 em{color:var(--saffron);font-style:italic}
 
   </div><!-- end tab-principles -->
 
+  <!-- MY THOUGHTS -->
+  <div class="tsec" id="tab-thoughts">
+
+    <div class="panel" id="tForm">
+      <div class="plabel">Capture a Thought</div>
+      <p style="font-size:.88rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:16px">Every meaningful thought deserves to be preserved. Write it before it fades.</p>
+      <div class="tv-field">
+        <span class="tv-label">Your Thought</span>
+        <textarea id="thoughtTa" class="tv-ta" placeholder="Write your thought, insight, realisation or reflection…"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <select class="sel" id="thoughtCat">
+          <option>Clarity &amp; Insight</option>
+          <option>Career &amp; Purpose</option>
+          <option>Business &amp; OperionAI</option>
+          <option>Relationships</option>
+          <option>Money &amp; Wealth</option>
+          <option>Health &amp; Energy</option>
+          <option>Family</option>
+          <option>Spirituality &amp; Astrology</option>
+          <option>Fear &amp; Courage</option>
+          <option>Gratitude</option>
+          <option>Lesson Learned</option>
+          <option>Random Thought</option>
+        </select>
+        <button class="abtn2" id="tSaveBtn" onclick="saveThought()">Save Thought ✦</button>
+        <span id="tSaveMsg" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;opacity:0;transition:opacity .3s;color:var(--green)"></span>
+      </div>
+    </div>
+
+    <div class="panel" id="tList">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron);padding-top:2px">Thought Library</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <input id="tSearch" type="text" placeholder="Search…" oninput="filterThoughts()" style="border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--ink);padding:5px 10px;outline:none;border-radius:1px;width:130px;transition:border-color .2s" onfocus="this.style.borderColor='var(--saffron)'" onblur="this.style.borderColor='var(--border)'">
+          <select class="sel" id="tFilter" onchange="filterThoughts()" style="font-size:.6rem">
+            <option value="">All categories</option>
+            <option>Clarity &amp; Insight</option><option>Career &amp; Purpose</option><option>Business &amp; OperionAI</option>
+            <option>Relationships</option><option>Money &amp; Wealth</option><option>Health &amp; Energy</option>
+            <option>Family</option><option>Spirituality &amp; Astrology</option><option>Fear &amp; Courage</option>
+            <option>Gratitude</option><option>Lesson Learned</option><option>Random Thought</option>
+          </select>
+          <button class="abtn2" style="background:transparent;border:1px solid var(--border);color:var(--ash);font-size:.6rem;padding:5px 12px" onclick="loadThoughts()">↻ Refresh</button>
+        </div>
+      </div>
+      <div id="tcount" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-bottom:12px"></div>
+      <div id="tCards"></div>
+      <div id="tLoading" style="display:none;text-align:center;padding:24px;color:var(--ash);font-style:italic;font-size:.9rem"><span class="spin"></span> Loading…</div>
+      <div id="tEmpty" style="display:none" class="empty-msg">No thoughts captured yet. Add your first one above.</div>
+    </div>
+
+  </div><!-- end tab-thoughts -->
+
+  <!-- MY VIDEOS -->
+  <div class="tsec" id="tab-videos">
+
+    <div class="panel blue" id="vForm">
+      <div class="plabel blue">Save a Video</div>
+      <p style="font-size:.88rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:16px">Preserve videos that move, teach or shift your perspective.</p>
+      <div class="tv-field">
+        <span class="tv-label blue">Video URL</span>
+        <input type="url" id="videoUrl" class="tv-input" placeholder="https://youtube.com/watch?v=… or any video link" style="border:1px solid var(--border)" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:13px">
+        <div style="flex:1;min-width:140px" class="tv-field">
+          <span class="tv-label blue">Category</span>
+          <select class="sel" id="videoCat" style="width:100%">
+            <option>Motivation &amp; Mindset</option>
+            <option>Career &amp; Business</option>
+            <option>Spirituality &amp; Astrology</option>
+            <option>Health &amp; Wellness</option>
+            <option>Relationships &amp; Family</option>
+            <option>Finance &amp; Wealth</option>
+            <option>Technology &amp; AI</option>
+            <option>Philosophy &amp; Wisdom</option>
+            <option>Music &amp; Entertainment</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div style="flex:1;min-width:140px" class="tv-field">
+          <span class="tv-label blue">Emotion it gives me</span>
+          <input type="text" id="videoEmo" class="tv-input" placeholder="e.g. inspired, calm, energised…" style="border:1px solid var(--border)" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+        </div>
+      </div>
+      <div class="tv-field">
+        <span class="tv-label blue">Why this video matters</span>
+        <textarea id="videoDesc" class="tv-ta" style="min-height:65px;border-color:var(--border)" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'" placeholder="What does it teach, how does it make you feel, why did you save it…"></textarea>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+        <button class="abtn2" id="vSaveBtn" onclick="saveVideo()" style="border-color:var(--blue);color:var(--blue)">Save Video ✦</button>
+        <span id="vSaveMsg" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;opacity:0;transition:opacity .3s;color:var(--green)"></span>
+      </div>
+    </div>
+
+    <div class="panel blue" id="vList">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--blue);padding-top:2px">Video Library</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
+          <input id="vSearch" type="text" placeholder="Search…" oninput="filterVideos()" style="border:1px solid var(--border);background:rgba(255,255,255,.6);font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--ink);padding:5px 10px;outline:none;border-radius:1px;width:130px;transition:border-color .2s" onfocus="this.style.borderColor='var(--blue)'" onblur="this.style.borderColor='var(--border)'">
+          <select class="sel" id="vFilter" onchange="filterVideos()" style="font-size:.6rem">
+            <option value="">All categories</option>
+            <option>Motivation &amp; Mindset</option><option>Career &amp; Business</option><option>Spirituality &amp; Astrology</option>
+            <option>Health &amp; Wellness</option><option>Relationships &amp; Family</option><option>Finance &amp; Wealth</option>
+            <option>Technology &amp; AI</option><option>Philosophy &amp; Wisdom</option><option>Music &amp; Entertainment</option><option>Other</option>
+          </select>
+          <button class="abtn2" style="background:transparent;border:1px solid var(--border);color:var(--ash);font-size:.6rem;padding:5px 12px" onclick="loadVideos()">↻ Refresh</button>
+        </div>
+      </div>
+      <div id="vcount" style="font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-bottom:12px"></div>
+      <div id="vCards"></div>
+      <div id="vLoading" style="display:none;text-align:center;padding:24px;color:var(--ash);font-style:italic;font-size:.9rem"><span class="spin"></span> Loading…</div>
+      <div id="vEmpty" style="display:none" class="empty-msg">No videos saved yet. Add your first one above.</div>
+    </div>
+
+  </div><!-- end tab-videos -->
+
 </div>
 
 <!-- OVERLAYS -->
@@ -1095,7 +1246,7 @@ const ANCHORS = {
 
 // ── SHEETS ───────────────────────────────────────────────────
 const SHEETS_KEY = 'ic_sheets_url';
-const HARDCODED_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxJUPrLnOnw9l4dKqx1KSPiB2wpTjcp3c4cP9NMCbKzUdEZPIORPLIxF2DMBhmueY0i/exec';
+const HARDCODED_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbw8hTv23tBxWZVr93chBNuWCW0PdaBNJkV_g5cva3gSr8vsWnKfPfmHy0p1ibRL6x9l/exec';
 // ↑ Paste your Apps Script URL between the quotes for cross-device sync
 let allLearnings = [];
 
@@ -1130,6 +1281,14 @@ var curEmotion = '';
           document.getElementById('lList').style.display = 'block';
           if (allLearnings.length === 0) loadLearnings();
         }
+      }
+      // Load thoughts on tab open
+      if (tab.dataset.t === 'thoughts') {
+        if (getSheetsUrl() && allThoughts.length === 0) loadThoughts();
+      }
+      // Load videos on tab open
+      if (tab.dataset.t === 'videos') {
+        if (getSheetsUrl() && allVideos.length === 0) loadVideos();
       }
       // Show sheet connection status on triggers tab
       if (tab.dataset.t === 'triggers') {
@@ -1687,7 +1846,7 @@ function closeEM() {
 
 // ── GOOGLE SHEETS ────────────────────────────────────────────
 var SCRIPT_LINES = [
-  "// Inner Compass — Life Learnings + Trigger Map · Google Apps Script",
+  "// Inner Compass — Learnings + Triggers + Thoughts + Videos",
   "// Deploy: Web App | Execute as: Me | Access: Anyone",
   "",
   "function getSheet(name, headers, widths) {",
@@ -1711,6 +1870,12 @@ var SCRIPT_LINES = [
   "      if (type==='trigger') {",
   "        const sh=getSheet('Triggers',['Date','Emotion','Trigger','Timestamp'],[110,160,400,160]);",
   "        sh.appendRow([d,e.parameter.emotion||'',e.parameter.trigger||'',now.toISOString()]);",
+  "      } else if (type==='thought') {",
+  "        const sh=getSheet('Thoughts',['Date','Category','Thought','Timestamp'],[110,160,500,160]);",
+  "        sh.appendRow([d,e.parameter.category||'',e.parameter.thought||'',now.toISOString()]);",
+  "      } else if (type==='video') {",
+  "        const sh=getSheet('Videos',['Date','Category','URL','Emotion','Description','Timestamp'],[110,160,400,160,400,160]);",
+  "        sh.appendRow([d,e.parameter.category||'',e.parameter.url||'',e.parameter.emotion||'',e.parameter.description||'',now.toISOString()]);",
   "      } else {",
   "        const sh=getSheet('Learnings',['Date','Category','Incident','Learning','Timestamp'],[110,140,320,320,160]);",
   "        sh.appendRow([d,e.parameter.category||'',e.parameter.incident||'',e.parameter.learning||'',now.toISOString()]);",
@@ -1723,6 +1888,14 @@ var SCRIPT_LINES = [
   "        const sh=getSheet('Triggers',['Date','Emotion','Trigger','Timestamp'],[110,160,400,160]);",
   "        const data=sh.getDataRange().getValues();",
   "        result=data.length<=1?{success:true,rows:[]}:{success:true,rows:data.slice(1).filter(r=>r[2]).map(r=>({date:String(r[0]||''),emotion:String(r[1]||''),trigger:String(r[2]||''),ts:String(r[3]||'')})).reverse()};",
+  "      } else if (type==='thought') {",
+  "        const sh=getSheet('Thoughts',['Date','Category','Thought','Timestamp'],[110,160,500,160]);",
+  "        const data=sh.getDataRange().getValues();",
+  "        result=data.length<=1?{success:true,rows:[]}:{success:true,rows:data.slice(1).filter(r=>r[2]).map(r=>({date:String(r[0]||''),category:String(r[1]||''),thought:String(r[2]||''),ts:String(r[3]||'')})).reverse()};",
+  "      } else if (type==='video') {",
+  "        const sh=getSheet('Videos',['Date','Category','URL','Emotion','Description','Timestamp'],[110,160,400,160,400,160]);",
+  "        const data=sh.getDataRange().getValues();",
+  "        result=data.length<=1?{success:true,rows:[]}:{success:true,rows:data.slice(1).filter(r=>r[2]).map(r=>({date:String(r[0]||''),category:String(r[1]||''),url:String(r[2]||''),emotion:String(r[3]||''),description:String(r[4]||''),ts:String(r[5]||'')})).reverse()};",
   "      } else {",
   "        const sh=getSheet('Learnings',['Date','Category','Incident','Learning','Timestamp'],[110,140,320,320,160]);",
   "        const data=sh.getDataRange().getValues();",
@@ -1875,6 +2048,205 @@ function clearApiKey() {
 
 // ── UTIL ──────────────────────────────────────────────────────
 function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/\x3C/g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ── THOUGHTS ─────────────────────────────────────────────────
+var allThoughts = [];
+
+function saveThought() {
+  var thought  = document.getElementById('thoughtTa').value.trim();
+  var category = document.getElementById('thoughtCat').value;
+  var url      = getSheetsUrl();
+  if (!thought) { showTM('Write something first.','#c8503c'); return; }
+  if (!url)     { showTM('Connect Google Sheets first (Life Learnings tab).','#c8503c'); return; }
+  var btn = document.getElementById('tSaveBtn');
+  btn.disabled = true; showTM('Saving\u2026','var(--ash)');
+  var params = 'action=write&type=thought&category=' + encodeURIComponent(category) + '&thought=' + encodeURIComponent(thought);
+  jsonpRequest(url + '?' + params, function(data) {
+    if (data && data.success) {
+      addLocalThought(category, thought);
+      document.getElementById('thoughtTa').value = '';
+      showTM('\u2713 Saved to Google Sheets','#3d6b4f');
+      setTimeout(function(){ showTM('',''); }, 3500);
+    } else { showTM('Sheet error. Check deployment settings.','#c8503c'); }
+    btn.disabled = false;
+  }, function() {
+    fetch(url + '?' + params, {mode:'no-cors'});
+    addLocalThought(category, thought);
+    document.getElementById('thoughtTa').value = '';
+    showTM('\u2713 Sent to Sheets','#3d6b4f');
+    setTimeout(function(){ showTM('',''); }, 3500);
+    btn.disabled = false;
+  });
+}
+
+function addLocalThought(cat, thought) {
+  allThoughts.unshift({date: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}), category:cat, thought:thought, ts: new Date().toISOString()});
+  renderThoughts(allThoughts);
+}
+
+function loadThoughts() {
+  var url = getSheetsUrl(); if (!url) return;
+  document.getElementById('tLoading').style.display = 'block';
+  document.getElementById('tCards').innerHTML = '';
+  document.getElementById('tEmpty').style.display = 'none';
+  document.getElementById('tcount').textContent = '';
+  jsonpRequest(url + '?action=read&type=thought', function(data) {
+    document.getElementById('tLoading').style.display = 'none';
+    allThoughts = data.rows || [];
+    renderThoughts(allThoughts);
+  }, function() {
+    document.getElementById('tLoading').style.display = 'none';
+    if (allThoughts.length > 0) { renderThoughts(allThoughts); }
+    else { document.getElementById('tEmpty').style.display='block'; }
+  });
+}
+
+function renderThoughts(rows) {
+  var cards = document.getElementById('tCards');
+  var empty = document.getElementById('tEmpty');
+  if (!rows || !rows.length) {
+    cards.innerHTML = '';
+    empty.style.display = 'block';
+    document.getElementById('tcount').textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('tcount').textContent = rows.length + ' thought' + (rows.length===1?'':'s') + ' captured';
+  cards.innerHTML = rows.map(function(row, i) {
+    return '<div class="tcard" data-idx="'+i+'" data-cat="'+esc(row.category||'')+'" data-text="'+esc((row.thought||'').toLowerCase())+'">'
+      + '<div class="tcard-head">'
+      + '<span class="tcat-badge">'+esc(row.category||'General')+'</span>'
+      + '<span class="tdate">'+esc(row.date||'')+'</span>'
+      + '</div>'
+      + '<div class="tthought">'+esc(row.thought||'')+'</div>'
+      + '</div>';
+  }).join('');
+}
+
+function filterThoughts() {
+  var search = (document.getElementById('tSearch').value||'').toLowerCase().trim();
+  var cat    = document.getElementById('tFilter').value;
+  var visible = 0;
+  document.querySelectorAll('.tcard').forEach(function(card) {
+    var ok = (!cat || card.dataset.cat === cat) && (!search || card.dataset.text.includes(search));
+    card.classList.toggle('hidden', !ok);
+    if (ok) visible++;
+  });
+  document.getElementById('tcount').textContent = visible + ' of ' + allThoughts.length + ' thought' + (allThoughts.length===1?'':'s') + ' shown';
+}
+
+function showTM(msg, color) {
+  var el = document.getElementById('tSaveMsg');
+  el.textContent = msg; el.style.color = color; el.style.opacity = msg ? '1' : '0';
+}
+
+// ── VIDEOS ────────────────────────────────────────────────────
+var allVideos = [];
+
+function saveVideo() {
+  var url_val  = document.getElementById('videoUrl').value.trim();
+  var category = document.getElementById('videoCat').value;
+  var emotion  = document.getElementById('videoEmo').value.trim();
+  var desc     = document.getElementById('videoDesc').value.trim();
+  var url      = getSheetsUrl();
+  if (!url_val) { showVM('Paste a video URL first.','#c8503c'); return; }
+  if (!url)     { showVM('Connect Google Sheets first (Life Learnings tab).','#c8503c'); return; }
+  var btn = document.getElementById('vSaveBtn');
+  btn.disabled = true; showVM('Saving\u2026','var(--ash)');
+  var params = 'action=write&type=video'
+    + '&category='    + encodeURIComponent(category)
+    + '&url='         + encodeURIComponent(url_val)
+    + '&emotion='     + encodeURIComponent(emotion)
+    + '&description=' + encodeURIComponent(desc);
+  jsonpRequest(url + '?' + params, function(data) {
+    if (data && data.success) {
+      addLocalVideo(category, url_val, emotion, desc);
+      clearVideoForm();
+      showVM('\u2713 Saved to Google Sheets','#3d6b4f');
+      setTimeout(function(){ showVM('',''); }, 3500);
+    } else { showVM('Sheet error. Check deployment settings.','#c8503c'); }
+    btn.disabled = false;
+  }, function() {
+    fetch(url + '?' + params, {mode:'no-cors'});
+    addLocalVideo(category, url_val, emotion, desc);
+    clearVideoForm();
+    showVM('\u2713 Sent to Sheets','#3d6b4f');
+    setTimeout(function(){ showVM('',''); }, 3500);
+    btn.disabled = false;
+  });
+}
+
+function clearVideoForm() {
+  document.getElementById('videoUrl').value  = '';
+  document.getElementById('videoEmo').value  = '';
+  document.getElementById('videoDesc').value = '';
+}
+
+function addLocalVideo(cat, url_val, emo, desc) {
+  allVideos.unshift({date: new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}), category:cat, url:url_val, emotion:emo, description:desc, ts: new Date().toISOString()});
+  renderVideos(allVideos);
+}
+
+function loadVideos() {
+  var url = getSheetsUrl(); if (!url) return;
+  document.getElementById('vLoading').style.display = 'block';
+  document.getElementById('vCards').innerHTML = '';
+  document.getElementById('vEmpty').style.display = 'none';
+  document.getElementById('vcount').textContent = '';
+  jsonpRequest(url + '?action=read&type=video', function(data) {
+    document.getElementById('vLoading').style.display = 'none';
+    allVideos = data.rows || [];
+    renderVideos(allVideos);
+  }, function() {
+    document.getElementById('vLoading').style.display = 'none';
+    if (allVideos.length > 0) { renderVideos(allVideos); }
+    else { document.getElementById('vEmpty').style.display='block'; }
+  });
+}
+
+function renderVideos(rows) {
+  var cards = document.getElementById('vCards');
+  var empty = document.getElementById('vEmpty');
+  if (!rows || !rows.length) {
+    cards.innerHTML = '';
+    empty.style.display = 'block';
+    document.getElementById('vcount').textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('vcount').textContent = rows.length + ' video' + (rows.length===1?'':'s') + ' saved';
+  cards.innerHTML = rows.map(function(row, i) {
+    var safeUrl = esc(row.url || '');
+    return '<div class="vcard-item" data-idx="'+i+'" data-cat="'+esc(row.category||'')+'" data-text="'+esc(((row.description||'')+' '+(row.emotion||'')).toLowerCase())+'">'
+      + '<div class="vcard-head">'
+      + '<span class="vcat-badge">'+esc(row.category||'General')+'</span>'
+      + (row.emotion ? '<span class="vemo-badge">'+esc(row.emotion)+'</span>' : '')
+      + '<span class="vdate">'+esc(row.date||'')+'</span>'
+      + '</div>'
+      + (row.description ? '<div class="vdesc">'+esc(row.description)+'</div>' : '')
+      + '<a class="vplay-btn" href="'+safeUrl+'" target="_blank" rel="noopener">&#9654; Watch Video</a>'
+      + '<div class="vurl-text">'+safeUrl+'</div>'
+      + '</div>';
+  }).join('');
+}
+
+function filterVideos() {
+  var search  = (document.getElementById('vSearch').value||'').toLowerCase().trim();
+  var cat     = document.getElementById('vFilter').value;
+  var visible = 0;
+  document.querySelectorAll('.vcard-item').forEach(function(card) {
+    var ok = (!cat || card.dataset.cat === cat) && (!search || card.dataset.text.includes(search));
+    card.classList.toggle('hidden', !ok);
+    if (ok) visible++;
+  });
+  document.getElementById('vcount').textContent = visible + ' of ' + allVideos.length + ' video' + (allVideos.length===1?'':'s') + ' shown';
+}
+
+function showVM(msg, color) {
+  var el = document.getElementById('vSaveMsg');
+  el.textContent = msg; el.style.color = color; el.style.opacity = msg ? '1' : '0';
+}
+
 </script>
 
 
