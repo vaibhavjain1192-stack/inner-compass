@@ -101,6 +101,24 @@ h1 em{color:var(--saffron);font-style:italic}
 /* ── ADD METHOD PANEL ────────────────────────────────────────── */
 .add-panel{background:linear-gradient(135deg,rgba(146,64,14,.06),rgba(200,101,26,.04));border:1px solid rgba(146,64,14,.2);border-radius:4px;padding:18px 20px;margin-top:4px}
 
+/* ── DAILY SPOTLIGHT ─────────────────────────────────────────── */
+.spotlight{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+@media(max-width:500px){.spotlight{grid-template-columns:1fr}}
+.spot-card{border-radius:4px;overflow:hidden;box-shadow:var(--shadow);position:relative;background:rgba(255,255,255,.75);border:1px solid var(--border)}
+.spot-head{padding:9px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--border-lt)}
+.spot-head-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;flex:1}
+.spot-head-date{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);letter-spacing:.06em}
+.spot-body{padding:13px 15px}
+.spot-thought-cat{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(42,63,111,.2);color:var(--blue);border-radius:10px;background:rgba(42,63,111,.06);display:inline-block;margin-bottom:8px}
+.spot-thought-text{font-size:.96rem;color:var(--ink);line-height:1.65;font-style:italic}
+.spot-video-thumb{width:100%;height:100px;background:var(--border-lt);border-radius:2px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:10px;position:relative}
+.spot-video-thumb img{width:100%;height:100%;object-fit:cover}
+.spot-video-title{font-size:.93rem;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:5px}
+.spot-video-note{font-size:.83rem;color:var(--ash);font-style:italic;line-height:1.5;margin-bottom:8px}
+.spot-link{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);text-decoration:none;padding:3px 9px;border:1px solid rgba(200,101,26,.3);border-radius:1px;background:var(--saffron-pale);transition:all .2s;display:inline-block}
+.spot-link:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
+.spot-loading{padding:22px;text-align:center;color:var(--ash);font-style:italic;font-size:.88rem}
+
 /* ── UNIVERSAL METHODS ───────────────────────────────────────── */
 .univ-panel{background:linear-gradient(135deg,rgba(42,63,111,.07),rgba(42,63,111,.03));border:1px solid rgba(42,63,111,.2);border-radius:4px;padding:18px 20px;margin-bottom:14px}
 .univ-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
@@ -180,6 +198,37 @@ h1 em{color:var(--saffron);font-style:italic}
 
   <!-- ══════════ RIGHT NOW ══════════ -->
   <div class="tsec on" id="tab-now">
+
+    <!-- DAILY SPOTLIGHT -->
+    <div style="margin-bottom:4px">
+      <div style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-bottom:10px;display:flex;align-items:center;gap:10px">
+        <span>✦ Today's Spotlight</span>
+        <span style="flex:1;height:1px;background:var(--border-lt);display:inline-block"></span>
+        <span id="spotDate" style="font-size:.5rem;letter-spacing:.06em"></span>
+      </div>
+      <div class="spotlight">
+        <!-- THOUGHT CARD -->
+        <div class="spot-card">
+          <div class="spot-head" style="background:rgba(42,63,111,.06);border-color:rgba(42,63,111,.15)">
+            <span style="font-size:1rem">💭</span>
+            <span class="spot-head-label" style="color:var(--blue)">Random Thought</span>
+          </div>
+          <div class="spot-body" id="spotThought">
+            <div class="spot-loading"><span class="spin"></span>Loading…</div>
+          </div>
+        </div>
+        <!-- VIDEO CARD -->
+        <div class="spot-card">
+          <div class="spot-head" style="background:rgba(61,107,79,.06);border-color:rgba(61,107,79,.15)">
+            <span style="font-size:1rem">🎬</span>
+            <span class="spot-head-label" style="color:var(--green)">Random Video</span>
+          </div>
+          <div class="spot-body" id="spotVideo">
+            <div class="spot-loading"><span class="spin"></span>Loading…</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <!-- UNIVERSAL METHODS -->
     <div class="univ-panel">
@@ -784,10 +833,12 @@ function loadThoughts() {
     document.getElementById('thoughtLoading').style.display = 'none';
     allThoughts = (data && data.rows) ? data.rows : [];
     renderThoughts(allThoughts);
+    renderSpotlightThought();
   }, function() {
     document.getElementById('thoughtLoading').style.display = 'none';
     document.getElementById('thoughtEmpty').style.display = 'block';
     document.getElementById('thoughtEmpty').textContent = 'Could not load. Refresh to try again.';
+    renderSpotlightThought();
   });
 }
 
@@ -852,10 +903,12 @@ function loadVideos() {
     document.getElementById('videoLoading').style.display = 'none';
     allVideos = (data && data.rows) ? data.rows : [];
     renderVideos(allVideos);
+    renderSpotlightVideo();
   }, function() {
     document.getElementById('videoLoading').style.display = 'none';
     document.getElementById('videoEmpty').style.display = 'block';
     document.getElementById('videoEmpty').textContent = 'Could not load. Refresh to try again.';
+    renderSpotlightVideo();
   });
 }
 
@@ -895,6 +948,67 @@ function renderVideos(rows) {
       + '<span class="vdate">' + esc(date) + '<\/span>'
       + '<\/div><\/div>';
   }).join('');
+}
+// ── DAILY SPOTLIGHT ───────────────────────────────────────────
+// Day-seed: same item all day, changes next day
+function dayIndex(arr) {
+  if (!arr || !arr.length) return -1;
+  var dayNum = Math.floor(Date.now() / 86400000);
+  return dayNum % arr.length;
+}
+
+function renderSpotlightThought() {
+  var el = document.getElementById('spotThought');
+  if (!el) return;
+
+  // Set date label once
+  var dateEl = document.getElementById('spotDate');
+  if (dateEl && !dateEl.textContent) dateEl.textContent = today();
+
+  if (!allThoughts.length) {
+    el.innerHTML = '<div style="color:var(--ash);font-style:italic;font-size:.88rem;padding:4px 0">No thoughts saved yet.<\/div>';
+    return;
+  }
+
+  var idx  = dayIndex(allThoughts);
+  var item = allThoughts[idx];
+  var cat  = item.category || '';
+  var text = item.thought || item.text || '';
+  var date = cleanDate(item.date || '');
+
+  el.innerHTML = (cat ? '<span class="spot-thought-cat">' + esc(cat) + '<\/span>' : '')
+    + '<div class="spot-thought-text">' + esc(text) + '<\/div>'
+    + '<div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:10px;letter-spacing:.06em">' + esc(date) + '<\/div>';
+}
+
+function renderSpotlightVideo() {
+  var el = document.getElementById('spotVideo');
+  if (!el) return;
+
+  if (!allVideos.length) {
+    el.innerHTML = '<div style="color:var(--ash);font-style:italic;font-size:.88rem;padding:4px 0">No videos saved yet.<\/div>';
+    return;
+  }
+
+  var idx   = dayIndex(allVideos);
+  var item  = allVideos[idx];
+  var url   = item.url || '';
+  var title = item.title || item.emotion || 'Untitled';
+  var note  = item.note || item.description || '';
+  if (title === note) note = '';
+  var date  = cleanDate(item.date || '');
+  var thumb = getYtThumb(url);
+  var isInsta = url.indexOf('instagram.com') !== -1;
+
+  var thumbHtml = thumb
+    ? '<img src="' + thumb + '" alt="" onerror="this.parentNode.innerHTML=\'▶\'">'
+    : (isInsta ? '📸' : '▶');
+
+  el.innerHTML = '<div class="spot-video-thumb">' + thumbHtml + '<\/div>'
+    + '<div class="spot-video-title">' + esc(title) + '<\/div>'
+    + (note ? '<div class="spot-video-note">' + esc(note) + '<\/div>' : '')
+    + (url ? '<a class="spot-link" href="' + esc(url) + '" target="_blank" rel="noopener">Watch ↗<\/a>' : '')
+    + '<div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:8px;letter-spacing:.06em">' + esc(date) + '<\/div>';
 }
 </script>
 </body>
