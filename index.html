@@ -194,6 +194,7 @@ h1 em{color:var(--saffron);font-style:italic}
     <button class="tab" data-t="learnings">📖 Life Learnings</button>
     <button class="tab" data-t="thoughts">💭 My Thoughts</button>
     <button class="tab" data-t="videos">🎬 My Videos</button>
+    <button class="tab" data-t="growth">🚀 Professional Growth</button>
   </div>
 
   <!-- ══════════ RIGHT NOW ══════════ -->
@@ -446,6 +447,59 @@ h1 em{color:var(--saffron);font-style:italic}
 
   </div><!-- /tab-videos -->
 
+  <!-- ══════════ PROFESSIONAL GROWTH ══════════ -->
+  <div class="tsec" id="tab-growth">
+
+    <div class="panel">
+      <div class="panel-accent" style="background:var(--blue)"></div>
+      <div class="plabel blue">Professional Growth Areas</div>
+      <p class="panel-hint">Tap any area to see practical steps. These are your specific communication and professional challenges with actionable methods for each.</p>
+      <div id="growthLoading" class="loading-msg"><span class="spin"></span>Loading…</div>
+      <div class="emo-grid" id="growthGrid"></div>
+    </div>
+
+    <div class="add-panel" style="background:linear-gradient(135deg,rgba(42,63,111,.07),rgba(42,63,111,.03));border-color:rgba(42,63,111,.2)">
+      <div class="plabel blue" style="margin-bottom:10px">➕ Add Area or Method</div>
+      <p class="panel-hint" style="margin-bottom:14px">Add a practical method to an existing area, or create a completely new growth area.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:160px">
+            <label class="field-label" style="color:var(--blue)">Growth Area</label>
+            <select class="sel" id="addGrowthSel" style="width:100%" onchange="toggleNewGrowthField()">
+              <option value="">Select existing…</option>
+              <option value="__new__">➕ Add new area…</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:160px;display:none" id="newGrowthWrap">
+            <label class="field-label" style="color:var(--blue)">New Area Name</label>
+            <input class="itext" id="newGrowthInput" placeholder="e.g. Handling Disagreements…" style="height:40px;padding:8px 12px">
+          </div>
+        </div>
+
+        <div>
+          <label class="field-label" style="color:var(--blue)">Practical Method / Step</label>
+          <textarea class="ta sm" id="addGrowthTa" placeholder="Describe the practical method or technique…"></textarea>
+        </div>
+
+        <div style="background:rgba(255,255,255,.5);border:1px solid rgba(42,63,111,.15);border-radius:2px;padding:11px 13px">
+          <div style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:7px">Add directly via Google Sheet</div>
+          <div style="font-size:.87rem;color:var(--ash);line-height:1.65">
+            Open your Google Sheet → <strong style="color:var(--ink)">Growth</strong> tab → add a new row:<br>
+            Column A: <em>Area name</em> &nbsp;·&nbsp; Column B: <em>Method description</em> &nbsp;·&nbsp; Column C: <em>Date</em><br>
+            Refresh the page and it appears automatically.
+          </div>
+        </div>
+
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn" style="background:var(--blue)" onclick="addGrowthMethod()">Save ✦</button>
+          <span id="addGrowthStatus" class="status"></span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /tab-growth -->
+
 </div><!-- /wrap -->
 
 <script>
@@ -523,6 +577,7 @@ var FALLBACK_EMOTIONS = {
   loadLearnings();
   loadThoughts();
   loadVideos();
+  loadGrowth();
 })();
 
 // ── JSONP ─────────────────────────────────────────────────────
@@ -949,6 +1004,201 @@ function renderVideos(rows) {
       + '<\/div><\/div>';
   }).join('');
 }
+// ── PROFESSIONAL GROWTH ───────────────────────────────────────
+var GROWTH_ICONS = {
+  'Speaking Confidently': '🎤',
+  "Don't Know the Answer": '🤔',
+  'Analysis Not Done': '📊',
+  'Being Direct': '🎯',
+  'Leading with Story': '📖',
+  'Over-Explaining': '🔇'
+};
+
+var FALLBACK_GROWTH = {
+  'Speaking Confidently': [
+    "Before you speak, take one slow breath and plant your feet firmly on the floor. Physical grounding directly reduces vocal shakiness and creates a sense of authority before you say a single word.",
+    "Slow down by 20%. Most people speak too fast when nervous — it signals anxiety. Deliberate pace signals confidence. Practice speaking at 80% of your normal speed in low-stakes conversations first.",
+    "Prepare your opening sentence in advance for any important meeting or presentation. Confidence in the first 10 seconds sets the tone for everything that follows. You don't need to prepare everything — just the start.",
+    "Make your statements sound like statements. Avoid rising intonation at the end of sentences (upspeak) — it makes every assertion sound like a question. Record yourself once and listen back.",
+    "Own the silence. When you finish a point, stop. Do not fill the gap with 'um', 'like', or additional words. Silence after a confident statement amplifies the statement. Practice sitting in silence for 3 full seconds after making a point."
+  ],
+  "Don't Know the Answer": [
+    "Use this exact phrase: 'That's an important question — let me give you a considered answer rather than a quick one. Can I come back to you by [specific time]?' This signals intellectual honesty and reliability simultaneously.",
+    "Never pretend to know. Say directly: 'I don't have that information at hand.' Then immediately follow with: 'What I do know is…' and share something relevant. Partial knowledge offered honestly beats false confidence.",
+    "Reframe not knowing as a strength: 'I want to make sure I give you accurate information rather than guessing — I'll confirm and follow up.' People trust those who know the limits of their knowledge far more than those who bluff.",
+    "Ask a clarifying question to buy time: 'To make sure I answer the most relevant part — what specifically are you trying to decide or solve with this?' This redirects to their need and gives you a moment to think.",
+    "If you genuinely have no answer and no path to one, say: 'This is outside my area — the right person to ask is [name]. I'll connect you.' Routing accurately is more valuable than fumbling through a wrong answer."
+  ],
+  'Analysis Not Done': [
+    "Be direct and specific: 'I haven't completed the analysis yet — I'll have it ready by [specific time].' Give a concrete deadline, not 'soon' or 'shortly'. Vagueness about timing damages trust more than the gap itself.",
+    "Offer what you do have: 'I don't have the full picture yet, but what I can share now is [partial finding or hypothesis].' Partial insight with honesty is more credible than silence or deflection.",
+    "Never walk into a meeting unprepared without flagging it beforehand. Send a message 30 minutes ahead: 'I'm still working on the analysis — I can share initial findings today and the complete view by [date]. Does that work?' This shows proactiveness.",
+    "If asked mid-meeting: 'I want to be accurate here — I'll confirm the numbers and send them through within the hour rather than approximate.' Saying this confidently is far better than giving wrong numbers confidently.",
+    "Use the gap productively: 'While the analysis is in progress, let me share the key question I'm trying to answer and the approach I'm taking.' Walking through your thinking demonstrates competence even when the output isn't ready."
+  ],
+  'Being Direct': [
+    "Lead with your answer, then give the reasoning. Not: 'Well, there are several factors to consider and after looking at them I think...' But: 'My recommendation is X. Here's why.' The conclusion comes first, always.",
+    "The BLUF method (Bottom Line Up Front): before any email, message, or verbal response, ask yourself — what is the single most important thing I need to communicate? Say that first. Everything else is supporting context.",
+    "When someone asks a yes/no question, answer it with yes or no first. You can qualify it after. 'Yes, and here's the context' or 'No, because...' — but the direct answer must come before the explanation.",
+    "Practice in writing first. Before your next important email, write the full thing — then move your conclusion from the last paragraph to the first sentence. You'll find this is almost always better.",
+    "Notice when you are about to say 'it depends' and push yourself to answer the question as asked. 'It depends' without an answer is a non-answer. Answer the most likely scenario and then note the exceptions."
+  ],
+  'Leading with Story': [
+    "Use the Pyramid Principle: answer first, then support. Structure every communication as: Answer → Reason → Data/Story. Never: Story → Data → eventual Answer. The audience should know your point by your second sentence.",
+    "Before speaking, write your headline in one sentence: 'The main thing I want to communicate is ___.' Say that sentence first. Everything after is support. Train yourself to find the headline before you open your mouth.",
+    "The 10-second test: if someone had to leave after your first 10 seconds, would they have understood your key message? If not, restructure. The key message must land in the first 10 seconds.",
+    "When you feel the urge to give context before the answer, pause and ask: does this context genuinely help them receive the answer, or am I warming myself up to say something difficult? Context is often a delay tactic.",
+    "Use a simple signpost: 'The short answer is [X]. The context behind it is [Y].' This gives the audience the answer immediately and signals that more is coming — satisfying both directness and completeness."
+  ],
+  'Over-Explaining': [
+    "Set a personal rule: one explanation per point. State the point, give one reason or example, stop. If they want more, they will ask. Most people who over-explain do so because they fear being misunderstood — trust that your first explanation was enough.",
+    "Notice the silence and sit in it. The discomfort you feel after making a point and before the other person responds is not a problem to solve by talking — it is normal processing time. Count to 3 silently before adding anything.",
+    "Ask instead of explain: after making your point, instead of adding more words, ask 'Does that make sense?' or 'Any questions on that?' This transfers the control of depth to them — they decide if more is needed.",
+    "Prepare a one-sentence version of your key points before important conversations. If you can say it in one sentence, you're ready. Over-explanation often happens because the idea hasn't been fully clarified in your own mind first.",
+    "Physical intervention: when you notice yourself continuing past your natural stopping point, physically stop — put your pen down, close your notebook, take a breath. The physical action interrupts the verbal habit."
+  ]
+};
+
+var growthData = {};
+
+function loadGrowth() {
+  document.getElementById('growthLoading').style.display = 'block';
+  document.getElementById('growthGrid').innerHTML = '';
+  jsonpGet('action=read&type=growth', function(data) {
+    document.getElementById('growthLoading').style.display = 'none';
+    if (data && data.rows && data.rows.length) {
+      buildGrowthData(data.rows);
+    } else {
+      growthData = {};
+      Object.keys(FALLBACK_GROWTH).forEach(function(k) { growthData[k] = FALLBACK_GROWTH[k]; });
+    }
+    renderGrowth();
+    populateAddGrowthSelect();
+  }, function() {
+    document.getElementById('growthLoading').style.display = 'none';
+    growthData = {};
+    Object.keys(FALLBACK_GROWTH).forEach(function(k) { growthData[k] = FALLBACK_GROWTH[k]; });
+    renderGrowth();
+    populateAddGrowthSelect();
+  });
+}
+
+function buildGrowthData(rows) {
+  growthData = {};
+  rows.forEach(function(row) {
+    var area   = (row.area || row.emotion || '').trim();
+    var method = (row.method || '').trim();
+    if (!area) return;
+    if (!growthData[area]) growthData[area] = [];
+    if (method) growthData[area].push(method);
+  });
+  // Always merge fallback for areas not in sheet
+  Object.keys(FALLBACK_GROWTH).forEach(function(k) {
+    if (!growthData[k] || !growthData[k].length) growthData[k] = FALLBACK_GROWTH[k];
+  });
+}
+
+function renderGrowth() {
+  var grid = document.getElementById('growthGrid');
+  var areas = Object.keys(growthData);
+  if (!areas.length) {
+    grid.innerHTML = '<div class="empty-msg">No growth areas found.<\/div>';
+    return;
+  }
+  grid.innerHTML = areas.map(function(area, i) {
+    var methods = growthData[area];
+    var icon = GROWTH_ICONS[area] || '✦';
+    var methodsHtml = methods.map(function(m, idx) {
+      return '<div class="method-item" style="border-color:rgba(42,63,111,.12)">'
+        + '<span class="method-num" style="color:var(--blue);background:rgba(42,63,111,.08)">' + (idx+1) + '<\/span>'
+        + '<span class="method-text">' + esc(m) + '<\/span>'
+        + '<\/div>';
+    }).join('');
+    return '<div class="emo-card" style="border-color:rgba(42,63,111,.18)">'
+      + '<div class="emo-card-head' + (i===0?' on':'') + '" onclick="toggleGrowth(this)" style="' + (i===0?'background:linear-gradient(135deg,rgba(42,63,111,.1),rgba(42,63,111,.04));border-bottom:1px solid rgba(42,63,111,.12)':'') + '">'
+      + '<span class="emo-icon">' + icon + '<\/span>'
+      + '<div style="flex:1;min-width:0">'
+      + '<div class="emo-title">' + esc(area) + '<\/div>'
+      + '<div class="emo-meta">' + methods.length + ' method' + (methods.length===1?'':'s') + '<\/div>'
+      + '<\/div>'
+      + '<span class="emo-chev" style="color:var(--blue)">▾<\/span>'
+      + '<\/div>'
+      + '<div class="emo-body"' + (i===0?'':' style="display:none"') + '>'
+      + '<div class="method-list">' + methodsHtml + '<\/div>'
+      + '<\/div>'
+      + '<\/div>';
+  }).join('');
+}
+
+function toggleGrowth(head) {
+  var isOpen = head.classList.contains('on');
+  // Close all within growthGrid only
+  document.querySelectorAll('#growthGrid .emo-card-head').forEach(function(h) {
+    h.classList.remove('on');
+    h.style.background = '';
+    h.style.borderBottom = '';
+    h.nextElementSibling.style.display = 'none';
+  });
+  if (!isOpen) {
+    head.classList.add('on');
+    head.style.background = 'linear-gradient(135deg,rgba(42,63,111,.1),rgba(42,63,111,.04))';
+    head.style.borderBottom = '1px solid rgba(42,63,111,.12)';
+    head.nextElementSibling.style.display = 'block';
+  }
+}
+
+function populateAddGrowthSelect() {
+  var sel = document.getElementById('addGrowthSel');
+  sel.innerHTML = '<option value="">Select existing…<\/option>'
+    + Object.keys(growthData).map(function(a) {
+        return '<option value="' + esc(a) + '">' + (GROWTH_ICONS[a]||'') + ' ' + esc(a) + '<\/option>';
+      }).join('')
+    + '<option value="__new__">➕ Add new area…<\/option>';
+}
+
+function toggleNewGrowthField() {
+  var sel = document.getElementById('addGrowthSel');
+  document.getElementById('newGrowthWrap').style.display = (sel.value === '__new__') ? 'block' : 'none';
+}
+
+function addGrowthMethod() {
+  var selVal = document.getElementById('addGrowthSel').value;
+  var method = document.getElementById('addGrowthTa').value.trim();
+  var area;
+
+  if (selVal === '__new__') {
+    area = document.getElementById('newGrowthInput').value.trim();
+    if (!area) { showStatus('addGrowthStatus', 'Enter the new area name.', 'var(--red)'); return; }
+  } else {
+    area = selVal;
+  }
+
+  if (!area)   { showStatus('addGrowthStatus', 'Select an area first.', 'var(--red)'); return; }
+  if (!method) { showStatus('addGrowthStatus', 'Write a method first.', 'var(--red)'); return; }
+
+  showStatus('addGrowthStatus', 'Saving…', 'var(--ash)');
+  var params = 'action=write&type=growth&area=' + encodeURIComponent(area) + '&method=' + encodeURIComponent(method);
+
+  jsonpGet(params, function(data) {
+    if (data && data.success) {
+      document.getElementById('addGrowthTa').value = '';
+      if (selVal === '__new__') document.getElementById('newGrowthInput').value = '';
+      document.getElementById('newGrowthWrap').style.display = 'none';
+      document.getElementById('addGrowthSel').value = '';
+      showStatus('addGrowthStatus', '✓ Saved — reloading…', 'var(--green)');
+      setTimeout(loadGrowth, 1200);
+    } else { showStatus('addGrowthStatus', 'Error. Try again.', 'var(--red)'); }
+  }, function() {
+    var sc = document.createElement('script');
+    sc.src = SHEETS_URL + '?' + params + '&callback=_ic_noop2';
+    window['_ic_noop2'] = function(){};
+    document.head.appendChild(sc);
+    document.getElementById('addGrowthTa').value = '';
+    showStatus('addGrowthStatus', '✓ Sent — reloading…', 'var(--green)');
+    setTimeout(loadGrowth, 2000);
+  });
+}
+
 // ── DAILY SPOTLIGHT ───────────────────────────────────────────
 // Day-seed: same item all day, changes next day
 function dayIndex(arr) {
