@@ -176,6 +176,16 @@ h1 em{color:var(--saffron);font-style:italic}
 /* ── SECTION HEADER ──────────────────────────────────────────── */
 .sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
 .sec-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron)}
+/* ── IMAGE GALLERY ───────────────────────────────────────────── */
+#imgDropZone:hover,#imgDropZone.drag-over{border-color:var(--green);background:rgba(61,107,79,.07)}
+.img-card{border-radius:4px;overflow:hidden;border:1px solid var(--border);background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.06);cursor:zoom-in;transition:transform .2s,box-shadow .2s;animation:fadeIn .3s ease;position:relative}
+.img-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,20,16,.12)}
+.img-card img{width:100%;height:130px;object-fit:cover;display:block}
+.img-card-info{padding:8px 10px}
+.img-card-cat{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:3px;display:block}
+.img-card-caption{font-size:.86rem;color:var(--ink);line-height:1.4;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.img-card-date{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--ash);margin-top:3px;display:block;letter-spacing:.06em}
+.img-card.hidden{display:none}
 </style>
 </head>
 <body>
@@ -195,6 +205,7 @@ h1 em{color:var(--saffron);font-style:italic}
     <button class="tab" data-t="thoughts">💭 My Thoughts</button>
     <button class="tab" data-t="videos">🎬 My Videos</button>
     <button class="tab" data-t="growth">🚀 Professional Growth</button>
+    <button class="tab" data-t="images">🖼️ My Images</button>
   </div>
 
   <!-- ══════════ RIGHT NOW ══════════ -->
@@ -500,7 +511,112 @@ h1 em{color:var(--saffron);font-style:italic}
 
   </div><!-- /tab-growth -->
 
+  <!-- ══════════ MY IMAGES ══════════ -->
+  <div class="tsec" id="tab-images">
+
+    <!-- UPLOAD PANEL -->
+    <div class="panel">
+      <div class="panel-accent" style="background:var(--green)"></div>
+      <div class="plabel green">Upload an Image</div>
+
+      <!-- DROP ZONE -->
+      <div id="imgDropZone" onclick="document.getElementById('imgFilePicker').click()"
+           style="border:2px dashed var(--border);border-radius:4px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .25s;margin-bottom:14px;background:rgba(255,255,255,.4)">
+        <div id="imgDropIcon" style="font-size:2.4rem;margin-bottom:8px">📷</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)">Click or drag &amp; drop an image</div>
+        <div style="font-size:.82rem;color:var(--ash);font-style:italic;margin-top:5px">JPG, PNG, GIF, WebP — max 32MB</div>
+        <div id="imgPreviewWrap" style="display:none;margin-top:14px">
+          <img id="imgPreview" src="" alt="" style="max-width:100%;max-height:200px;border-radius:3px;border:1px solid var(--border);box-shadow:var(--shadow)">
+          <div id="imgPreviewName" style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);margin-top:6px;letter-spacing:.08em"></div>
+        </div>
+      </div>
+      <input type="file" id="imgFilePicker" accept="image/*" style="display:none" onchange="onImagePicked(this)">
+
+      <!-- FIELDS -->
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div>
+          <label class="field-label">Caption</label>
+          <input class="itext" id="imgCaption" placeholder="What is this image about?">
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:140px">
+            <label class="field-label">Category</label>
+            <select class="sel" id="imgCategory" style="width:100%">
+              <option value="">Select…</option>
+              <option>Memories</option>
+              <option>Inspiration</option>
+              <option>Goals &amp; Vision</option>
+              <option>Work &amp; Career</option>
+              <option>Family &amp; Friends</option>
+              <option>Travel</option>
+              <option>Learning</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div style="flex:1;min-width:140px">
+            <label class="field-label">Note (optional)</label>
+            <input class="itext" id="imgNote" placeholder="Any context or feeling…">
+          </div>
+        </div>
+      </div>
+
+      <!-- UPLOAD BUTTON -->
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button class="btn" id="imgUploadBtn" onclick="uploadImage()" style="background:var(--green);min-width:140px">
+          ⬆ Upload Image
+        </button>
+        <div id="imgProgress" style="display:none;flex:1;min-width:160px">
+          <div style="background:var(--border-lt);border-radius:10px;height:6px;overflow:hidden">
+            <div id="imgProgressBar" style="height:100%;background:var(--green);width:0%;transition:width .3s;border-radius:10px"></div>
+          </div>
+          <div id="imgProgressLabel" style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);margin-top:5px;letter-spacing:.08em;text-transform:uppercase">Uploading…</div>
+        </div>
+        <span id="imgUploadStatus" class="status"></span>
+      </div>
+    </div>
+
+    <!-- GALLERY -->
+    <div class="panel">
+      <div class="panel-accent" style="background:var(--green)"></div>
+      <div class="sec-header">
+        <div class="sec-title">🖼️ Image Gallery</div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+          <select class="sel" id="imgFilter" onchange="filterImages()" style="font-size:.6rem">
+            <option value="">All categories</option>
+            <option>Memories</option>
+            <option>Inspiration</option>
+            <option>Goals &amp; Vision</option>
+            <option>Work &amp; Career</option>
+            <option>Family &amp; Friends</option>
+            <option>Travel</option>
+            <option>Learning</option>
+            <option>Other</option>
+          </select>
+          <button class="btn-ghost" onclick="loadImages()">↻ Refresh</button>
+        </div>
+      </div>
+      <span class="count-tag" id="imgCount"></span>
+      <div id="imgLoading" class="loading-msg" style="display:none"><span class="spin"></span>Loading gallery…</div>
+      <div id="imgGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
+      <div id="imgEmpty" class="empty-msg" style="display:none">No images uploaded yet.</div>
+    </div>
+
+  </div><!-- /tab-images -->
+
 </div><!-- /wrap -->
+
+<!-- LIGHTBOX -->
+<div id="imgLightbox" onclick="closeLightbox()"
+     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:zoom-out">
+  <div style="max-width:90vw;max-height:80vh;position:relative">
+    <img id="imgLightboxImg" src="" alt="" style="max-width:100%;max-height:80vh;border-radius:4px;box-shadow:0 4px 40px rgba(0,0,0,.6);display:block">
+  </div>
+  <div style="text-align:center;margin-top:14px">
+    <div id="imgLightboxCaption" style="font-size:1rem;color:rgba(255,255,255,.9);font-style:italic;margin-bottom:5px"></div>
+    <div id="imgLightboxMeta" style="font-family:'DM Mono',monospace;font-size:.56rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase"></div>
+    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:.1em">CLICK ANYWHERE TO CLOSE</div>
+  </div>
+</div>
 
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
@@ -578,6 +694,8 @@ var FALLBACK_EMOTIONS = {
   loadThoughts();
   loadVideos();
   loadGrowth();
+  loadFocus();
+  loadImages();
 })();
 
 // ── JSONP ─────────────────────────────────────────────────────
@@ -1260,6 +1378,224 @@ function renderSpotlightVideo() {
     + (url ? '<a class="spot-link" href="' + esc(url) + '" target="_blank" rel="noopener">Watch ↗<\/a>' : '')
     + '<div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:8px;letter-spacing:.06em">' + esc(date) + '<\/div>';
 }
+// ── IMAGES ────────────────────────────────────────────────────
+var IMGBB_KEY = '48f14ea9b7f8d701ec6aec58a910d000';
+var allImages = [];
+var currentImageFile = null;
+
+// Drag & drop
+(function initImageDrop() {
+  var dz = document.getElementById('imgDropZone');
+  if (!dz) return;
+  dz.addEventListener('dragover', function(ev) {
+    ev.preventDefault();
+    dz.classList.add('drag-over');
+  });
+  dz.addEventListener('dragleave', function() { dz.classList.remove('drag-over'); });
+  dz.addEventListener('drop', function(ev) {
+    ev.preventDefault();
+    dz.classList.remove('drag-over');
+    var file = ev.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) previewImage(file);
+  });
+})();
+
+function onImagePicked(input) {
+  var file = input.files[0];
+  if (file) previewImage(file);
+}
+
+function previewImage(file) {
+  currentImageFile = file;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    document.getElementById('imgPreview').src = ev.target.result;
+    document.getElementById('imgPreviewName').textContent = file.name + ' (' + (file.size/1024).toFixed(1) + ' KB)';
+    document.getElementById('imgPreviewWrap').style.display = 'block';
+    document.getElementById('imgDropIcon').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function uploadImage() {
+  if (!currentImageFile) {
+    showStatus('imgUploadStatus', 'Select an image first.', 'var(--red)'); return;
+  }
+  var caption  = document.getElementById('imgCaption').value.trim();
+  var category = document.getElementById('imgCategory').value;
+  var note     = document.getElementById('imgNote').value.trim();
+
+  // Read file as base64
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var base64 = ev.target.result.split(',')[1];
+    doUploadToImgbb(base64, caption, category, note);
+  };
+  reader.readAsDataURL(currentImageFile);
+}
+
+function doUploadToImgbb(base64, caption, category, note) {
+  var btn = document.getElementById('imgUploadBtn');
+  btn.disabled = true;
+  document.getElementById('imgProgress').style.display = 'block';
+  document.getElementById('imgProgressBar').style.width = '0%';
+  document.getElementById('imgProgressLabel').textContent = 'Uploading to ImgBB…';
+  showStatus('imgUploadStatus', '', '');
+
+  // Animate progress bar
+  var prog = 0;
+  var progInt = setInterval(function() {
+    prog = Math.min(prog + 3, 85);
+    document.getElementById('imgProgressBar').style.width = prog + '%';
+  }, 80);
+
+  var formData = new FormData();
+  formData.append('key', IMGBB_KEY);
+  formData.append('image', base64);
+  if (caption) formData.append('name', caption);
+
+  fetch('https://api.imgbb.com/1/upload', { method:'POST', body:formData })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      clearInterval(progInt);
+      document.getElementById('imgProgressBar').style.width = '100%';
+
+      if (data.success) {
+        var imgUrl    = data.data.url;
+        var thumbUrl  = data.data.thumb ? data.data.thumb.url : imgUrl;
+        var deleteUrl = data.data.delete_url || '';
+        document.getElementById('imgProgressLabel').textContent = '✓ Upload complete!';
+        showStatus('imgUploadStatus', '✓ Uploaded — saving to sheet…', 'var(--green)');
+
+        // Save to Google Sheet
+        var params = 'action=write&type=images'
+          + '&url='      + encodeURIComponent(imgUrl)
+          + '&thumb='    + encodeURIComponent(thumbUrl)
+          + '&caption='  + encodeURIComponent(caption)
+          + '&category=' + encodeURIComponent(category)
+          + '&note='     + encodeURIComponent(note)
+          + '&delete='   + encodeURIComponent(deleteUrl);
+
+        jsonpGet(params, function(sheetData) {
+          btn.disabled = false;
+          resetUploadForm();
+          showStatus('imgUploadStatus', '✓ Saved to Gallery!', 'var(--green)');
+          allImages.unshift({url:imgUrl, thumb:thumbUrl, caption:caption, category:category, note:note, date:today()});
+          renderImages(allImages);
+          setTimeout(function() { document.getElementById('imgProgress').style.display='none'; }, 2000);
+        }, function() {
+          // Sheet save failed — still show the image locally
+          btn.disabled = false;
+          resetUploadForm();
+          showStatus('imgUploadStatus', '✓ Uploaded! (Sheet save pending)', 'var(--saffron)');
+          allImages.unshift({url:imgUrl, thumb:thumbUrl, caption:caption, category:category, note:note, date:today()});
+          renderImages(allImages);
+          setTimeout(function() { document.getElementById('imgProgress').style.display='none'; }, 2000);
+        });
+      } else {
+        clearInterval(progInt);
+        btn.disabled = false;
+        document.getElementById('imgProgress').style.display = 'none';
+        showStatus('imgUploadStatus', 'Upload failed: ' + (data.error && data.error.message || 'Unknown error'), 'var(--red)');
+      }
+    })
+    .catch(function(err) {
+      clearInterval(progInt);
+      btn.disabled = false;
+      document.getElementById('imgProgress').style.display = 'none';
+      showStatus('imgUploadStatus', 'Network error — try again.', 'var(--red)');
+    });
+}
+
+function resetUploadForm() {
+  currentImageFile = null;
+  document.getElementById('imgCaption').value  = '';
+  document.getElementById('imgNote').value     = '';
+  document.getElementById('imgCategory').value = '';
+  document.getElementById('imgPreviewWrap').style.display = 'none';
+  document.getElementById('imgDropIcon').style.display    = 'block';
+  document.getElementById('imgFilePicker').value = '';
+}
+
+function loadImages() {
+  document.getElementById('imgLoading').style.display = 'block';
+  document.getElementById('imgGallery').innerHTML = '';
+  document.getElementById('imgEmpty').style.display = 'none';
+  document.getElementById('imgCount').textContent = '';
+  jsonpGet('action=read&type=images', function(data) {
+    document.getElementById('imgLoading').style.display = 'none';
+    allImages = (data && data.rows) ? data.rows : [];
+    renderImages(allImages);
+  }, function() {
+    document.getElementById('imgLoading').style.display = 'none';
+    if (allImages.length) {
+      renderImages(allImages);
+    } else {
+      document.getElementById('imgEmpty').style.display = 'block';
+      document.getElementById('imgEmpty').textContent = 'Could not load. Refresh to try again.';
+    }
+  });
+}
+
+function renderImages(rows) {
+  var gallery = document.getElementById('imgGallery');
+  var empty   = document.getElementById('imgEmpty');
+  if (!rows || !rows.length) {
+    gallery.innerHTML = '';
+    empty.style.display = 'block';
+    empty.textContent = 'No images uploaded yet. Upload your first one above.';
+    document.getElementById('imgCount').textContent = '';
+    return;
+  }
+  empty.style.display = 'none';
+  document.getElementById('imgCount').textContent = rows.length + ' image' + (rows.length===1?'':'s');
+  gallery.innerHTML = rows.map(function(row, i) {
+    var thumb   = row.thumb || row.url || '';
+    var url     = row.url   || '';
+    var caption = row.caption || '';
+    var cat     = row.category || '';
+    var note    = row.note || '';
+    var date    = cleanDate(row.date || '');
+    return '<div class="img-card" data-cat="' + esc(cat) + '" onclick="openLightbox(\'' + esc(url) + '\',\'' + esc(caption) + '\',\'' + esc(cat) + '\',\'' + esc(date) + '\',\'' + esc(note) + '\')">'
+      + '<img src="' + esc(thumb) + '" alt="' + esc(caption) + '" loading="lazy" onerror="this.src=\'' + esc(url) + '\'">'
+      + '<div class="img-card-info">'
+      + (cat ? '<span class="img-card-cat">' + esc(cat) + '<\/span>' : '')
+      + (caption ? '<div class="img-card-caption">' + esc(caption) + '<\/div>' : '<div class="img-card-caption" style="color:var(--ash);font-style:italic">Untitled<\/div>')
+      + '<span class="img-card-date">' + esc(date) + '<\/span>'
+      + '<\/div><\/div>';
+  }).join('');
+}
+
+function filterImages() {
+  var cat = document.getElementById('imgFilter').value;
+  var visible = 0;
+  document.querySelectorAll('.img-card').forEach(function(card) {
+    var ok = !cat || card.dataset.cat === cat;
+    card.classList.toggle('hidden', !ok);
+    if (ok) visible++;
+  });
+  document.getElementById('imgCount').textContent = visible + ' of ' + allImages.length + ' image' + (allImages.length===1?'':'s');
+}
+
+function openLightbox(url, caption, cat, date, note) {
+  document.getElementById('imgLightboxImg').src     = url;
+  document.getElementById('imgLightboxCaption').textContent = caption || 'Untitled';
+  document.getElementById('imgLightboxMeta').textContent    = [cat, date, note].filter(Boolean).join('  ·  ');
+  var lb = document.getElementById('imgLightbox');
+  lb.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('imgLightbox').style.display = 'none';
+  document.getElementById('imgLightboxImg').src = '';
+  document.body.style.overflow = '';
+}
+
+// Close lightbox on Escape key
+document.addEventListener('keydown', function(ev) {
+  if (ev.key === 'Escape') closeLightbox();
+});
 </script>
 </body>
 </html>
