@@ -1424,17 +1424,10 @@ function uploadImage() {
   var caption  = document.getElementById('imgCaption').value.trim();
   var category = document.getElementById('imgCategory').value;
   var note     = document.getElementById('imgNote').value.trim();
-
-  // Read file as base64
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    var base64 = ev.target.result.split(',')[1];
-    doUploadToImgbb(base64, caption, category, note);
-  };
-  reader.readAsDataURL(currentImageFile);
+  doUploadToImgbb(currentImageFile, caption, category, note);
 }
 
-function doUploadToImgbb(base64, caption, category, note) {
+function doUploadToImgbb(file, caption, category, note) {
   var btn = document.getElementById('imgUploadBtn');
   btn.disabled = true;
   document.getElementById('imgProgress').style.display = 'block';
@@ -1442,19 +1435,19 @@ function doUploadToImgbb(base64, caption, category, note) {
   document.getElementById('imgProgressLabel').textContent = 'Uploading to ImgBB…';
   showStatus('imgUploadStatus', '', '');
 
-  // Animate progress bar
   var prog = 0;
   var progInt = setInterval(function() {
     prog = Math.min(prog + 3, 85);
     document.getElementById('imgProgressBar').style.width = prog + '%';
   }, 80);
 
+  // Send file directly as multipart — more reliable than base64 from browsers
   var formData = new FormData();
   formData.append('key', IMGBB_KEY);
-  formData.append('image', base64);
+  formData.append('image', file);  // send raw file blob
   if (caption) formData.append('name', caption);
 
-  fetch('https://api.imgbb.com/1/upload', { method:'POST', body:formData })
+  fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
     .then(function(r) { return r.json(); })
     .then(function(data) {
       clearInterval(progInt);
@@ -1467,7 +1460,6 @@ function doUploadToImgbb(base64, caption, category, note) {
         document.getElementById('imgProgressLabel').textContent = '✓ Upload complete!';
         showStatus('imgUploadStatus', '✓ Uploaded — saving to sheet…', 'var(--green)');
 
-        // Save to Google Sheet
         var params = 'action=write&type=images'
           + '&url='      + encodeURIComponent(imgUrl)
           + '&thumb='    + encodeURIComponent(thumbUrl)
@@ -1476,7 +1468,7 @@ function doUploadToImgbb(base64, caption, category, note) {
           + '&note='     + encodeURIComponent(note)
           + '&delete='   + encodeURIComponent(deleteUrl);
 
-        jsonpGet(params, function(sheetData) {
+        jsonpGet(params, function() {
           btn.disabled = false;
           resetUploadForm();
           showStatus('imgUploadStatus', '✓ Saved to Gallery!', 'var(--green)');
@@ -1484,7 +1476,6 @@ function doUploadToImgbb(base64, caption, category, note) {
           renderImages(allImages);
           setTimeout(function() { document.getElementById('imgProgress').style.display='none'; }, 2000);
         }, function() {
-          // Sheet save failed — still show the image locally
           btn.disabled = false;
           resetUploadForm();
           showStatus('imgUploadStatus', '✓ Uploaded! (Sheet save pending)', 'var(--saffron)');
@@ -1492,18 +1483,20 @@ function doUploadToImgbb(base64, caption, category, note) {
           renderImages(allImages);
           setTimeout(function() { document.getElementById('imgProgress').style.display='none'; }, 2000);
         });
+
       } else {
         clearInterval(progInt);
         btn.disabled = false;
         document.getElementById('imgProgress').style.display = 'none';
-        showStatus('imgUploadStatus', 'Upload failed: ' + (data.error && data.error.message || 'Unknown error'), 'var(--red)');
+        var errMsg = (data.error && (data.error.message || data.error)) || JSON.stringify(data);
+        showStatus('imgUploadStatus', 'Upload failed: ' + errMsg, 'var(--red)');
       }
     })
     .catch(function(err) {
       clearInterval(progInt);
       btn.disabled = false;
       document.getElementById('imgProgress').style.display = 'none';
-      showStatus('imgUploadStatus', 'Network error — try again.', 'var(--red)');
+      showStatus('imgUploadStatus', 'Network error: ' + (err.message || err), 'var(--red)');
     });
 }
 
