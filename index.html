@@ -694,7 +694,6 @@ var FALLBACK_EMOTIONS = {
   loadThoughts();
   loadVideos();
   loadGrowth();
-  loadFocus();
   loadImages();
 })();
 
@@ -1203,6 +1202,10 @@ function loadGrowth() {
 
 function buildGrowthData(rows) {
   growthData = {};
+  if (!rows || !rows.length) {
+    Object.keys(FALLBACK_GROWTH).forEach(function(k) { growthData[k] = FALLBACK_GROWTH[k]; });
+    return;
+  }
   rows.forEach(function(row) {
     var area   = (row.area || row.emotion || '').trim();
     var method = (row.method || '').trim();
@@ -1424,10 +1427,16 @@ function uploadImage() {
   var caption  = document.getElementById('imgCaption').value.trim();
   var category = document.getElementById('imgCategory').value;
   var note     = document.getElementById('imgNote').value.trim();
-  doUploadToImgbb(currentImageFile, caption, category, note);
+  // Read as base64 then upload
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var base64 = ev.target.result.split(',')[1];
+    doUploadToImgbb(base64, caption, category, note);
+  };
+  reader.readAsDataURL(currentImageFile);
 }
 
-function doUploadToImgbb(file, caption, category, note) {
+function doUploadToImgbb(base64, caption, category, note) {
   var btn = document.getElementById('imgUploadBtn');
   btn.disabled = true;
   document.getElementById('imgProgress').style.display = 'block';
@@ -1441,10 +1450,9 @@ function doUploadToImgbb(file, caption, category, note) {
     document.getElementById('imgProgressBar').style.width = prog + '%';
   }, 80);
 
-  // Send file directly as multipart — more reliable than base64 from browsers
   var formData = new FormData();
   formData.append('key', IMGBB_KEY);
-  formData.append('image', file);  // send raw file blob
+  formData.append('image', base64);
   if (caption) formData.append('name', caption);
 
   fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
