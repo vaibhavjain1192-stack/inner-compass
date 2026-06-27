@@ -202,7 +202,7 @@ h1 em{color:var(--saffron);font-style:italic}
   <div class="tabs">
     <button class="tab on" data-t="now">🧭 Right Now</button>
     <button class="tab" data-t="learnings">📖 Life Learnings</button>
-    <button class="tab" data-t="thoughts">💭 My Thoughts</button>
+    <button class="tab" data-t="thoughts">💭 My Habits</button>
     <button class="tab" data-t="videos">🎬 My Videos</button>
     <button class="tab" data-t="growth">🚀 Professional Growth</button>
     <button class="tab" data-t="images">🖼️ My Images</button>
@@ -394,12 +394,12 @@ h1 em{color:var(--saffron);font-style:italic}
           </select>
         </div>
         <div>
-          <label class="field-label">Your Thought</label>
+          <label class="field-label">Your Habits</label>
           <textarea class="ta" id="thoughtTa" placeholder="What's on your mind? Write freely…"></textarea>
         </div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn" onclick="saveThought()">Save Thought ✦</button>
+        <button class="btn" onclick="saveThought()">Save Habits ✦</button>
         <span id="thoughtStatus" class="status"></span>
       </div>
     </div>
@@ -407,13 +407,13 @@ h1 em{color:var(--saffron);font-style:italic}
     <div class="panel">
       <div class="panel-accent" style="background:var(--blue)"></div>
       <div class="sec-header">
-        <div class="sec-title">💭 All Thoughts</div>
+        <div class="sec-title">💭 All Habits</div>
         <button class="btn-ghost" onclick="loadThoughts()">↻ Refresh</button>
       </div>
       <span class="count-tag" id="thoughtCount"></span>
       <div id="thoughtLoading" class="loading-msg" style="display:none"><span class="spin"></span>Loading…</div>
       <div id="thoughtCards"></div>
-      <div id="thoughtEmpty" class="empty-msg" style="display:none">No thoughts captured yet.</div>
+      <div id="thoughtEmpty" class="empty-msg" style="display:none">No Habits captured yet.</div>
     </div>
 
   </div><!-- /tab-thoughts -->
