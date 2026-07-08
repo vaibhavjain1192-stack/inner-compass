@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache,no-store,must-revalidate">
 <title>The Inner Compass</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
@@ -16,44 +16,34 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
 body{font-family:'Cormorant Garamond',Georgia,serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden}
-
-/* ── HEADER ─────────────────────────────────────────────────── */
-header{background:linear-gradient(180deg,#1a1410 0%,#2c1f14 100%);padding:40px 20px 32px;text-align:center;position:relative;overflow:hidden}
+header{background:linear-gradient(180deg,#1a1410 0%,#2c1f14 100%);padding:36px 20px 28px;text-align:center;position:relative;overflow:hidden}
 header::after{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");pointer-events:none}
-.om{font-size:2rem;color:var(--saffron);display:block;margin-bottom:8px;animation:pulse 4s ease-in-out infinite;position:relative}
+.om{font-size:1.8rem;color:var(--saffron);display:block;margin-bottom:6px;animation:pulse 4s ease-in-out infinite;position:relative}
 @keyframes pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
-h1{font-size:clamp(2rem,6vw,3.2rem);font-weight:300;letter-spacing:.07em;line-height:1;color:#f5ede0;position:relative}
+h1{font-size:clamp(1.9rem,5vw,3rem);font-weight:300;letter-spacing:.07em;line-height:1;color:#f5ede0;position:relative}
 h1 em{color:var(--saffron);font-style:italic}
-.subtitle{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,237,224,.45);margin-top:10px;position:relative}
-.ribbon{max-width:560px;margin:18px auto 0;padding:11px 22px;background:rgba(200,101,26,.15);border:1px solid rgba(200,101,26,.3);border-radius:2px;text-align:center;font-style:italic;font-size:.92rem;color:rgba(245,237,224,.85);line-height:1.55;position:relative}
-
-/* ── WRAP ───────────────────────────────────────────────────── */
-.wrap{max-width:680px;margin:0 auto;padding:26px 14px 80px}
-
-/* ── TABS ───────────────────────────────────────────────────── */
-.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:20px;padding:3px;background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:3px}
-.tab{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:8px 14px;border:none;background:transparent;color:var(--ash);cursor:pointer;border-radius:2px;transition:all .2s;flex:1;min-width:100px;text-align:center}
+.subtitle{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(245,237,224,.45);margin-top:9px;position:relative}
+.ribbon{max-width:560px;margin:16px auto 0;padding:10px 22px;background:rgba(200,101,26,.15);border:1px solid rgba(200,101,26,.3);border-radius:2px;text-align:center;font-style:italic;font-size:.92rem;color:rgba(245,237,224,.85);line-height:1.55;position:relative}
+.wrap{max-width:700px;margin:0 auto;padding:22px 14px 80px}
+/* TABS */
+.tabs{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:20px;padding:3px;background:rgba(255,255,255,.5);border:1px solid var(--border);border-radius:3px}
+.tab{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 11px;border:none;background:transparent;color:var(--ash);cursor:pointer;border-radius:2px;transition:all .2s;text-align:center;flex:1;min-width:80px}
 .tab:hover{background:var(--saffron-pale);color:var(--saffron)}
 .tab.on{background:var(--saffron);color:#fff;box-shadow:0 1px 6px rgba(200,101,26,.3)}
-.tsec{display:none;width:100%;animation:fadeIn .2s ease}
-.tsec.on{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-
-/* ── PANELS ─────────────────────────────────────────────────── */
-.panel{background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:22px;margin-bottom:16px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.panel-accent{position:absolute;top:0;left:0;width:4px;height:100%;background:var(--saffron);border-radius:4px 0 0 4px}
-.panel-accent.blue{background:var(--blue)}
-.panel-accent.green{background:var(--green)}
-.panel-accent.amber{background:#92400e}
-.plabel{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+.tsec{display:none;width:100%}
+.tsec.on{display:block;animation:fadeIn .2s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+/* PANELS */
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:4px;padding:20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.panel-accent{position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
+.plabel{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron);margin-bottom:12px;display:flex;align-items:center;gap:10px}
 .plabel::after{content:'';flex:1;height:1px;background:var(--border)}
-.plabel.blue{color:var(--blue)}.plabel.green{color:var(--green)}.plabel.amber{color:#92400e}
-.panel-hint{font-size:.88rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:14px}
-
-/* ── INPUTS ─────────────────────────────────────────────────── */
-.field-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:5px;display:block}
-.sel{border:1px solid var(--border);background:rgba(255,255,255,.7);font-family:'DM Mono',monospace;font-size:.62rem;color:var(--ink);padding:9px 11px;outline:none;border-radius:2px;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7968'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;padding-right:28px}
-.sel:focus{border-color:var(--saffron);outline:none}
+.plabel.blue{color:var(--blue)}.plabel.green{color:var(--green)}.plabel.amber{color:#92400e}.plabel.purple{color:#6b3fa0}
+.panel-hint{font-size:.88rem;color:var(--ash);font-style:italic;line-height:1.6;margin-bottom:12px}
+/* INPUTS */
+.field-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:5px;display:block}
+.sel{border:1px solid var(--border);background:rgba(255,255,255,.7);font-family:'DM Mono',monospace;font-size:.62rem;color:var(--ink);padding:9px 28px 9px 11px;outline:none;border-radius:2px;cursor:pointer;transition:border-color .2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a7968'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.sel:focus{border-color:var(--saffron)}
 .itext{border:1px solid var(--border);background:rgba(255,255,255,.65);font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);padding:9px 13px;outline:none;border-radius:2px;transition:border-color .2s;width:100%}
 .itext:focus{border-color:var(--saffron)}
 .itext::placeholder{color:var(--ash);font-style:italic}
@@ -61,65 +51,111 @@ h1 em{color:var(--saffron);font-style:italic}
 .ta:focus{border-color:var(--saffron)}
 .ta::placeholder{color:var(--ash);font-style:italic}
 .ta.sm{min-height:58px}
-
-/* ── BUTTONS ─────────────────────────────────────────────────── */
+/* BUTTONS */
 .btn{border:none;background:var(--saffron);color:#fff;font-family:'DM Mono',monospace;font-size:.6rem;padding:10px 20px;cursor:pointer;border-radius:2px;letter-spacing:.12em;text-transform:uppercase;transition:all .2s;white-space:nowrap;box-shadow:0 1px 4px rgba(200,101,26,.25)}
-.btn:hover{background:var(--saffron-d);box-shadow:0 2px 8px rgba(200,101,26,.35);transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
+.btn:hover{background:var(--saffron-d);transform:translateY(-1px)}
 .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
 .btn-ghost{border:1px solid var(--border);background:transparent;color:var(--ash);font-family:'DM Mono',monospace;font-size:.58rem;padding:8px 14px;cursor:pointer;border-radius:2px;letter-spacing:.1em;text-transform:uppercase;transition:all .2s}
 .btn-ghost:hover{border-color:var(--saffron);color:var(--saffron);background:var(--saffron-pale)}
-
-/* ── STATUS / LOADING ────────────────────────────────────────── */
-.spin{display:inline-block;width:13px;height:13px;border:2px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:6px}
+/* STATUS */
+.spin{display:inline-block;width:12px;height:12px;border:2px solid var(--border);border-top-color:var(--saffron);border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:5px}
 @keyframes spin{to{transform:rotate(360deg)}}
-.loading-msg{text-align:center;padding:24px;color:var(--ash);font-style:italic;font-size:.93rem}
-.empty-msg{text-align:center;padding:22px 16px;color:var(--ash);font-style:italic;font-size:.92rem;border:1px dashed var(--border);border-radius:2px}
+.loading-msg{text-align:center;padding:20px;color:var(--ash);font-style:italic;font-size:.92rem}
+.empty-msg{text-align:center;padding:20px;color:var(--ash);font-style:italic;font-size:.9rem;border:1px dashed var(--border);border-radius:2px}
 .status{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;transition:opacity .4s;opacity:0}
-.count-tag{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:12px;display:block}
-
-/* ── EMOTION CARDS ───────────────────────────────────────────── */
+.count-tag{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ash);margin-bottom:10px;display:block}
+.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.sec-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron)}
+/* EMOTION CARDS */
 .emo-grid{display:flex;flex-direction:column;gap:10px}
-.emo-card{border:1px solid var(--border);border-radius:4px;background:rgba(255,255,255,.55);overflow:hidden;box-shadow:0 1px 6px rgba(26,20,16,.04);transition:box-shadow .2s,border-color .2s}
+.emo-card{border:1px solid var(--border);border-radius:4px;background:rgba(255,255,255,.55);overflow:hidden;box-shadow:0 1px 6px rgba(26,20,16,.04);transition:box-shadow .2s}
 .emo-card:hover{box-shadow:0 2px 12px rgba(26,20,16,.09)}
-.emo-card-head{padding:14px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;user-select:none;gap:12px}
+.emo-card-head{padding:14px 18px;cursor:pointer;display:flex;align-items:center;gap:12px;user-select:none}
 .emo-card-head:hover{background:rgba(200,101,26,.04)}
 .emo-card-head.on{background:linear-gradient(135deg,rgba(200,101,26,.1),rgba(200,101,26,.04));border-bottom:1px solid var(--border-lt)}
 .emo-icon{font-size:1.6rem;flex-shrink:0;line-height:1}
-.emo-title{font-size:1.08rem;font-weight:600;color:var(--ink);letter-spacing:.01em;line-height:1.2}
+.emo-title{font-size:1.08rem;font-weight:600;color:var(--ink)}
 .emo-meta{font-family:'DM Mono',monospace;font-size:.52rem;color:var(--ash);letter-spacing:.08em;margin-top:3px}
-.emo-chev{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--ash);transition:transform .2s;flex-shrink:0}
+.emo-chev{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--ash);transition:transform .2s;margin-left:auto;flex-shrink:0}
 .emo-card-head.on .emo-chev{transform:rotate(180deg)}
 .emo-body{display:none;padding:12px 16px 14px}
 .emo-card-head.on + .emo-body{display:block}
 .method-list{display:flex;flex-direction:column;gap:7px}
-.method-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:rgba(255,255,255,.7);border:1px solid var(--border-lt);border-radius:2px;transition:border-color .2s}
-.method-item:hover{border-color:rgba(200,101,26,.2)}
+.method-item{display:flex;align-items:flex-start;gap:10px;padding:9px 12px;background:rgba(255,255,255,.7);border:1px solid var(--border-lt);border-radius:2px}
 .method-num{font-family:'DM Mono',monospace;font-size:.56rem;font-weight:600;color:var(--saffron);min-width:16px;margin-top:2px;background:var(--saffron-pale);padding:1px 5px;border-radius:1px}
 .method-text{font-size:.91rem;color:var(--ink);line-height:1.55}
-
-/* ── ADD METHOD PANEL ────────────────────────────────────────── */
 .add-panel{background:linear-gradient(135deg,rgba(146,64,14,.06),rgba(200,101,26,.04));border:1px solid rgba(146,64,14,.2);border-radius:4px;padding:18px 20px;margin-top:4px}
-
-/* ── DAILY SPOTLIGHT ─────────────────────────────────────────── */
+/* GENERAL CARDS */
+.lcard,.tcard,.vcard-wrap,.stcard,.bdcard{border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:10px;background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.04);animation:fadeIn .3s ease}
+.card-head{display:flex;gap:8px;align-items:center;margin-bottom:10px;border-bottom:1px solid var(--border-lt);padding-bottom:8px;flex-wrap:wrap}
+.badge{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border-radius:10px;border:1px solid rgba(200,101,26,.25);color:var(--saffron);background:var(--saffron-pale)}
+.badge.blue{border-color:rgba(42,63,111,.2);color:var(--blue);background:rgba(42,63,111,.06)}
+.badge.green{border-color:rgba(61,107,79,.2);color:var(--green);background:rgba(61,107,79,.06)}
+.badge.purple{border-color:rgba(107,63,160,.2);color:#6b3fa0;background:rgba(107,63,160,.06)}
+.card-date{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);margin-left:auto;letter-spacing:.06em}
+/* LEARNINGS */
+.lrow{display:flex;gap:0;align-items:stretch}
+.lcol-inc{flex:1;min-width:90px;padding-right:12px;border-right:1px solid var(--border-lt)}
+.lcol-lrn{flex:2;min-width:130px;padding-left:12px}
+.llabel{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;display:block}
+.llabel.inc{color:var(--ash)}.llabel.lrn{color:var(--saffron)}
+.lincident{font-size:.88rem;color:var(--ash);line-height:1.55;font-style:italic;white-space:pre-wrap}
+.llearning{font-size:.93rem;color:var(--ink);line-height:1.62;white-space:pre-wrap}
+@media(max-width:460px){.lrow{flex-direction:column}.lcol-inc{border-right:none;padding-right:0;padding-bottom:10px;border-bottom:1px solid var(--border-lt);margin-bottom:10px}.lcol-lrn{padding-left:0}}
+/* VIDEO CARDS */
+.vcard{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.vthumb{width:120px;height:68px;background:var(--border-lt);border-radius:3px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:1.6rem;border:1px solid var(--border)}
+.vthumb img{width:100%;height:100%;object-fit:cover}
+.vinfo{flex:1;min-width:140px}
+.vtitle{font-size:.96rem;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:4px}
+.vnote{font-size:.86rem;color:var(--ash);font-style:italic;line-height:1.5;margin-bottom:7px}
+.vlink{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);text-decoration:none;padding:3px 9px;border:1px solid rgba(200,101,26,.3);border-radius:1px;background:var(--saffron-pale);transition:all .2s;display:inline-block}
+.vlink:hover{background:var(--saffron);color:#fff}
+/* IMAGE GALLERY */
+#imgDropZone:hover,#imgDropZone.drag-over{border-color:var(--green);background:rgba(61,107,79,.07)}
+.img-card{border-radius:4px;overflow:hidden;border:1px solid var(--border);background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.06);cursor:zoom-in;transition:transform .2s,box-shadow .2s;animation:fadeIn .3s ease;position:relative}
+.img-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,20,16,.12)}
+.img-card img{width:100%;height:120px;object-fit:cover;display:block}
+.img-card-info{padding:8px 10px}
+.img-card-cat{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:3px;display:block}
+.img-card-caption{font-size:.86rem;color:var(--ink);line-height:1.4;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.img-card-date{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--ash);margin-top:3px;display:block}
+.img-card.hidden,.lcard.hidden,.tcard.hidden,.vcard-wrap.hidden,.stcard.hidden,.bdcard.hidden{display:none}
+/* SPOTLIGHT */
 .spotlight{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
 @media(max-width:500px){.spotlight{grid-template-columns:1fr}}
-.spot-card{border-radius:4px;overflow:hidden;box-shadow:var(--shadow);position:relative;background:rgba(255,255,255,.75);border:1px solid var(--border)}
+.spot-card{border-radius:4px;overflow:hidden;box-shadow:var(--shadow);background:rgba(255,255,255,.75);border:1px solid var(--border)}
 .spot-head{padding:9px 14px;display:flex;align-items:center;gap:7px;border-bottom:1px solid var(--border-lt)}
 .spot-head-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.18em;text-transform:uppercase;flex:1}
-.spot-head-date{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);letter-spacing:.06em}
 .spot-body{padding:13px 15px}
 .spot-thought-cat{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(42,63,111,.2);color:var(--blue);border-radius:10px;background:rgba(42,63,111,.06);display:inline-block;margin-bottom:8px}
 .spot-thought-text{font-size:.96rem;color:var(--ink);line-height:1.65;font-style:italic}
-.spot-video-thumb{width:100%;height:100px;background:var(--border-lt);border-radius:2px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:10px;position:relative}
+.spot-video-thumb{width:100%;height:100px;background:var(--border-lt);border-radius:2px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:2rem;margin-bottom:10px}
 .spot-video-thumb img{width:100%;height:100%;object-fit:cover}
 .spot-video-title{font-size:.93rem;font-weight:600;color:var(--ink);line-height:1.35;margin-bottom:5px}
 .spot-video-note{font-size:.83rem;color:var(--ash);font-style:italic;line-height:1.5;margin-bottom:8px}
 .spot-link{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);text-decoration:none;padding:3px 9px;border:1px solid rgba(200,101,26,.3);border-radius:1px;background:var(--saffron-pale);transition:all .2s;display:inline-block}
-.spot-link:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
-.spot-loading{padding:22px;text-align:center;color:var(--ash);font-style:italic;font-size:.88rem}
-
-/* ── UNIVERSAL METHODS ───────────────────────────────────────── */
+.spot-link:hover{background:var(--saffron);color:#fff}
+/* MONTHLY FOCUS */
+.focus-panel{background:linear-gradient(135deg,rgba(200,101,26,.08),rgba(200,101,26,.03));border:1px solid rgba(200,101,26,.25);border-radius:4px;margin-bottom:14px;overflow:hidden}
+.focus-header{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.focus-header:hover{background:rgba(200,101,26,.04)}
+.focus-month-tag{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 10px;background:var(--saffron);color:#fff;border-radius:10px}
+.focus-title{font-size:1rem;font-weight:600;color:var(--saffron);flex:1;margin:0 12px}
+.focus-chev{font-family:'DM Mono',monospace;font-size:.55rem;color:var(--ash);transition:transform .25s}
+.focus-chev.open{transform:rotate(180deg)}
+.focus-body{display:none;padding:0 18px 16px}
+.focus-body.open{display:block}
+.focus-items{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.focus-item{background:rgba(255,255,255,.75);border:1px solid rgba(200,101,26,.15);border-radius:3px;padding:13px 15px}
+.focus-item-num{font-family:'DM Mono',monospace;font-size:.56rem;font-weight:600;color:var(--saffron);background:var(--saffron-pale);padding:2px 7px;border-radius:1px;display:inline-block;margin-bottom:7px}
+.focus-item-skill{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:5px}
+.focus-item-habit{font-size:.9rem;color:var(--ash);line-height:1.6;font-style:italic;white-space:pre-wrap}
+.focus-empty{text-align:center;padding:16px;color:var(--ash);font-style:italic;font-size:.88rem;border:1px dashed rgba(200,101,26,.2);border-radius:2px}
+.focus-form{background:rgba(255,255,255,.5);border:1px solid rgba(200,101,26,.18);border-radius:3px;padding:14px 16px;margin-top:10px;display:none}
+.focus-form.open{display:block}
+.focus-sub-label{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ash);margin-bottom:4px;display:block}
+/* UNIVERSAL */
 .univ-panel{background:linear-gradient(135deg,rgba(42,63,111,.07),rgba(42,63,111,.03));border:1px solid rgba(42,63,111,.2);border-radius:4px;padding:18px 20px;margin-bottom:14px}
 .univ-header{display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
 .univ-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--blue)}
@@ -129,234 +165,218 @@ h1 em{color:var(--saffron);font-style:italic}
 .univ-body.open{display:block}
 .univ-item{display:flex;align-items:flex-start;gap:10px;padding:10px 13px;background:rgba(255,255,255,.7);border:1px solid rgba(42,63,111,.12);border-radius:2px;margin-bottom:8px}
 .univ-item:last-child{margin-bottom:0}
-.univ-num{font-family:'DM Mono',monospace;font-size:.58rem;font-weight:600;color:var(--blue);min-width:20px;margin-top:1px;background:rgba(42,63,111,.09);padding:1px 6px;border-radius:1px}
+.univ-num{font-family:'DM Mono',monospace;font-size:.58rem;font-weight:600;color:var(--blue);min-width:20px;background:rgba(42,63,111,.09);padding:1px 6px;border-radius:1px}
 .univ-text{font-size:.92rem;color:var(--ink);line-height:1.55}
-.univ-text strong{color:var(--blue);font-weight:600}
-
-/* ── LEARNINGS ───────────────────────────────────────────────── */
-.lcard{border:1px solid var(--border);border-radius:4px;padding:15px 17px;margin-bottom:10px;background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.04);animation:fadeIn .3s ease}
-.lcard[style*="display:none"]{display:none!important}
-.lcard-head{display:flex;gap:8px;align-items:center;margin-bottom:11px;padding-bottom:9px;border-bottom:1px solid var(--border-lt);flex-wrap:wrap}
-.lcat{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid rgba(200,101,26,.25);color:var(--saffron);border-radius:10px;background:var(--saffron-pale)}
-.ldate{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);margin-left:auto;letter-spacing:.06em}
-.lrow{display:flex;gap:0;align-items:stretch}
-.lcol-inc{flex:1;min-width:90px;padding-right:14px;border-right:1px solid var(--border-lt)}
-.lcol-lrn{flex:2;min-width:130px;padding-left:14px}
-.llabel{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;display:block}
-.llabel.inc{color:var(--ash)}.llabel.lrn{color:var(--saffron)}
-.lincident{font-size:.88rem;color:var(--ash);line-height:1.55;font-style:italic;white-space:pre-wrap}
-.llearning{font-size:.93rem;color:var(--ink);line-height:1.62;white-space:pre-wrap}
-@media(max-width:460px){.lrow{flex-direction:column}.lcol-inc{border-right:none;padding-right:0;padding-bottom:10px;border-bottom:1px solid var(--border-lt);margin-bottom:10px}.lcol-lrn{padding-left:0}}
-
-/* ── THOUGHTS ────────────────────────────────────────────────── */
-.tcard{border:1px solid var(--border);border-radius:4px;padding:15px 17px;margin-bottom:10px;background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.04);animation:fadeIn .3s ease}
-.tcard-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;padding-bottom:8px;border-bottom:1px solid var(--border-lt);flex-wrap:wrap;gap:6px}
-.tcat-badge{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 9px;border:1px solid rgba(42,63,111,.2);color:var(--blue);border-radius:10px;background:rgba(42,63,111,.06)}
-.tdate{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);letter-spacing:.06em}
-.ttext{font-size:.97rem;color:var(--ink);line-height:1.68;white-space:pre-wrap}
-
-/* ── VIDEOS ──────────────────────────────────────────────────── */
-.vcard{border:1px solid var(--border);border-radius:4px;padding:14px 16px;margin-bottom:10px;background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.04);animation:fadeIn .3s ease;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
-.vthumb{width:130px;height:74px;background:var(--border-lt);border-radius:3px;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:1.8rem;border:1px solid var(--border)}
-.vthumb img{width:100%;height:100%;object-fit:cover}
-.vinfo{flex:1;min-width:150px}
-.vcat{font-family:'DM Mono',monospace;font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;border:1px solid rgba(61,107,79,.25);color:var(--green);border-radius:10px;background:rgba(61,107,79,.07);display:inline-block;margin-bottom:7px}
-.vtitle{font-size:.97rem;font-weight:600;color:var(--ink);line-height:1.4;margin-bottom:5px}
-.vnote{font-size:.87rem;color:var(--ash);font-style:italic;line-height:1.55;margin-bottom:9px}
-.vlink{font-family:'DM Mono',monospace;font-size:.57rem;letter-spacing:.1em;text-transform:uppercase;color:var(--saffron);text-decoration:none;padding:4px 10px;border:1px solid rgba(200,101,26,.3);border-radius:1px;background:var(--saffron-pale);transition:all .2s;display:inline-block}
-.vlink:hover{background:var(--saffron);color:#fff;border-color:var(--saffron)}
-.vdate{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);margin-top:8px;display:block;letter-spacing:.06em}
-
-/* ── SEARCH / FILTER ─────────────────────────────────────────── */
-.filter-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
-.isearch{border:1px solid var(--border);background:rgba(255,255,255,.7);font-family:'Cormorant Garamond',serif;font-size:.92rem;color:var(--ink);padding:7px 11px;outline:none;border-radius:2px;flex:1;min-width:110px;transition:border-color .2s}
+/* EMOTIONAL CONTROL */
+.ec-selector{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.ec-btn{border:1px solid var(--border);background:rgba(255,255,255,.5);font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--ink);padding:7px 14px;cursor:pointer;border-radius:2px;transition:all .2s;display:flex;align-items:center;gap:6px}
+.ec-btn:hover{border-color:var(--saffron);background:var(--saffron-pale)}
+.ec-btn.on{border-color:var(--saffron);background:var(--saffron);color:#fff}
+.ec-result{display:none}
+.ec-result.on{display:block;animation:fadeIn .25s ease}
+.ec-section{margin-bottom:16px}
+.ec-section-label{font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:var(--saffron);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.ec-section-label::after{content:'';flex:1;height:1px;background:var(--border-lt)}
+.ec-related-grid{display:flex;flex-direction:column;gap:7px}
+.ec-related-item{padding:10px 13px;background:rgba(255,255,255,.65);border:1px solid var(--border-lt);border-radius:2px;font-size:.9rem;color:var(--ink);line-height:1.5}
+.ec-related-meta{font-family:'DM Mono',monospace;font-size:.5rem;color:var(--ash);margin-top:4px;letter-spacing:.06em}
+.ec-empty{font-size:.86rem;color:var(--ash);font-style:italic;padding:8px 0}
+.ec-img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}
+.ec-img-item{border-radius:3px;overflow:hidden;aspect-ratio:1;cursor:zoom-in}
+.ec-img-item img{width:100%;height:100%;object-fit:cover}
+/* BRAIN DUMP */
+.bd-filter-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.bd-pattern-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+@media(max-width:480px){.bd-pattern-grid{grid-template-columns:1fr}}
+.bd-pattern-card{background:rgba(255,255,255,.6);border:1px solid var(--border);border-radius:3px;padding:13px 15px}
+.bd-pattern-label{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+.bd-pattern-item{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid var(--border-lt);font-size:.88rem}
+.bd-pattern-item:last-child{border-bottom:none}
+.bd-pattern-bar{height:5px;background:var(--saffron-pale);border-radius:3px;margin-top:3px;position:relative;overflow:hidden}
+.bd-pattern-bar-fill{height:100%;background:var(--saffron);border-radius:3px;transition:width .5s}
+.bd-tag{font-family:'DM Mono',monospace;font-size:.5rem;padding:2px 7px;border-radius:10px;margin:0 2px;display:inline-block;letter-spacing:.06em}
+.bd-emo-tag{border:1px solid rgba(200,101,26,.3);color:var(--saffron);background:var(--saffron-pale)}
+.bd-evt-tag{border:1px solid rgba(42,63,111,.25);color:var(--blue);background:rgba(42,63,111,.06)}
+.isearch{border:1px solid var(--border);background:rgba(255,255,255,.7);font-family:'Cormorant Garamond',serif;font-size:.9rem;color:var(--ink);padding:7px 11px;outline:none;border-radius:2px;flex:1;min-width:110px;transition:border-color .2s}
 .isearch:focus{border-color:var(--saffron)}
 .isearch::placeholder{color:var(--ash);font-style:italic}
-
-/* ── SECTION HEADER ──────────────────────────────────────────── */
-.sec-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
-.sec-title{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--saffron)}
-/* ── IMAGE GALLERY ───────────────────────────────────────────── */
-#imgDropZone:hover,#imgDropZone.drag-over{border-color:var(--green);background:rgba(61,107,79,.07)}
-.img-card{border-radius:4px;overflow:hidden;border:1px solid var(--border);background:rgba(255,255,255,.6);box-shadow:0 1px 5px rgba(26,20,16,.06);cursor:zoom-in;transition:transform .2s,box-shadow .2s;animation:fadeIn .3s ease;position:relative}
-.img-card:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(26,20,16,.12)}
-.img-card img{width:100%;height:130px;object-fit:cover;display:block}
-.img-card-info{padding:8px 10px}
-.img-card-cat{font-family:'DM Mono',monospace;font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:var(--green);margin-bottom:3px;display:block}
-.img-card-caption{font-size:.86rem;color:var(--ink);line-height:1.4;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.img-card-date{font-family:'DM Mono',monospace;font-size:.48rem;color:var(--ash);margin-top:3px;display:block;letter-spacing:.06em}
-.img-card.hidden{display:none}
+/* GROWTH */
+.growth-panel-accent{background:var(--blue) !important}
+/* IMAGE UPLOAD */
+#imgDropZone{border:2px dashed var(--border);border-radius:4px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .25s;margin-bottom:14px;background:rgba(255,255,255,.4)}
 </style>
 </head>
 <body>
-
 <header>
   <span class="om">ॐ</span>
   <h1>The Inner <em>Compass</em></h1>
   <p class="subtitle">Equanimity &nbsp;·&nbsp; Clarity &nbsp;·&nbsp; Unshakeable Action</p>
   <div class="ribbon" id="ribbon"></div>
 </header>
-
 <div class="wrap">
-
   <div class="tabs">
-    <button class="tab on" data-t="now">🧭 Right Now</button>
-    <button class="tab" data-t="learnings">📖 Life Learnings</button>
-    <button class="tab" data-t="thoughts">💭 My Habits</button>
-    <button class="tab" data-t="videos">🎬 My Videos</button>
-    <button class="tab" data-t="growth">🚀 Professional Growth</button>
-    <button class="tab" data-t="images">🖼️ My Images</button>
+    <button class="tab on" data-t="now">🧭 Home</button>
+    <button class="tab" data-t="ec">🎭 Emotional Control</button>
+    <button class="tab" data-t="learnings">📖 Learnings</button>
+    <button class="tab" data-t="thoughts">💭 Thoughts</button>
+    <button class="tab" data-t="videos">🎬 Videos</button>
+    <button class="tab" data-t="images">🖼️ Images</button>
+    <button class="tab" data-t="stories">📝 Stories</button>
+    <button class="tab" data-t="braindump">🧠 Brain Dump</button>
+    <button class="tab" data-t="growth">🚀 Growth</button>
   </div>
 
-  <!-- ══════════ RIGHT NOW ══════════ -->
+  <!-- ══ HOME ══ -->
   <div class="tsec on" id="tab-now">
-
-    <!-- DAILY SPOTLIGHT -->
+    <!-- SPOTLIGHT -->
     <div style="margin-bottom:4px">
       <div style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ash);margin-bottom:10px;display:flex;align-items:center;gap:10px">
-        <span>✦ Today's Spotlight</span>
-        <span style="flex:1;height:1px;background:var(--border-lt);display:inline-block"></span>
+        <span>✦ Today's Spotlight</span><span style="flex:1;height:1px;background:var(--border-lt);display:inline-block"></span>
         <span id="spotDate" style="font-size:.5rem;letter-spacing:.06em"></span>
       </div>
       <div class="spotlight">
-        <!-- THOUGHT CARD -->
         <div class="spot-card">
           <div class="spot-head" style="background:rgba(42,63,111,.06);border-color:rgba(42,63,111,.15)">
             <span style="font-size:1rem">💭</span>
             <span class="spot-head-label" style="color:var(--blue)">Random Thought</span>
           </div>
-          <div class="spot-body" id="spotThought">
-            <div class="spot-loading"><span class="spin"></span>Loading…</div>
-          </div>
+          <div class="spot-body" id="spotThought"><div class="loading-msg"><span class="spin"></span></div></div>
         </div>
-        <!-- VIDEO CARD -->
         <div class="spot-card">
           <div class="spot-head" style="background:rgba(61,107,79,.06);border-color:rgba(61,107,79,.15)">
             <span style="font-size:1rem">🎬</span>
             <span class="spot-head-label" style="color:var(--green)">Random Video</span>
           </div>
-          <div class="spot-body" id="spotVideo">
-            <div class="spot-loading"><span class="spin"></span>Loading…</div>
+          <div class="spot-body" id="spotVideo"><div class="loading-msg"><span class="spin"></span></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- MONTHLY FOCUS -->
+    <div class="focus-panel">
+      <div class="focus-header" onclick="toggleFocus()">
+        <span class="focus-month-tag" id="focusMonthTag">This Month</span>
+        <span class="focus-title">🎯 Monthly Focus</span>
+        <span class="focus-chev" id="focusChev">▾</span>
+      </div>
+      <div class="focus-body" id="focusBody">
+        <div id="focusLoading" class="loading-msg" style="padding:10px"><span class="spin"></span></div>
+        <div class="focus-items" id="focusItems"></div>
+        <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:2px">
+          <button class="btn-ghost" onclick="loadFocus()" style="font-size:.56rem;padding:5px 11px">↻</button>
+          <button class="btn" onclick="toggleFocusForm()" style="font-size:.58rem;padding:7px 14px">✏️ Edit Focus</button>
+        </div>
+        <div class="focus-form" id="focusForm">
+          <div style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.16em;text-transform:uppercase;color:var(--saffron);margin-bottom:12px">Set Monthly Focus (up to 3)</div>
+          <div id="focusInputRows"></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn" onclick="saveFocus()">Save ✦</button>
+            <button class="btn-ghost" onclick="toggleFocusForm()">Cancel</button>
+            <span id="focusSaveStatus" class="status"></span>
           </div>
         </div>
       </div>
     </div>
-
-    <!-- UNIVERSAL METHODS -->
+    <!-- UNIVERSAL -->
     <div class="univ-panel">
       <div class="univ-header" onclick="toggleUniv()">
         <div>
           <div class="univ-title">🛡️ Universal — Works for Every Situation</div>
-          <div style="font-family:'DM Mono',monospace;font-size:.52rem;color:var(--ash);margin-top:3px;letter-spacing:.06em">3 methods that work regardless of what you're feeling</div>
+          <div style="font-family:'DM Mono',monospace;font-size:.52rem;color:var(--ash);margin-top:3px">3 methods that work regardless of what you're feeling</div>
         </div>
         <span class="univ-chev" id="univChev">▾</span>
       </div>
       <div class="univ-body" id="univBody">
-        <div class="univ-item">
-          <span class="univ-num">1</span>
-          <div class="univ-text"><strong>Box Breathing (90 seconds)</strong> — Inhale 4 counts · Hold 4 · Exhale 4 · Hold 4. Repeat 4–5 cycles. This directly activates your parasympathetic nervous system and is the fastest physiological reset available regardless of the emotion. Do this before anything else.</div>
-        </div>
-        <div class="univ-item">
-          <span class="univ-num">2</span>
-          <div class="univ-text"><strong>Name It to Tame It</strong> — Say or write the precise emotion out loud: not "I feel bad" but "I feel disrespected" or "I feel afraid of failing." Neuroscience shows that labelling an emotion with specificity reduces its intensity by 30–50% within 90 seconds. Precision is the antidote to overwhelm.</div>
-        </div>
-        <div class="univ-item">
-          <span class="univ-num">3</span>
-          <div class="univ-text"><strong>The One Question</strong> — Ask yourself: <em>"What is the one thing I can do right now that is within my control?"</em> Write the answer in one sentence. Then do only that. This question cuts through every type of emotional state by returning focus to agency rather than circumstance.</div>
-        </div>
+        <div class="univ-item"><span class="univ-num">1</span><div class="univ-text"><strong>Box Breathing (90 seconds)</strong> — Inhale 4 · Hold 4 · Exhale 4 · Hold 4. Repeat 5 cycles. Fastest physiological reset available.</div></div>
+        <div class="univ-item"><span class="univ-num">2</span><div class="univ-text"><strong>Name It to Tame It</strong> — Say the precise emotion aloud. "I feel disrespected" not "I feel bad." Naming reduces intensity by 30–50% within 90 seconds.</div></div>
+        <div class="univ-item"><span class="univ-num">3</span><div class="univ-text"><strong>The One Question</strong> — Ask: <em>"What is the one thing I can do right now within my control?"</em> Write it. Do only that.</div></div>
       </div>
     </div>
-
-    <div class="panel">
-      <div class="panel-accent"></div>
-      <div class="plabel">What do you need right now?</div>
-      <p class="panel-hint">Select what you're feeling — practical methods appear below.</p>
-      <div id="emoLoading" class="loading-msg"><span class="spin"></span>Loading emotions…</div>
-      <div class="emo-grid" id="emoGrid"></div>
-    </div>
-
-    <div class="add-panel">
-      <div class="plabel amber" style="margin-bottom:10px">➕ Add Emotion or Method</div>
-      <p class="panel-hint" style="margin-bottom:14px">Add a method to an existing emotion, or create a completely new emotion with its first method.</p>
-      <div style="display:flex;flex-direction:column;gap:10px">
-
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <div style="flex:1;min-width:160px">
-            <label class="field-label">Emotion</label>
-            <select class="sel" id="addEmoSel" style="width:100%" onchange="toggleNewEmoField()">
-              <option value="">Select existing…</option>
-              <option value="__new__">➕ Add new emotion…</option>
-            </select>
-          </div>
-          <div style="flex:1;min-width:160px" id="newEmoWrap" style="display:none">
-            <label class="field-label">New Emotion Name</label>
-            <input class="itext" id="newEmoInput" placeholder="e.g. Feeling Lonely…" style="height:38px;padding:8px 12px">
-          </div>
-        </div>
-
-        <div>
-          <label class="field-label">Method / Practice</label>
-          <textarea class="ta sm" id="addMethodTa" placeholder="Describe the method that works for you…"></textarea>
-        </div>
-
-        <div style="background:rgba(255,255,255,.5);border:1px solid rgba(146,64,14,.15);border-radius:2px;padding:11px 13px">
-          <div style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:#92400e;margin-bottom:7px">How to add a new emotion to the sheet directly</div>
-          <div style="font-size:.87rem;color:var(--ash);line-height:1.65">
-            Open your Google Sheet → <strong style="color:var(--ink)">Emotions</strong> tab → add a new row with:<br>
-            Column A: <em>Emotion name</em> &nbsp;·&nbsp; Column B: <em>Method description</em> &nbsp;·&nbsp; Column C: <em>Date</em><br>
-            Add as many rows as you want for each emotion. Refresh the page and it appears automatically.
-          </div>
-        </div>
-
-        <div style="display:flex;gap:8px;align-items:center">
-          <button class="btn" onclick="addMethod()">Save ✦</button>
-          <span id="addMethodStatus" class="status"></span>
-        </div>
-      </div>
-    </div>
-
   </div><!-- /tab-now -->
 
-  <!-- ══════════ LIFE LEARNINGS ══════════ -->
-  <div class="tsec" id="tab-learnings">
+  <!-- ══ EMOTIONAL CONTROL ══ -->
+  <div class="tsec" id="tab-ec">
+    <div class="panel">
+      <div class="panel-accent" style="background:var(--saffron)"></div>
+      <div class="plabel">How are you feeling right now?</div>
+      <p class="panel-hint">Select your emotion — see methods, related content, and add your own.</p>
+      <div id="ecLoading" class="loading-msg"><span class="spin"></span>Loading emotions…</div>
+      <div class="ec-selector" id="ecSelector"></div>
+    </div>
+    <div class="ec-result" id="ecResult">
+      <!-- METHODS -->
+      <div class="panel">
+        <div class="panel-accent"></div>
+        <div class="plabel" id="ecMethodLabel">Methods</div>
+        <div class="method-list" id="ecMethodList"></div>
+      </div>
+      <!-- RELATED THOUGHTS -->
+      <div class="panel">
+        <div class="panel-accent" style="background:var(--blue)"></div>
+        <div class="plabel blue">Related Thoughts</div>
+        <div id="ecThoughts"></div>
+      </div>
+      <!-- RELATED VIDEOS -->
+      <div class="panel">
+        <div class="panel-accent" style="background:var(--green)"></div>
+        <div class="plabel green">Related Videos</div>
+        <div id="ecVideos"></div>
+      </div>
+      <!-- RELATED IMAGES -->
+      <div class="panel">
+        <div class="panel-accent" style="background:#6b3fa0"></div>
+        <div class="plabel purple">Related Images</div>
+        <div class="ec-img-grid" id="ecImages"></div>
+      </div>
+      <!-- RELATED STORIES -->
+      <div class="panel">
+        <div class="panel-accent" style="background:#92400e"></div>
+        <div class="plabel amber">Related Stories</div>
+        <div id="ecStories"></div>
+      </div>
+      <!-- ADD METHOD -->
+      <div class="add-panel">
+        <div class="plabel amber" style="margin-bottom:10px">➕ Add a Method for This Emotion</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div><label class="field-label">Method / Practice</label>
+            <textarea class="ta sm" id="ecAddMethodTa" placeholder="Describe a method that helps with this emotion…"></textarea></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn" onclick="addEcMethod()">Save Method ✦</button>
+            <span id="ecAddStatus" class="status"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /tab-ec -->
 
+  <!-- ══ LIFE LEARNINGS ══ -->
+  <div class="tsec" id="tab-learnings">
     <div class="panel">
       <div class="panel-accent"></div>
       <div class="plabel">Capture a Learning</div>
-      <div style="display:flex;flex-direction:column;gap:11px;margin-bottom:14px">
-        <div>
-          <label class="field-label">The Incident</label>
-          <textarea class="ta" id="incidentTa" placeholder="What happened? Describe briefly…"></textarea>
-        </div>
-        <div>
-          <label class="field-label">The Learning</label>
-          <textarea class="ta" id="learningTa" placeholder="What did this teach you?"></textarea>
-        </div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-          <div>
-            <label class="field-label">Category</label>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div><label class="field-label">Emotion</label><input class="itext" id="lEmotion" placeholder="What emotion was involved? (e.g. Anger, Fear…)"></div>
+        <div><label class="field-label">The Incident</label><textarea class="ta" id="incidentTa" placeholder="What happened?"></textarea></div>
+        <div><label class="field-label">The Learning</label><textarea class="ta" id="learningTa" placeholder="What did this teach you?"></textarea></div>
+        <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">
+          <div><label class="field-label">Category</label>
             <select class="sel" id="lCat">
               <option>Relationships</option><option>Work &amp; Career</option><option>Self &amp; Identity</option>
               <option>Anger &amp; Reactions</option><option>Trust &amp; Betrayal</option><option>Fear &amp; Courage</option>
               <option>Communication</option><option>Money &amp; Decisions</option><option>Discipline &amp; Habits</option><option>Other</option>
-            </select>
-          </div>
-          <div style="display:flex;gap:8px;align-items:flex-end;padding-top:18px">
-            <button class="btn" id="lSaveBtn" onclick="saveLearning()">Save to Sheet ✦</button>
-            <span id="lSaveMsg" class="status"></span>
-          </div>
+            </select></div>
+          <div style="padding-bottom:2px"><button class="btn" id="lSaveBtn" onclick="saveLearning()">Save ✦</button></div>
+          <span id="lSaveMsg" class="status"></span>
         </div>
       </div>
     </div>
-
     <div class="panel">
       <div class="panel-accent" style="background:var(--green)"></div>
       <div class="sec-header">
         <div class="sec-title">📚 Wisdom Library</div>
-        <div class="filter-row">
+        <div style="display:flex;gap:7px;flex-wrap:wrap;align-items:center">
           <input class="isearch" id="lSearch" type="text" placeholder="Search…" oninput="filterL()">
           <select class="sel" id="lFilter" onchange="filterL()">
-            <option value="">All categories</option>
+            <option value="">All</option>
             <option>Relationships</option><option>Work &amp; Career</option><option>Self &amp; Identity</option>
             <option>Anger &amp; Reactions</option><option>Trust &amp; Betrayal</option><option>Fear &amp; Courage</option>
             <option>Communication</option><option>Money &amp; Decisions</option><option>Discipline &amp; Habits</option><option>Other</option>
@@ -365,262 +385,264 @@ h1 em{color:var(--saffron);font-style:italic}
         </div>
       </div>
       <span class="count-tag" id="lCount"></span>
-      <div id="lLoading" class="loading-msg" style="display:none"><span class="spin"></span>Loading…</div>
+      <div id="lLoading" class="loading-msg" style="display:none"><span class="spin"></span></div>
       <div id="lCards"></div>
-      <div id="lEmpty" class="empty-msg" style="display:none">No learnings yet — add your first one above.</div>
+      <div id="lEmpty" class="empty-msg" style="display:none">No learnings yet.</div>
     </div>
-
   </div><!-- /tab-learnings -->
 
-  <!-- ══════════ MY THOUGHTS ══════════ -->
+  <!-- ══ MY THOUGHTS ══ -->
   <div class="tsec" id="tab-thoughts">
-
     <div class="panel">
       <div class="panel-accent" style="background:var(--blue)"></div>
       <div class="plabel blue">Capture a Thought</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div>
-          <label class="field-label">Category</label>
+        <div><label class="field-label">Emotion</label><input class="itext" id="thoughtEmotion" placeholder="What emotion triggered this thought?"></div>
+        <div><label class="field-label">Category</label>
           <select class="sel" id="thoughtCat" style="width:100%">
             <option value="">Select category…</option>
-            <option>Clarity &amp; Insight</option>
-            <option>Lesson Learned</option>
-            <option>Relationships</option>
-            <option>Work &amp; Career</option>
-            <option>Philosophy &amp; Wisdom</option>
-            <option>Gratitude</option>
-            <option>Goals &amp; Vision</option>
-            <option>Random</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label">Your Habits</label>
-          <textarea class="ta" id="thoughtTa" placeholder="What's on your mind? Write freely…"></textarea>
-        </div>
+            <option>Clarity &amp; Insight</option><option>Lesson Learned</option><option>Relationships</option>
+            <option>Work &amp; Career</option><option>Philosophy &amp; Wisdom</option><option>Gratitude</option>
+            <option>Goals &amp; Vision</option><option>Random</option>
+          </select></div>
+        <div><label class="field-label">Your Thought</label><textarea class="ta" id="thoughtTa" placeholder="What's on your mind?"></textarea></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn" onclick="saveThought()">Save Habits ✦</button>
+        <button class="btn" onclick="saveThought()">Save ✦</button>
         <span id="thoughtStatus" class="status"></span>
       </div>
     </div>
-
     <div class="panel">
       <div class="panel-accent" style="background:var(--blue)"></div>
       <div class="sec-header">
-        <div class="sec-title">💭 All Habits</div>
-        <button class="btn-ghost" onclick="loadThoughts()">↻ Refresh</button>
+        <div class="sec-title">💭 All Thoughts</div>
+        <button class="btn-ghost" onclick="loadThoughts()">↻</button>
       </div>
       <span class="count-tag" id="thoughtCount"></span>
-      <div id="thoughtLoading" class="loading-msg" style="display:none"><span class="spin"></span>Loading…</div>
+      <div id="thoughtLoading" class="loading-msg" style="display:none"><span class="spin"></span></div>
       <div id="thoughtCards"></div>
-      <div id="thoughtEmpty" class="empty-msg" style="display:none">No Habits captured yet.</div>
+      <div id="thoughtEmpty" class="empty-msg" style="display:none">No thoughts yet.</div>
     </div>
-
   </div><!-- /tab-thoughts -->
 
-  <!-- ══════════ MY VIDEOS ══════════ -->
+  <!-- ══ MY VIDEOS ══ -->
   <div class="tsec" id="tab-videos">
-
     <div class="panel">
       <div class="panel-accent" style="background:var(--green)"></div>
       <div class="plabel green">Save a Video</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div>
-          <label class="field-label">Video URL</label>
-          <input class="itext" id="videoUrl" placeholder="YouTube or Instagram link…">
-        </div>
-        <div>
-          <label class="field-label">Title / Topic</label>
-          <input class="itext" id="videoTitle" placeholder="What is this video about?">
-        </div>
-        <div>
-          <label class="field-label">Why save it?</label>
-          <textarea class="ta sm" id="videoNote" placeholder="What made this worth saving?"></textarea>
-        </div>
+        <div><label class="field-label">Emotion</label><input class="itext" id="videoEmotion" placeholder="What emotion does this relate to?"></div>
+        <div><label class="field-label">Video URL</label><input class="itext" id="videoUrl" placeholder="YouTube or Instagram link…"></div>
+        <div><label class="field-label">Title / Topic</label><input class="itext" id="videoTitle" placeholder="What is this video about?"></div>
+        <div><label class="field-label">Note</label><textarea class="ta sm" id="videoNote" placeholder="Why save it?"></textarea></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <button class="btn" onclick="saveVideo()">Save Video ✦</button>
+        <button class="btn" onclick="saveVideo()">Save ✦</button>
         <span id="videoStatus" class="status"></span>
       </div>
     </div>
-
     <div class="panel">
       <div class="panel-accent" style="background:var(--green)"></div>
       <div class="sec-header">
         <div class="sec-title">🎬 Saved Videos</div>
-        <button class="btn-ghost" onclick="loadVideos()">↻ Refresh</button>
+        <button class="btn-ghost" onclick="loadVideos()">↻</button>
       </div>
       <span class="count-tag" id="videoCount"></span>
-      <div id="videoLoading" class="loading-msg" style="display:none"><span class="spin"></span>Loading…</div>
+      <div id="videoLoading" class="loading-msg" style="display:none"><span class="spin"></span></div>
       <div id="videoCards"></div>
-      <div id="videoEmpty" class="empty-msg" style="display:none">No videos saved yet.</div>
+      <div id="videoEmpty" class="empty-msg" style="display:none">No videos yet.</div>
     </div>
-
   </div><!-- /tab-videos -->
 
-  <!-- ══════════ PROFESSIONAL GROWTH ══════════ -->
-  <div class="tsec" id="tab-growth">
+  <!-- ══ MY IMAGES ══ -->
+  <div class="tsec" id="tab-images">
+    <div class="panel">
+      <div class="panel-accent" style="background:var(--green)"></div>
+      <div class="plabel green">Upload an Image</div>
+      <div id="imgDropZone" onclick="document.getElementById('imgFilePicker').click()">
+        <div id="imgDropIcon" style="font-size:2.2rem;margin-bottom:8px">📷</div>
+        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)">Click or drag &amp; drop</div>
+        <div style="font-size:.82rem;color:var(--ash);font-style:italic;margin-top:5px">JPG, PNG, GIF, WebP — max 32MB</div>
+        <div id="imgPreviewWrap" style="display:none;margin-top:14px">
+          <img id="imgPreview" src="" alt="" style="max-width:100%;max-height:180px;border-radius:3px;border:1px solid var(--border)">
+          <div id="imgPreviewName" style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);margin-top:6px"></div>
+        </div>
+      </div>
+      <input type="file" id="imgFilePicker" accept="image/*" style="display:none" onchange="onImagePicked(this)">
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div><label class="field-label">Emotion</label><input class="itext" id="imgEmotion" placeholder="What emotion does this image relate to?"></div>
+        <div><label class="field-label">Caption</label><input class="itext" id="imgCaption" placeholder="What is this image about?"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:140px"><label class="field-label">Category</label>
+            <select class="sel" id="imgCategory" style="width:100%">
+              <option value="">Select…</option><option>Memories</option><option>Inspiration</option>
+              <option>Goals &amp; Vision</option><option>Work &amp; Career</option>
+              <option>Family &amp; Friends</option><option>Travel</option><option>Learning</option><option>Other</option>
+            </select></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <button class="btn" id="imgUploadBtn" onclick="uploadImage()" style="background:var(--green)">⬆ Upload</button>
+        <div id="imgProgress" style="display:none;flex:1;min-width:160px">
+          <div style="background:var(--border-lt);border-radius:10px;height:6px;overflow:hidden">
+            <div id="imgProgressBar" style="height:100%;background:var(--green);width:0%;transition:width .3s;border-radius:10px"></div>
+          </div>
+          <div id="imgProgressLabel" style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);margin-top:5px;text-transform:uppercase"></div>
+        </div>
+        <span id="imgUploadStatus" class="status"></span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-accent" style="background:var(--green)"></div>
+      <div class="sec-header">
+        <div class="sec-title">🖼️ Gallery</div>
+        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
+          <select class="sel" id="imgFilter" onchange="filterImages()" style="font-size:.6rem">
+            <option value="">All</option><option>Memories</option><option>Inspiration</option>
+            <option>Goals &amp; Vision</option><option>Work &amp; Career</option>
+            <option>Family &amp; Friends</option><option>Travel</option><option>Learning</option><option>Other</option>
+          </select>
+          <button class="btn-ghost" onclick="loadImages()">↻</button>
+        </div>
+      </div>
+      <span class="count-tag" id="imgCount"></span>
+      <div id="imgLoading" class="loading-msg" style="display:none"><span class="spin"></span></div>
+      <div id="imgGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px"></div>
+      <div id="imgEmpty" class="empty-msg" style="display:none">No images yet.</div>
+    </div>
+  </div><!-- /tab-images -->
 
+  <!-- ══ STORIES ══ -->
+  <div class="tsec" id="tab-stories">
+    <div class="panel">
+      <div class="panel-accent" style="background:#92400e"></div>
+      <div class="plabel amber">Add a Story</div>
+      <p class="panel-hint">Stories that shaped you — moments, experiences, turning points.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div><label class="field-label">Emotion</label><input class="itext" id="storyEmotion" placeholder="What emotion does this story carry?"></div>
+        <div><label class="field-label">Story</label><textarea class="ta" id="storyText" placeholder="Tell the story…" style="min-height:120px"></textarea></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" onclick="saveStory()" style="background:#92400e">Save Story ✦</button>
+        <span id="storyStatus" class="status"></span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-accent" style="background:#92400e"></div>
+      <div class="sec-header">
+        <div class="sec-title">📝 All Stories</div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <input class="isearch" id="storySearch" type="text" placeholder="Search…" oninput="filterStories()">
+          <button class="btn-ghost" onclick="loadStories()">↻</button>
+        </div>
+      </div>
+      <span class="count-tag" id="storyCount"></span>
+      <div id="storyLoading" class="loading-msg" style="display:none"><span class="spin"></span></div>
+      <div id="storyCards"></div>
+      <div id="storyEmpty" class="empty-msg" style="display:none">No stories yet.</div>
+    </div>
+  </div><!-- /tab-stories -->
+
+  <!-- ══ BRAIN DUMP ══ -->
+  <div class="tsec" id="tab-braindump">
+    <div class="panel">
+      <div class="panel-accent" style="background:#6b3fa0"></div>
+      <div class="plabel purple">Dump It Out</div>
+      <p class="panel-hint">No filter, no judgment. Just get it out of your head. Tag it and move on.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+        <div><label class="field-label">The Thought / Feeling</label>
+          <textarea class="ta" id="bdText" placeholder="Whatever is in your head right now — positive, negative, random, chaotic. Just write it."></textarea></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <div style="flex:1;min-width:140px"><label class="field-label">Emotion Tag</label>
+            <input class="itext" id="bdEmotion" placeholder="e.g. Anxious, Angry, Hopeful…"></div>
+          <div style="flex:1;min-width:140px"><label class="field-label">Event / Trigger</label>
+            <input class="itext" id="bdEvent" placeholder="e.g. Meeting, Traffic, News…"></div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" onclick="saveBrainDump()" style="background:#6b3fa0">Dump It ✦</button>
+        <span id="bdStatus" class="status"></span>
+      </div>
+    </div>
+    <!-- PATTERNS -->
+    <div class="panel">
+      <div class="panel-accent" style="background:#6b3fa0"></div>
+      <div class="plabel purple">Pattern Insights</div>
+      <div class="bd-pattern-grid" id="bdPatterns">
+        <div class="bd-pattern-card" id="bdEmoPatternCard">
+          <div class="bd-pattern-label">By Emotion</div>
+          <div id="bdEmoPattern"><div class="loading-msg" style="padding:8px"><span class="spin"></span></div></div>
+        </div>
+        <div class="bd-pattern-card" id="bdEvtPatternCard">
+          <div class="bd-pattern-label">By Event / Trigger</div>
+          <div id="bdEvtPattern"><div class="loading-msg" style="padding:8px"><span class="spin"></span></div></div>
+        </div>
+      </div>
+    </div>
+    <!-- ALL DUMPS -->
+    <div class="panel">
+      <div class="panel-accent" style="background:#6b3fa0"></div>
+      <div class="sec-header">
+        <div class="sec-title">🧠 All Dumps</div>
+        <div class="bd-filter-row" style="margin:0">
+          <input class="isearch" id="bdSearch" type="text" placeholder="Search…" oninput="filterBD()" style="min-width:100px">
+          <input class="isearch" id="bdEmoFilter" type="text" placeholder="Filter emotion…" oninput="filterBD()" style="min-width:100px">
+          <button class="btn-ghost" onclick="loadBrainDump()">↻</button>
+        </div>
+      </div>
+      <span class="count-tag" id="bdCount"></span>
+      <div id="bdLoading" class="loading-msg" style="display:none"><span class="spin"></span></div>
+      <div id="bdCards"></div>
+      <div id="bdEmpty" class="empty-msg" style="display:none">Nothing dumped yet. Get it out of your head.</div>
+    </div>
+  </div><!-- /tab-braindump -->
+
+  <!-- ══ PROFESSIONAL GROWTH ══ -->
+  <div class="tsec" id="tab-growth">
     <div class="panel">
       <div class="panel-accent" style="background:var(--blue)"></div>
       <div class="plabel blue">Professional Growth Areas</div>
-      <p class="panel-hint">Tap any area to see practical steps. These are your specific communication and professional challenges with actionable methods for each.</p>
-      <div id="growthLoading" class="loading-msg"><span class="spin"></span>Loading…</div>
+      <p class="panel-hint">Tap any area to see practical steps.</p>
+      <div id="growthLoading" class="loading-msg"><span class="spin"></span></div>
       <div class="emo-grid" id="growthGrid"></div>
     </div>
-
     <div class="add-panel" style="background:linear-gradient(135deg,rgba(42,63,111,.07),rgba(42,63,111,.03));border-color:rgba(42,63,111,.2)">
       <div class="plabel blue" style="margin-bottom:10px">➕ Add Area or Method</div>
-      <p class="panel-hint" style="margin-bottom:14px">Add a practical method to an existing area, or create a completely new growth area.</p>
       <div style="display:flex;flex-direction:column;gap:10px">
-
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <div style="flex:1;min-width:160px">
-            <label class="field-label" style="color:var(--blue)">Growth Area</label>
+          <div style="flex:1;min-width:160px"><label class="field-label" style="color:var(--blue)">Growth Area</label>
             <select class="sel" id="addGrowthSel" style="width:100%" onchange="toggleNewGrowthField()">
-              <option value="">Select existing…</option>
-              <option value="__new__">➕ Add new area…</option>
-            </select>
-          </div>
+              <option value="">Select existing…</option><option value="__new__">➕ New area…</option>
+            </select></div>
           <div style="flex:1;min-width:160px;display:none" id="newGrowthWrap">
             <label class="field-label" style="color:var(--blue)">New Area Name</label>
-            <input class="itext" id="newGrowthInput" placeholder="e.g. Handling Disagreements…" style="height:40px;padding:8px 12px">
-          </div>
+            <input class="itext" id="newGrowthInput" placeholder="e.g. Handling Conflict…" style="height:40px;padding:8px 12px"></div>
         </div>
-
-        <div>
-          <label class="field-label" style="color:var(--blue)">Practical Method / Step</label>
-          <textarea class="ta sm" id="addGrowthTa" placeholder="Describe the practical method or technique…"></textarea>
-        </div>
-
-        <div style="background:rgba(255,255,255,.5);border:1px solid rgba(42,63,111,.15);border-radius:2px;padding:11px 13px">
-          <div style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:7px">Add directly via Google Sheet</div>
-          <div style="font-size:.87rem;color:var(--ash);line-height:1.65">
-            Open your Google Sheet → <strong style="color:var(--ink)">Growth</strong> tab → add a new row:<br>
-            Column A: <em>Area name</em> &nbsp;·&nbsp; Column B: <em>Method description</em> &nbsp;·&nbsp; Column C: <em>Date</em><br>
-            Refresh the page and it appears automatically.
-          </div>
-        </div>
-
+        <div><label class="field-label" style="color:var(--blue)">Method</label>
+          <textarea class="ta sm" id="addGrowthTa" placeholder="Describe the practical method…"></textarea></div>
         <div style="display:flex;gap:8px;align-items:center">
           <button class="btn" style="background:var(--blue)" onclick="addGrowthMethod()">Save ✦</button>
           <span id="addGrowthStatus" class="status"></span>
         </div>
       </div>
     </div>
-
   </div><!-- /tab-growth -->
-
-  <!-- ══════════ MY IMAGES ══════════ -->
-  <div class="tsec" id="tab-images">
-
-    <!-- UPLOAD PANEL -->
-    <div class="panel">
-      <div class="panel-accent" style="background:var(--green)"></div>
-      <div class="plabel green">Upload an Image</div>
-
-      <!-- DROP ZONE -->
-      <div id="imgDropZone" onclick="document.getElementById('imgFilePicker').click()"
-           style="border:2px dashed var(--border);border-radius:4px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .25s;margin-bottom:14px;background:rgba(255,255,255,.4)">
-        <div id="imgDropIcon" style="font-size:2.4rem;margin-bottom:8px">📷</div>
-        <div style="font-family:'DM Mono',monospace;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ash)">Click or drag &amp; drop an image</div>
-        <div style="font-size:.82rem;color:var(--ash);font-style:italic;margin-top:5px">JPG, PNG, GIF, WebP — max 32MB</div>
-        <div id="imgPreviewWrap" style="display:none;margin-top:14px">
-          <img id="imgPreview" src="" alt="" style="max-width:100%;max-height:200px;border-radius:3px;border:1px solid var(--border);box-shadow:var(--shadow)">
-          <div id="imgPreviewName" style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);margin-top:6px;letter-spacing:.08em"></div>
-        </div>
-      </div>
-      <input type="file" id="imgFilePicker" accept="image/*" style="display:none" onchange="onImagePicked(this)">
-
-      <!-- FIELDS -->
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div>
-          <label class="field-label">Caption</label>
-          <input class="itext" id="imgCaption" placeholder="What is this image about?">
-        </div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <div style="flex:1;min-width:140px">
-            <label class="field-label">Category</label>
-            <select class="sel" id="imgCategory" style="width:100%">
-              <option value="">Select…</option>
-              <option>Memories</option>
-              <option>Inspiration</option>
-              <option>Goals &amp; Vision</option>
-              <option>Work &amp; Career</option>
-              <option>Family &amp; Friends</option>
-              <option>Travel</option>
-              <option>Learning</option>
-              <option>Other</option>
-            </select>
-          </div>
-          <div style="flex:1;min-width:140px">
-            <label class="field-label">Note (optional)</label>
-            <input class="itext" id="imgNote" placeholder="Any context or feeling…">
-          </div>
-        </div>
-      </div>
-
-      <!-- UPLOAD BUTTON -->
-      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-        <button class="btn" id="imgUploadBtn" onclick="uploadImage()" style="background:var(--green);min-width:140px">
-          ⬆ Upload Image
-        </button>
-        <div id="imgProgress" style="display:none;flex:1;min-width:160px">
-          <div style="background:var(--border-lt);border-radius:10px;height:6px;overflow:hidden">
-            <div id="imgProgressBar" style="height:100%;background:var(--green);width:0%;transition:width .3s;border-radius:10px"></div>
-          </div>
-          <div id="imgProgressLabel" style="font-family:'DM Mono',monospace;font-size:.56rem;color:var(--ash);margin-top:5px;letter-spacing:.08em;text-transform:uppercase">Uploading…</div>
-        </div>
-        <span id="imgUploadStatus" class="status"></span>
-      </div>
-    </div>
-
-    <!-- GALLERY -->
-    <div class="panel">
-      <div class="panel-accent" style="background:var(--green)"></div>
-      <div class="sec-header">
-        <div class="sec-title">🖼️ Image Gallery</div>
-        <div style="display:flex;gap:7px;align-items:center;flex-wrap:wrap">
-          <select class="sel" id="imgFilter" onchange="filterImages()" style="font-size:.6rem">
-            <option value="">All categories</option>
-            <option>Memories</option>
-            <option>Inspiration</option>
-            <option>Goals &amp; Vision</option>
-            <option>Work &amp; Career</option>
-            <option>Family &amp; Friends</option>
-            <option>Travel</option>
-            <option>Learning</option>
-            <option>Other</option>
-          </select>
-          <button class="btn-ghost" onclick="loadImages()">↻ Refresh</button>
-        </div>
-      </div>
-      <span class="count-tag" id="imgCount"></span>
-      <div id="imgLoading" class="loading-msg" style="display:none"><span class="spin"></span>Loading gallery…</div>
-      <div id="imgGallery" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px"></div>
-      <div id="imgEmpty" class="empty-msg" style="display:none">No images uploaded yet.</div>
-    </div>
-
-  </div><!-- /tab-images -->
 
 </div><!-- /wrap -->
 
 <!-- LIGHTBOX -->
-<div id="imgLightbox" onclick="closeLightbox()"
-     style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:zoom-out">
-  <div style="max-width:90vw;max-height:80vh;position:relative">
-    <img id="imgLightboxImg" src="" alt="" style="max-width:100%;max-height:80vh;border-radius:4px;box-shadow:0 4px 40px rgba(0,0,0,.6);display:block">
-  </div>
+<div id="imgLightbox" onclick="closeLightbox()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:1000;align-items:center;justify-content:center;flex-direction:column;padding:20px;cursor:zoom-out">
+  <img id="imgLightboxImg" src="" alt="" style="max-width:90vw;max-height:80vh;border-radius:4px;box-shadow:0 4px 40px rgba(0,0,0,.6);display:block">
   <div style="text-align:center;margin-top:14px">
     <div id="imgLightboxCaption" style="font-size:1rem;color:rgba(255,255,255,.9);font-style:italic;margin-bottom:5px"></div>
     <div id="imgLightboxMeta" style="font-family:'DM Mono',monospace;font-size:.56rem;color:rgba(255,255,255,.5);letter-spacing:.1em;text-transform:uppercase"></div>
-    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:rgba(255,255,255,.35);margin-top:10px;letter-spacing:.1em">CLICK ANYWHERE TO CLOSE</div>
+    <div style="font-family:'DM Mono',monospace;font-size:.54rem;color:rgba(255,255,255,.3);margin-top:8px">CLICK TO CLOSE · ESC</div>
   </div>
 </div>
-
 <script>
 // ── CONFIG ────────────────────────────────────────────────────
 var SHEETS_URL = 'https://script.google.com/macros/s/AKfycbzh8wChXZeP3H_eBBmixz47qkl96tJW_Ylk723Uee--AbXvt_3eHZp05_jfvQ8yKq_J/exec';
+var IMGBB_KEY  = 'eb426f1db804774ed1a4a3926acf2a2d';
 
 var RIBBON_QUOTES = [
   "Focus on action, never the fruit.",
@@ -632,60 +654,109 @@ var RIBBON_QUOTES = [
   "True power is quiet, unhurried, and unshakeable.",
   "Between stimulus and response lies your freedom.",
   "The obstacle is the way.",
-  "What you resist, persists. What you accept, transforms.",
-  "Equanimity is not indifference — it is unshakeable presence."
+  "What you resist, persists. What you accept, transforms."
 ];
 
-// Fallback emotion methods (5 per emotion) shown if sheet is empty
 var FALLBACK_EMOTIONS = {
   "Control Anger": [
-    "Pause for exactly 90 seconds — the neurochemical surge of anger lasts that long. After that, you are choosing to continue it.",
-    "Lower your voice by one full notch when you feel anger rising. A quieter voice paradoxically reclaims more authority than a louder one.",
-    "Write what you are angry about in one sentence. Then write: 'What outcome do I actually want?' Respond from the answer, not the heat.",
-    "Splash cold water on your face and wrists. The dive reflex activates within 30 seconds, measurably slowing heart rate.",
-    "Name the anger precisely before acting: 'I feel disrespected because…' Naming converts raw emotion into addressable information."
+    "Pause 90 seconds before responding — the neurochemical surge of anger lasts exactly that long. After that, you are choosing to continue it.",
+    "Lower your voice by one full notch when anger rises. A quieter voice paradoxically reclaims more authority than a louder one.",
+    "Write what you are angry about in one sentence. Then ask: what outcome do I actually want? Respond from the answer, not the heat.",
+    "Splash cold water on your face and wrists. The dive reflex activates in 30 seconds, measurably slowing heart rate.",
+    "Name the anger precisely: 'I feel disrespected because…' Naming converts raw emotion into addressable information."
   ],
   "Become Patient": [
     "Name what you are waiting for. Ask: what is actually happening during this delay that needs to happen? Most delays are incubation, not obstruction.",
-    "Set a 25-minute focused work timer on something entirely different. Impatience completely evaporates when full attention is occupied.",
+    "Set a 25-minute focused work timer on something else entirely. Impatience evaporates when full attention is occupied.",
     "Adjust your expected timeline to the realistic one — most impatience dissolves the moment the expectation becomes accurate.",
-    "Ask: what is the quality of the outcome if I get it right now at this pace, versus if I wait the correct amount of time? Write both answers.",
-    "Stand up and shake out your hands for 30 seconds. Walk around slowly. Impatience is physiological — discharge it physically first."
+    "Ask: what is the quality if I get this right now versus waiting the correct amount of time? Write both answers.",
+    "Stand up and shake out your hands. Walk slowly. Impatience is physiological — discharge it physically first."
   ],
   "Get Focused": [
-    "Close every tab and app except the one task. Phone in another room. 45 minutes of single-focus consistently outperforms a full scattered day.",
+    "Close every tab and app except the one task. Phone in another room. 45 minutes of single-focus beats a scattered day.",
     "Write one sentence: the single most important task for the next 90 minutes. Not a list — one task. Begin before you feel ready.",
-    "Do the 5-4-3-2-1 grounding first: name 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste. Then begin immediately.",
-    "Set a visible countdown timer for 25 minutes. The constraint of time gives the restless mind something to push against productively.",
-    "Write every open loop and pending thought in 3 minutes — no filtering. Then close that list and give full attention to only one item."
+    "Do 5-4-3-2-1 grounding first: 5 things you see, 4 you feel, 3 you hear, 2 you smell, 1 you taste. Then begin immediately.",
+    "Set a visible countdown timer for 25 minutes. The constraint gives the restless mind something to push against.",
+    "Write every open loop in 3 minutes without filtering. Then close that list and give full attention to only one item."
   ],
   "Self Confidence": [
     "Write 5 things you understand deeply that most people don't. Read this before any situation where you feel underestimated.",
-    "Act first — feel confident second. Confidence follows action and never precedes it. Start before you feel ready. Always.",
-    "Recall one moment when you handled something genuinely difficult well. Hold that memory for 30 full seconds. That person is still you.",
-    "Identify whose opinion you fear most right now. Ask: do I deeply respect their judgment in general? If no — their opinion carries no real weight.",
-    "Adopt one physical posture shift: shoulders back, chin level, breathing slower than normal. Physiology precedes psychology — change the body first."
+    "Act first — feel confident second. Confidence follows action and never precedes it. Start before you feel ready.",
+    "Recall one moment when you handled something genuinely difficult well. Hold it for 30 seconds. That person is still you.",
+    "Identify whose opinion you fear most. Ask: do I deeply respect their judgment? If no — their opinion carries no real weight.",
+    "Shoulders back, chin level, breath slower than normal. Physiology precedes psychology — change the body first."
   ],
   "Living in the Present": [
-    "Name 5 things you can see right now, 4 you can physically touch, 3 you can hear, 2 you can smell. You are here. This is enough.",
-    "Set one task and give it complete, undivided attention for 25 minutes — no checking anything else. The present is the only place life actually happens.",
-    "When a future worry arises, say internally: 'I will address this at 6pm.' Give worry a scheduled slot rather than unlimited background access.",
-    "Notice the sensation of your feet on the floor and the weight of your body in the chair. Five slow breaths. The past cannot be changed. The future is not yet. Only now.",
-    "Ask: what is the one thing directly in front of me that I can do with complete quality and presence right now? Do that one thing fully."
+    "Name 5 things you see, 4 you can touch, 3 you hear, 2 you smell. You are here. This moment is enough.",
+    "Give one task complete attention for 25 minutes — no checking anything else. The present is the only place life happens.",
+    "When a future worry arises, say: 'I'll address this at 6pm.' Give worry a scheduled slot, not unlimited access.",
+    "Notice the sensation of your feet on the floor, weight of your body. Five slow breaths. Only now exists.",
+    "Ask: what can I do right now with complete quality and presence? Do that one thing fully."
   ]
 };
 
-// ── INIT ──────────────────────────────────────────────────────
-(function init() {
-  var d = Math.floor((Date.now() - new Date(new Date().getFullYear(),0,0)) / 86400000);
-  document.getElementById('ribbon').textContent = '"' + RIBBON_QUOTES[d % RIBBON_QUOTES.length] + '"';
+var FALLBACK_GROWTH = {
+  'Speaking Confidently': [
+    "Before speaking, plant feet firmly on floor and take one slow breath. Physical grounding reduces vocal shakiness before you say a word.",
+    "Slow down by 20%. Deliberate pace signals confidence. Practice at 80% of your normal speed in low-stakes conversations first.",
+    "Prepare your opening sentence in advance for important meetings. Confidence in the first 10 seconds sets the tone for everything.",
+    "Make statements sound like statements. Avoid rising intonation at sentence ends (upspeak). Record yourself once and listen back.",
+    "Own the silence. After making a point, stop. Do not fill the gap. Silence after a confident statement amplifies it."
+  ],
+  "Don't Know the Answer": [
+    "'That's an important question — let me give you a considered answer. Can I come back to you by [specific time]?' This signals reliability.",
+    "Never pretend to know. Say: 'I don't have that at hand.' Then: 'What I do know is…' Partial honesty beats false confidence.",
+    "'I want to give you accurate information rather than guessing — I'll confirm and follow up.' People trust those who know their limits.",
+    "Ask a clarifying question to buy time: 'To make sure I answer the most relevant part — what are you trying to decide?' Then think.",
+    "If you have no path to the answer: 'This is outside my area — the right person is [name]. I'll connect you.' Routing is valuable."
+  ],
+  'Analysis Not Done': [
+    "'I haven't completed the analysis yet — I'll have it ready by [specific time].' Concrete deadline. Not 'soon' or 'shortly'.",
+    "Offer what you have: 'I don't have the full picture yet, but what I can share is [partial finding].' Partial honesty is credible.",
+    "Flag before the meeting: 'I'm still working on this — I can share initial findings today, complete view by [date]. Does that work?'",
+    "'I want to be accurate — I'll confirm and send within the hour rather than approximate.' Saying this confidently is better than wrong numbers.",
+    "'Let me walk through the question I'm trying to answer and my approach.' Thinking out loud demonstrates competence before output."
+  ],
+  'Being Direct': [
+    "Lead with your answer, then give reasoning. Not 'there are several factors…' but 'My recommendation is X. Here's why.'",
+    "BLUF — Bottom Line Up Front. Before any message, ask: what is the single most important thing? Say that first. Everything else supports it.",
+    "Answer yes/no questions with yes or no first. 'Yes, and here's the context' or 'No, because…' The direct answer comes before explanation.",
+    "Write the full email — then move your conclusion from the last paragraph to the first sentence. This is almost always better.",
+    "Notice when you're about to say 'it depends' and push yourself to answer. Give the most likely answer, then note exceptions."
+  ],
+  'Leading with Story': [
+    "Pyramid Principle: Answer → Reason → Data/Story. Never Story → Data → Answer. Your point must land in the first two sentences.",
+    "Before speaking, write your headline: 'The main thing I want to communicate is ___.' Say that first. Everything after is support.",
+    "10-second test: if someone left after your first 10 seconds, would they have your key message? If not, restructure.",
+    "When you want to give context before the answer, pause and ask: is this context helping them, or am I warming up to say something difficult?",
+    "'The short answer is [X]. The context is [Y].' This gives the answer immediately and signals more is coming — satisfying both."
+  ],
+  'Over-Explaining': [
+    "One explanation per point. State it, give one reason or example, stop. Trust your first explanation was enough.",
+    "Notice silence and sit in it. The discomfort after you finish speaking is normal processing time. Count to 3 before adding anything.",
+    "After making your point, ask 'Does that make sense?' This transfers control of depth to them — they decide if more is needed.",
+    "Prepare a one-sentence version of key points before important conversations. If you can say it in one sentence, you're ready.",
+    "Physical intervention: when you notice yourself going past your natural stopping point, physically stop — put your pen down, breathe."
+  ]
+};
 
-  document.querySelectorAll('.tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      document.querySelectorAll('.tab').forEach(function(t) { t.classList.remove('on'); });
-      document.querySelectorAll('.tsec').forEach(function(s) { s.classList.remove('on'); });
+// ── GLOBAL STATE ──────────────────────────────────────────────
+var allLearnings=[], allThoughts=[], allVideos=[], allImages=[], allStories=[], allBD=[];
+var emotionsData={}, growthData={};
+var currentEcEmotion='';
+var currentImageFile=null;
+
+// ── INIT ──────────────────────────────────────────────────────
+(function init(){
+  var d=Math.floor((Date.now()-new Date(new Date().getFullYear(),0,0))/86400000);
+  document.getElementById('ribbon').textContent='"'+RIBBON_QUOTES[d%RIBBON_QUOTES.length]+'"';
+
+  document.querySelectorAll('.tab').forEach(function(tab){
+    tab.addEventListener('click',function(){
+      document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('on');});
+      document.querySelectorAll('.tsec').forEach(function(s){s.classList.remove('on');});
       tab.classList.add('on');
-      document.getElementById('tab-' + tab.dataset.t).classList.add('on');
+      document.getElementById('tab-'+tab.dataset.t).classList.add('on');
     });
   });
 
@@ -693,910 +764,613 @@ var FALLBACK_EMOTIONS = {
   loadLearnings();
   loadThoughts();
   loadVideos();
-  loadGrowth();
   loadImages();
+  loadStories();
+  loadBrainDump();
+  loadGrowth();
+  loadFocus();
+  initImageDrop();
+  document.addEventListener('keydown',function(ev){if(ev.key==='Escape')closeLightbox();});
 })();
 
 // ── JSONP ─────────────────────────────────────────────────────
-function jsonpGet(params, onOk, onErr) {
-  var cb = '_ic_' + Date.now() + '_' + Math.floor(Math.random() * 9999);
-  var sc = document.createElement('script');
-  var done = false;
-  var timer = setTimeout(function() {
-    if (!done) { done=true; cleanup(); if (onErr) onErr('timeout'); }
-  }, 15000);
-  window[cb] = function(data) {
-    if (done) return;
-    done=true; clearTimeout(timer); cleanup(); if (onOk) onOk(data);
-  };
-  function cleanup() { if (sc.parentNode) sc.parentNode.removeChild(sc); delete window[cb]; }
-  sc.src = SHEETS_URL + '?' + params + '&callback=' + cb;
-  sc.onerror = function() { if (!done) { done=true; clearTimeout(timer); cleanup(); if (onErr) onErr('error'); } };
+function jsonpGet(params,onOk,onErr){
+  var cb='_ic_'+Date.now()+'_'+Math.floor(Math.random()*9999);
+  var sc=document.createElement('script');
+  var done=false;
+  var timer=setTimeout(function(){if(!done){done=true;cleanup();if(onErr)onErr('timeout');}},15000);
+  window[cb]=function(data){if(done)return;done=true;clearTimeout(timer);cleanup();if(onOk)onOk(data);};
+  function cleanup(){if(sc.parentNode)sc.parentNode.removeChild(sc);delete window[cb];}
+  sc.src=SHEETS_URL+'?'+params+'&callback='+cb;
+  sc.onerror=function(){if(!done){done=true;clearTimeout(timer);cleanup();if(onErr)onErr('error');}};
   document.head.appendChild(sc);
 }
 
 // ── UTILS ─────────────────────────────────────────────────────
-function today() {
-  var d = new Date();
-  return d.getDate() + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] + ' ' + d.getFullYear();
+function today(){
+  var d=new Date();
+  return d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear();
 }
-
-function cleanDate(v) {
-  if (!v) return '';
-  var s = String(v);
-  if (s.length <= 15 && isNaN(Number(s))) return s;
-  var d = new Date(s);
-  if (!isNaN(d)) return d.getDate() + ' ' + ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()] + ' ' + d.getFullYear();
+function cleanDate(v){
+  if(!v)return'';var s=String(v);
+  if(s.length<=15&&isNaN(Number(s)))return s;
+  var d=new Date(s);if(!isNaN(d))return d.getDate()+' '+['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()]+' '+d.getFullYear();
   return s;
 }
-
-function esc(s) {
-  return String(s||'').replace(/&/g,'&amp;').replace(/\x3C/g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/\x3C/g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function showStatus(id,msg,color){
+  var el=document.getElementById(id);if(!el)return;
+  el.textContent=msg;el.style.color=color||'var(--green)';el.style.opacity='1';
+  setTimeout(function(){el.style.opacity='0';},3500);
 }
-
-function showStatus(id, msg, color) {
-  var el = document.getElementById(id);
-  if (!el) return;
-  el.textContent = msg;
-  el.style.color = color || 'var(--green)';
-  el.style.opacity = '1';
-  setTimeout(function() { el.style.opacity='0'; }, 3500);
+function getYtThumb(url){
+  var m=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
+  return m?'https://img.youtube.com/vi/'+m[1]+'/mqdefault.jpg':'';
 }
+function dayIndex(arr){if(!arr||!arr.length)return-1;return Math.floor(Date.now()/86400000)%arr.length;}
 
-// ── EMOTIONS ──────────────────────────────────────────────────
-var emotionsData = {};
-var EMO_ICONS = {
-  'Control Anger':'🔥','Become Patient':'⏳','Get Focused':'🎯',
-  'Self Confidence':'💪','Living in the Present':'🌿'
-};
+// ── EMOTIONS (Right Now + EC selector) ───────────────────────
+var EMO_ICONS={'Control Anger':'🔥','Become Patient':'⏳','Get Focused':'🎯','Self Confidence':'💪','Living in the Present':'🌿'};
 
-function loadEmotions() {
-  document.getElementById('emoLoading').style.display = 'block';
-  document.getElementById('emoGrid').innerHTML = '';
-  jsonpGet('action=read&type=emotions', function(data) {
-    document.getElementById('emoLoading').style.display = 'none';
-    if (data && data.rows && data.rows.length) {
-      buildEmotionData(data.rows);
-    } else {
-      // Use fallback if sheet is empty or returns no rows
-      emotionsData = {};
-      Object.keys(FALLBACK_EMOTIONS).forEach(function(emo) {
-        emotionsData[emo] = FALLBACK_EMOTIONS[emo];
-      });
-    }
-    renderEmotions();
-    populateAddEmoSelect();
-  }, function() {
-    document.getElementById('emoLoading').style.display = 'none';
-    // Use fallback on error too
-    emotionsData = {};
-    Object.keys(FALLBACK_EMOTIONS).forEach(function(emo) {
-      emotionsData[emo] = FALLBACK_EMOTIONS[emo];
-    });
-    renderEmotions();
-    populateAddEmoSelect();
+function loadEmotions(){
+  var el=document.getElementById('ecLoading');if(el)el.style.display='block';
+  jsonpGet('action=read&type=emotions',function(data){
+    if(el)el.style.display='none';
+    if(data&&data.rows&&data.rows.length)buildEmotionData(data.rows);
+    else{emotionsData={};Object.keys(FALLBACK_EMOTIONS).forEach(function(k){emotionsData[k]=FALLBACK_EMOTIONS[k];});}
+    renderEcSelector();
+  },function(){
+    if(el)el.style.display='none';
+    emotionsData={};Object.keys(FALLBACK_EMOTIONS).forEach(function(k){emotionsData[k]=FALLBACK_EMOTIONS[k];});
+    renderEcSelector();
   });
 }
 
-function buildEmotionData(rows) {
-  emotionsData = {};
-  rows.forEach(function(row) {
-    var emo = (row.emotion||'').trim();
-    var method = (row.method||'').trim();
-    if (!emo) return;
-    if (!emotionsData[emo]) emotionsData[emo] = [];
-    if (method) emotionsData[emo].push(method);
+function buildEmotionData(rows){
+  emotionsData={};
+  if(!rows||!rows.length){Object.keys(FALLBACK_EMOTIONS).forEach(function(k){emotionsData[k]=FALLBACK_EMOTIONS[k];});return;}
+  rows.forEach(function(row){
+    var area=(row.emotion||row.area||'').trim();var method=(row.method||'').trim();
+    if(!area)return;if(!emotionsData[area])emotionsData[area]=[];if(method)emotionsData[area].push(method);
   });
-  // Merge fallback for emotions not in sheet
-  Object.keys(FALLBACK_EMOTIONS).forEach(function(emo) {
-    if (!emotionsData[emo] || !emotionsData[emo].length) {
-      emotionsData[emo] = FALLBACK_EMOTIONS[emo];
-    }
+  Object.keys(FALLBACK_EMOTIONS).forEach(function(k){
+    if(!emotionsData[k]||!emotionsData[k].length)emotionsData[k]=FALLBACK_EMOTIONS[k];
   });
 }
 
-function renderEmotions() {
-  var grid = document.getElementById('emoGrid');
-  var emotions = Object.keys(emotionsData);
-  if (!emotions.length) {
-    grid.innerHTML = '<div class="empty-msg">No emotions found.<\/div>';
-    return;
-  }
-  grid.innerHTML = emotions.map(function(emo, i) {
-    var methods = emotionsData[emo];
-    var icon = EMO_ICONS[emo] || '✦';
-    var methodsHtml = methods.map(function(m, idx) {
-      return '<div class="method-item">'
-        + '<span class="method-num">' + (idx+1) + '<\/span>'
-        + '<span class="method-text">' + esc(m) + '<\/span>'
-        + '<\/div>';
-    }).join('');
-    return '<div class="emo-card">'
-      + '<div class="emo-card-head' + (i===0?' on':'') + '" onclick="toggleEmo(this)">'
-      + '<span class="emo-icon">' + icon + '<\/span>'
-      + '<div style="flex:1;min-width:0">'
-      + '<div class="emo-title">' + esc(emo) + '<\/div>'
-      + '<div class="emo-meta">' + methods.length + ' method' + (methods.length===1?'':'s') + '<\/div>'
-      + '<\/div>'
-      + '<span class="emo-chev">▾<\/span>'
-      + '<\/div>'
-      + '<div class="emo-body"' + (i===0?'':' style="display:none"') + '>'
-      + '<div class="method-list">' + methodsHtml + '<\/div>'
-      + '<\/div>'
-      + '<\/div>';
+function renderEcSelector(){
+  var sel=document.getElementById('ecSelector');if(!sel)return;
+  sel.innerHTML=Object.keys(emotionsData).map(function(emo){
+    return '<button class="ec-btn" onclick="selectEcEmotion(\''+esc(emo)+'\')">'+(EMO_ICONS[emo]||'✦')+' '+esc(emo)+'<\/button>';
   }).join('');
 }
 
-function toggleEmo(head) {
-  var isOpen = head.classList.contains('on');
-  document.querySelectorAll('.emo-card-head').forEach(function(h) {
-    h.classList.remove('on');
-    h.nextElementSibling.style.display = 'none';
-  });
-  if (!isOpen) { head.classList.add('on'); head.nextElementSibling.style.display = 'block'; }
+function selectEcEmotion(emo){
+  currentEcEmotion=emo;
+  document.querySelectorAll('.ec-btn').forEach(function(b){b.classList.toggle('on',b.textContent.indexOf(emo)!==-1);});
+  document.getElementById('ecResult').classList.add('on');
+  document.getElementById('ecMethodLabel').textContent='Methods for "'+emo+'"';
+  renderEcMethods(emo);
+  renderEcRelated(emo);
 }
 
-function toggleUniv() {
-  var body = document.getElementById('univBody');
-  var chev = document.getElementById('univChev');
-  var open = body.classList.contains('open');
-  body.classList.toggle('open', !open);
-  chev.classList.toggle('open', !open);
+function renderEcMethods(emo){
+  var list=document.getElementById('ecMethodList');
+  var methods=emotionsData[emo]||[];
+  list.innerHTML=methods.map(function(m,i){
+    return '<div class="method-item"><span class="method-num">'+(i+1)+'<\/span><span class="method-text">'+esc(m)+'<\/span><\/div>';
+  }).join('')||'<div class="ec-empty">No methods yet — add one below.<\/div>';
 }
 
-function toggleNewEmoField() {
-  var sel = document.getElementById('addEmoSel');
-  var wrap = document.getElementById('newEmoWrap');
-  wrap.style.display = (sel.value === '__new__') ? 'block' : 'none';
+function renderEcRelated(emo){
+  var elow=emo.toLowerCase();
+  // Thoughts
+  var tEl=document.getElementById('ecThoughts');
+  var tItems=allThoughts.filter(function(t){return (t.emotion||'').toLowerCase().indexOf(elow)!==-1||(t.thought||'').toLowerCase().indexOf(elow)!==-1;});
+  tEl.innerHTML=tItems.length?tItems.slice(0,5).map(function(t){
+    return '<div class="ec-related-item">'+esc(t.thought||'')+'<div class="ec-related-meta">'+(t.category?'<span class="badge blue">'+esc(t.category)+'<\/span> ':'')+esc(cleanDate(t.date||''))+(t.emotion?' · '+esc(t.emotion):'')+'<\/div><\/div>';
+  }).join(''):'<div class="ec-empty">No related thoughts found.<\/div>';
+  // Videos
+  var vEl=document.getElementById('ecVideos');
+  var vItems=allVideos.filter(function(v){return (v.emotion||v.title||'').toLowerCase().indexOf(elow)!==-1||(v.note||v.description||'').toLowerCase().indexOf(elow)!==-1;});
+  vEl.innerHTML=vItems.length?vItems.slice(0,4).map(function(v){
+    var thumb=getYtThumb(v.url||'');
+    return '<div class="ec-related-item" style="display:flex;gap:10px;align-items:flex-start">'+(thumb?'<img src="'+esc(thumb)+'" style="width:80px;height:45px;object-fit:cover;border-radius:2px;flex-shrink:0" alt="">':'')+'<div><div style="font-size:.92rem;font-weight:600;color:var(--ink)">'+esc(v.title||v.emotion||'')+'<\/div>'+(v.note||v.description?'<div class="ec-related-meta">'+esc(v.note||v.description)+'<\/div>':'')+'<a href="'+esc(v.url||'')+'" target="_blank" class="vlink" style="margin-top:5px;display:inline-block">Watch ↗<\/a><\/div><\/div>';
+  }).join(''):'<div class="ec-empty">No related videos found.<\/div>';
+  // Images
+  var iEl=document.getElementById('ecImages');
+  var iItems=allImages.filter(function(i){return (i.emotion||i.note||i.caption||'').toLowerCase().indexOf(elow)!==-1;});
+  iEl.innerHTML=iItems.length?iItems.slice(0,6).map(function(img){
+    return '<div class="ec-img-item" onclick="openLightbox(\''+esc(img.url||'')+'\',\''+esc(img.caption||'')+'\',\''+esc(img.category||'')+'\',\''+esc(cleanDate(img.date||''))+'\',\''+esc(img.emotion||img.note||'')+'\')"><img src="'+esc(img.thumb||img.url||'')+'" alt="'+esc(img.caption||'')+'" loading="lazy"><\/div>';
+  }).join(''):'<div class="ec-empty" style="grid-column:1/-1">No related images found.<\/div>';
+  // Stories
+  var sEl=document.getElementById('ecStories');
+  var sItems=allStories.filter(function(s){return (s.emotion||'').toLowerCase().indexOf(elow)!==-1||(s.story||'').toLowerCase().indexOf(elow)!==-1;});
+  sEl.innerHTML=sItems.length?sItems.slice(0,3).map(function(st){
+    return '<div class="ec-related-item">'+esc((st.story||'').substring(0,200))+((st.story||'').length>200?'…':'')+'<div class="ec-related-meta">'+(st.emotion?'<span class="badge">'+esc(st.emotion)+'<\/span> ':'')+esc(cleanDate(st.date||''))+'<\/div><\/div>';
+  }).join(''):'<div class="ec-empty">No related stories found.<\/div>';
 }
 
-function populateAddEmoSelect() {
-  var sel = document.getElementById('addEmoSel');
-  sel.innerHTML = '<option value="">Select existing…<\/option>'
-    + Object.keys(emotionsData).map(function(e) {
-        return '<option value="' + esc(e) + '">' + (EMO_ICONS[e]||'') + ' ' + esc(e) + '<\/option>';
-      }).join('')
-    + '<option value="__new__">➕ Add new emotion…<\/option>';
-}
-
-function addMethod() {
-  var selVal  = document.getElementById('addEmoSel').value;
-  var method  = document.getElementById('addMethodTa').value.trim();
-  var emo;
-
-  if (selVal === '__new__') {
-    emo = document.getElementById('newEmoInput').value.trim();
-    if (!emo) { showStatus('addMethodStatus', 'Enter the new emotion name.', 'var(--red)'); return; }
-  } else {
-    emo = selVal;
-  }
-
-  if (!emo)   { showStatus('addMethodStatus', 'Select an emotion first.', 'var(--red)'); return; }
-  if (!method){ showStatus('addMethodStatus', 'Write a method first.', 'var(--red)'); return; }
-
-  showStatus('addMethodStatus', 'Saving…', 'var(--ash)');
-  var params = 'action=write&type=emotions&emotion=' + encodeURIComponent(emo) + '&method=' + encodeURIComponent(method);
-  jsonpGet(params, function(data) {
-    if (data && data.success) {
-      document.getElementById('addMethodTa').value = '';
-      if (selVal === '__new__') document.getElementById('newEmoInput').value = '';
-      document.getElementById('newEmoWrap').style.display = 'none';
-      document.getElementById('addEmoSel').value = '';
-      showStatus('addMethodStatus', '✓ Saved — reloading…', 'var(--green)');
-      setTimeout(loadEmotions, 1200);
-    } else { showStatus('addMethodStatus', 'Error. Try again.', 'var(--red)'); }
-  }, function() {
-    var sc = document.createElement('script');
-    sc.src = SHEETS_URL + '?' + params + '&callback=_ic_noop';
-    window['_ic_noop'] = function(){};
-    document.head.appendChild(sc);
-    document.getElementById('addMethodTa').value = '';
-    showStatus('addMethodStatus', '✓ Sent — reloading…', 'var(--green)');
-    setTimeout(loadEmotions, 2000);
+function addEcMethod(){
+  if(!currentEcEmotion){showStatus('ecAddStatus','Select an emotion first.','var(--red)');return;}
+  var method=document.getElementById('ecAddMethodTa').value.trim();
+  if(!method){showStatus('ecAddStatus','Write a method first.','var(--red)');return;}
+  showStatus('ecAddStatus','Saving…','var(--ash)');
+  var params='action=write&type=emotions&emotion='+encodeURIComponent(currentEcEmotion)+'&method='+encodeURIComponent(method);
+  jsonpGet(params,function(data){
+    if(data&&data.success){
+      document.getElementById('ecAddMethodTa').value='';
+      if(!emotionsData[currentEcEmotion])emotionsData[currentEcEmotion]=[];
+      emotionsData[currentEcEmotion].push(method);
+      renderEcMethods(currentEcEmotion);
+      showStatus('ecAddStatus','✓ Saved!','var(--green)');
+    }else{showStatus('ecAddStatus','Error. Try again.','var(--red)');}
+  },function(){
+    document.getElementById('ecAddMethodTa').value='';
+    showStatus('ecAddStatus','✓ Sent','var(--green)');
   });
 }
 
 // ── LEARNINGS ─────────────────────────────────────────────────
-var allLearnings = [];
-
-function saveLearning() {
-  var incident = document.getElementById('incidentTa').value.trim();
-  var learning = document.getElementById('learningTa').value.trim();
-  var category = document.getElementById('lCat').value;
-  if (!incident||!learning) { showStatus('lSaveMsg','Fill in both fields.','var(--red)'); return; }
-  var btn = document.getElementById('lSaveBtn');
-  btn.disabled = true; showStatus('lSaveMsg','Saving…','var(--ash)');
-  var params = 'action=write&type=learnings&category=' + encodeURIComponent(category)
-    + '&incident=' + encodeURIComponent(incident) + '&learning=' + encodeURIComponent(learning);
-  jsonpGet(params, function(data) {
-    btn.disabled = false;
-    if (data && data.success) {
-      document.getElementById('incidentTa').value = '';
-      document.getElementById('learningTa').value = '';
-      showStatus('lSaveMsg','✓ Saved to Sheet','var(--green)');
-      allLearnings.unshift({date:today(),category:category,incident:incident,learning:learning});
+function saveLearning(){
+  var emotion=document.getElementById('lEmotion').value.trim();
+  var incident=document.getElementById('incidentTa').value.trim();
+  var learning=document.getElementById('learningTa').value.trim();
+  var category=document.getElementById('lCat').value;
+  if(!incident||!learning){showStatus('lSaveMsg','Fill in Incident and Learning.','var(--red)');return;}
+  var btn=document.getElementById('lSaveBtn');btn.disabled=true;showStatus('lSaveMsg','Saving…','var(--ash)');
+  var params='action=write&type=learnings&category='+encodeURIComponent(category)
+    +'&incident='+encodeURIComponent(incident)+'&learning='+encodeURIComponent(learning)
+    +'&emotion='+encodeURIComponent(emotion);
+  jsonpGet(params,function(data){
+    btn.disabled=false;
+    if(data&&data.success){
+      document.getElementById('lEmotion').value='';document.getElementById('incidentTa').value='';document.getElementById('learningTa').value='';
+      showStatus('lSaveMsg','✓ Saved','var(--green)');
+      allLearnings.unshift({date:today(),category:category,incident:incident,learning:learning,emotion:emotion});
       renderLearnings(allLearnings);
-    } else { showStatus('lSaveMsg','Error — try again.','var(--red)'); }
-  }, function() {
-    btn.disabled = false;
-    document.getElementById('incidentTa').value = '';
-    document.getElementById('learningTa').value = '';
+    }else{showStatus('lSaveMsg','Error.','var(--red)');}
+  },function(){
+    btn.disabled=false;document.getElementById('incidentTa').value='';document.getElementById('learningTa').value='';
     showStatus('lSaveMsg','✓ Sent','var(--green)');
-    allLearnings.unshift({date:today(),category:category,incident:incident,learning:learning});
-    renderLearnings(allLearnings);
+    allLearnings.unshift({date:today(),category:category,incident:incident,learning:learning,emotion:emotion});renderLearnings(allLearnings);
   });
 }
-
-function loadLearnings() {
-  document.getElementById('lLoading').style.display = 'block';
-  document.getElementById('lCards').innerHTML = '';
-  document.getElementById('lEmpty').style.display = 'none';
-  document.getElementById('lCount').textContent = '';
-  jsonpGet('action=read&type=learnings', function(data) {
-    document.getElementById('lLoading').style.display = 'none';
-    allLearnings = (data && data.rows) ? data.rows : [];
-    renderLearnings(allLearnings);
-  }, function() {
-    document.getElementById('lLoading').style.display = 'none';
-    document.getElementById('lEmpty').style.display = 'block';
-    document.getElementById('lEmpty').textContent = 'Could not load. Check connection and refresh.';
-  });
+function loadLearnings(){
+  document.getElementById('lLoading').style.display='block';document.getElementById('lCards').innerHTML='';
+  document.getElementById('lEmpty').style.display='none';document.getElementById('lCount').textContent='';
+  jsonpGet('action=read&type=learnings',function(data){
+    document.getElementById('lLoading').style.display='none';allLearnings=(data&&data.rows)?data.rows:[];renderLearnings(allLearnings);
+  },function(){document.getElementById('lLoading').style.display='none';document.getElementById('lEmpty').style.display='block';});
 }
-
-function renderLearnings(rows) {
-  var cards = document.getElementById('lCards'), empty = document.getElementById('lEmpty');
-  if (!rows||!rows.length) {
-    cards.innerHTML = ''; empty.style.display = 'block';
-    empty.textContent = 'No learnings yet — add your first one above.';
-    document.getElementById('lCount').textContent = ''; return;
-  }
-  empty.style.display = 'none';
-  document.getElementById('lCount').textContent = rows.length + ' entr' + (rows.length===1?'y':'ies');
-  cards.innerHTML = rows.map(function(row) {
-    return '<div class="lcard" data-cat="' + esc(row.category||'') + '" data-text="' + esc(((row.incident||'')+' '+(row.learning||'')).toLowerCase()) + '">'
-      + '<div class="lcard-head"><span class="lcat">' + esc(row.category||'General') + '<\/span><span class="ldate">' + esc(cleanDate(row.date||'')) + '<\/span><\/div>'
-      + '<div class="lrow">'
-      + '<div class="lcol-inc"><span class="llabel inc">Incident<\/span><div class="lincident">' + esc(row.incident||'') + '<\/div><\/div>'
-      + '<div class="lcol-lrn"><span class="llabel lrn">Learning<\/span><div class="llearning">' + esc(row.learning||'') + '<\/div><\/div>'
-      + '<\/div><\/div>';
+function renderLearnings(rows){
+  var cards=document.getElementById('lCards'),empty=document.getElementById('lEmpty');
+  if(!rows||!rows.length){cards.innerHTML='';empty.style.display='block';empty.textContent='No learnings yet.';document.getElementById('lCount').textContent='';return;}
+  empty.style.display='none';document.getElementById('lCount').textContent=rows.length+' entr'+(rows.length===1?'y':'ies');
+  cards.innerHTML=rows.map(function(row){
+    return '<div class="lcard" data-cat="'+esc(row.category||'')+'" data-text="'+esc(((row.incident||'')+' '+(row.learning||'')+' '+(row.emotion||'')).toLowerCase())+'">'
+      +'<div class="card-head">'+(row.emotion?'<span class="badge">'+esc(row.emotion)+'<\/span>':'')+' <span class="badge blue">'+esc(row.category||'General')+'<\/span><span class="card-date">'+esc(cleanDate(row.date||''))+'<\/span><\/div>'
+      +'<div class="lrow"><div class="lcol-inc"><span class="llabel inc">Incident<\/span><div class="lincident">'+esc(row.incident||'')+'<\/div><\/div>'
+      +'<div class="lcol-lrn"><span class="llabel lrn">Learning<\/span><div class="llearning">'+esc(row.learning||'')+'<\/div><\/div><\/div><\/div>';
   }).join('');
 }
-
-function filterL() {
-  var search = (document.getElementById('lSearch').value||'').toLowerCase().trim();
-  var cat = document.getElementById('lFilter').value;
-  var v = 0;
-  document.querySelectorAll('#lCards .lcard').forEach(function(c) {
-    var ok = (!cat||c.dataset.cat===cat) && (!search||c.dataset.text.includes(search));
-    c.style.display = ok ? '' : 'none'; if (ok) v++;
+function filterL(){
+  var search=(document.getElementById('lSearch').value||'').toLowerCase().trim();
+  var cat=document.getElementById('lFilter').value;var v=0;
+  document.querySelectorAll('#lCards .lcard').forEach(function(c){
+    var ok=(!cat||c.dataset.cat===cat)&&(!search||c.dataset.text.includes(search));
+    c.style.display=ok?'':'none';if(ok)v++;
   });
-  document.getElementById('lCount').textContent = v + ' of ' + allLearnings.length + ' entr' + (allLearnings.length===1?'y':'ies');
+  document.getElementById('lCount').textContent=v+' of '+allLearnings.length+' entr'+(allLearnings.length===1?'y':'ies');
 }
 
 // ── THOUGHTS ──────────────────────────────────────────────────
-var allThoughts = [];
-
-function saveThought() {
-  var text = document.getElementById('thoughtTa').value.trim();
-  var cat  = document.getElementById('thoughtCat').value;
-  if (!text) { showStatus('thoughtStatus','Write something first.','var(--red)'); return; }
+function saveThought(){
+  var emotion=document.getElementById('thoughtEmotion').value.trim();
+  var text=document.getElementById('thoughtTa').value.trim();
+  var cat=document.getElementById('thoughtCat').value;
+  if(!text){showStatus('thoughtStatus','Write something first.','var(--red)');return;}
   showStatus('thoughtStatus','Saving…','var(--ash)');
-  var params = 'action=write&type=thoughts&thought=' + encodeURIComponent(text) + '&category=' + encodeURIComponent(cat);
-  jsonpGet(params, function(data) {
-    if (data && data.success) {
-      document.getElementById('thoughtTa').value = '';
+  var params='action=write&type=thoughts&thought='+encodeURIComponent(text)+'&category='+encodeURIComponent(cat)+'&emotion='+encodeURIComponent(emotion);
+  jsonpGet(params,function(data){
+    if(data&&data.success){
+      document.getElementById('thoughtTa').value='';document.getElementById('thoughtEmotion').value='';
       showStatus('thoughtStatus','✓ Saved','var(--green)');
-      allThoughts.unshift({date:today(),category:cat,thought:text});
-      renderThoughts(allThoughts);
-    } else { showStatus('thoughtStatus','Error — try again.','var(--red)'); }
-  }, function() {
-    document.getElementById('thoughtTa').value = '';
-    showStatus('thoughtStatus','✓ Sent','var(--green)');
-    allThoughts.unshift({date:today(),category:cat,thought:text});
-    renderThoughts(allThoughts);
+      allThoughts.unshift({date:today(),category:cat,thought:text,emotion:emotion});renderThoughts(allThoughts);
+      renderSpotlightThought();
+    }else{showStatus('thoughtStatus','Error.','var(--red)');}
+  },function(){
+    document.getElementById('thoughtTa').value='';showStatus('thoughtStatus','✓ Sent','var(--green)');
+    allThoughts.unshift({date:today(),category:cat,thought:text,emotion:emotion});renderThoughts(allThoughts);
   });
 }
-
-function loadThoughts() {
-  document.getElementById('thoughtLoading').style.display = 'block';
-  document.getElementById('thoughtCards').innerHTML = '';
-  document.getElementById('thoughtEmpty').style.display = 'none';
-  jsonpGet('action=read&type=thoughts', function(data) {
-    document.getElementById('thoughtLoading').style.display = 'none';
-    allThoughts = (data && data.rows) ? data.rows : [];
-    renderThoughts(allThoughts);
-    renderSpotlightThought();
-  }, function() {
-    document.getElementById('thoughtLoading').style.display = 'none';
-    document.getElementById('thoughtEmpty').style.display = 'block';
-    document.getElementById('thoughtEmpty').textContent = 'Could not load. Refresh to try again.';
-    renderSpotlightThought();
-  });
+function loadThoughts(){
+  document.getElementById('thoughtLoading').style.display='block';document.getElementById('thoughtCards').innerHTML='';
+  document.getElementById('thoughtEmpty').style.display='none';
+  jsonpGet('action=read&type=thoughts',function(data){
+    document.getElementById('thoughtLoading').style.display='none';
+    allThoughts=(data&&data.rows)?data.rows:[];renderThoughts(allThoughts);renderSpotlightThought();
+  },function(){document.getElementById('thoughtLoading').style.display='none';document.getElementById('thoughtEmpty').style.display='block';renderSpotlightThought();});
 }
-
-function renderThoughts(rows) {
-  var cards = document.getElementById('thoughtCards'), empty = document.getElementById('thoughtEmpty');
-  if (!rows||!rows.length) {
-    cards.innerHTML = ''; empty.style.display = 'block';
-    empty.textContent = 'No thoughts captured yet.';
-    document.getElementById('thoughtCount').textContent = ''; return;
-  }
-  empty.style.display = 'none';
-  document.getElementById('thoughtCount').textContent = rows.length + ' thought' + (rows.length===1?'':'s');
-  cards.innerHTML = rows.map(function(row) {
-    var cat = row.category || '';
-    var thought = row.thought || row.text || '';
-    var date = cleanDate(row.date || '');
+function renderThoughts(rows){
+  var cards=document.getElementById('thoughtCards'),empty=document.getElementById('thoughtEmpty');
+  if(!rows||!rows.length){cards.innerHTML='';empty.style.display='block';empty.textContent='No thoughts yet.';document.getElementById('thoughtCount').textContent='';return;}
+  empty.style.display='none';document.getElementById('thoughtCount').textContent=rows.length+' thought'+(rows.length===1?'':'s');
+  cards.innerHTML=rows.map(function(row){
+    var cat=row.category||'',thought=row.thought||row.text||'',date=cleanDate(row.date||''),emo=row.emotion||'';
     return '<div class="tcard">'
-      + '<div class="tcard-meta">'
-      + (cat ? '<span class="tcat-badge">' + esc(cat) + '<\/span>' : '<span><\/span>')
-      + '<span class="tdate">' + esc(date) + '<\/span>'
-      + '<\/div>'
-      + '<div class="ttext">' + esc(thought) + '<\/div>'
-      + '<\/div>';
+      +'<div class="card-head">'+(emo?'<span class="badge">'+esc(emo)+'<\/span> ':'')+' '+(cat?'<span class="badge blue">'+esc(cat)+'<\/span>':'')+'<span class="card-date">'+esc(date)+'<\/span><\/div>'
+      +'<div style="font-size:.97rem;color:var(--ink);line-height:1.68;white-space:pre-wrap">'+esc(thought)+'<\/div><\/div>';
   }).join('');
 }
 
 // ── VIDEOS ────────────────────────────────────────────────────
-var allVideos = [];
-
-function saveVideo() {
-  var url = document.getElementById('videoUrl').value.trim();
-  var title = document.getElementById('videoTitle').value.trim();
-  var note = document.getElementById('videoNote').value.trim();
-  if (!url||!title) { showStatus('videoStatus','URL and Title required.','var(--red)'); return; }
+function saveVideo(){
+  var emotion=document.getElementById('videoEmotion').value.trim();
+  var url=document.getElementById('videoUrl').value.trim();
+  var title=document.getElementById('videoTitle').value.trim();
+  var note=document.getElementById('videoNote').value.trim();
+  if(!url||!title){showStatus('videoStatus','URL and Title required.','var(--red)');return;}
   showStatus('videoStatus','Saving…','var(--ash)');
-  var params = 'action=write&type=videos&url=' + encodeURIComponent(url)
-    + '&title=' + encodeURIComponent(title) + '&note=' + encodeURIComponent(note);
-  jsonpGet(params, function(data) {
-    if (data && data.success) {
-      document.getElementById('videoUrl').value = '';
-      document.getElementById('videoTitle').value = '';
-      document.getElementById('videoNote').value = '';
-      showStatus('videoStatus','✓ Saved','var(--green)');
-      allVideos.unshift({date:today(),url:url,title:title,note:note});
-      renderVideos(allVideos);
-    } else { showStatus('videoStatus','Error — try again.','var(--red)'); }
-  }, function() {
-    document.getElementById('videoUrl').value = '';
-    document.getElementById('videoTitle').value = '';
-    document.getElementById('videoNote').value = '';
-    showStatus('videoStatus','✓ Sent','var(--green)');
-    allVideos.unshift({date:today(),url:url,title:title,note:note});
-    renderVideos(allVideos);
+  var params='action=write&type=videos&url='+encodeURIComponent(url)+'&title='+encodeURIComponent(title)+'&note='+encodeURIComponent(note)+'&emotion='+encodeURIComponent(emotion);
+  jsonpGet(params,function(data){
+    if(data&&data.success){
+      document.getElementById('videoUrl').value='';document.getElementById('videoTitle').value='';document.getElementById('videoNote').value='';document.getElementById('videoEmotion').value='';
+      showStatus('videoStatus','✓ Saved','var(--green)');allVideos.unshift({date:today(),url:url,title:title,note:note,emotion:emotion});renderVideos(allVideos);
+      renderSpotlightVideo();
+    }else{showStatus('videoStatus','Error.','var(--red)');}
+  },function(){
+    document.getElementById('videoUrl').value='';document.getElementById('videoTitle').value='';document.getElementById('videoNote').value='';
+    showStatus('videoStatus','✓ Sent','var(--green)');allVideos.unshift({date:today(),url:url,title:title,note:note,emotion:emotion});renderVideos(allVideos);
   });
 }
-
-function loadVideos() {
-  document.getElementById('videoLoading').style.display = 'block';
-  document.getElementById('videoCards').innerHTML = '';
-  document.getElementById('videoEmpty').style.display = 'none';
-  jsonpGet('action=read&type=videos', function(data) {
-    document.getElementById('videoLoading').style.display = 'none';
-    allVideos = (data && data.rows) ? data.rows : [];
-    renderVideos(allVideos);
-    renderSpotlightVideo();
-  }, function() {
-    document.getElementById('videoLoading').style.display = 'none';
-    document.getElementById('videoEmpty').style.display = 'block';
-    document.getElementById('videoEmpty').textContent = 'Could not load. Refresh to try again.';
-    renderSpotlightVideo();
-  });
+function loadVideos(){
+  document.getElementById('videoLoading').style.display='block';document.getElementById('videoCards').innerHTML='';document.getElementById('videoEmpty').style.display='none';
+  jsonpGet('action=read&type=videos',function(data){
+    document.getElementById('videoLoading').style.display='none';allVideos=(data&&data.rows)?data.rows:[];renderVideos(allVideos);renderSpotlightVideo();
+  },function(){document.getElementById('videoLoading').style.display='none';document.getElementById('videoEmpty').style.display='block';renderSpotlightVideo();});
 }
-
-function getYtThumb(url) {
-  var m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([A-Za-z0-9_-]{11})/);
-  return m ? 'https://img.youtube.com/vi/' + m[1] + '/mqdefault.jpg' : '';
-}
-
-function renderVideos(rows) {
-  var cards = document.getElementById('videoCards'), empty = document.getElementById('videoEmpty');
-  if (!rows||!rows.length) {
-    cards.innerHTML = ''; empty.style.display = 'block';
-    empty.textContent = 'No videos saved yet.';
-    document.getElementById('videoCount').textContent = ''; return;
-  }
-  empty.style.display = 'none';
-  document.getElementById('videoCount').textContent = rows.length + ' video' + (rows.length===1?'':'s');
-  cards.innerHTML = rows.map(function(row) {
-    var url = row.url || '';
-    var title = row.title || row.emotion || 'Untitled';
-    var note = row.note || row.description || '';
-    if (title === note) note = '';
-    var date = cleanDate(row.date || '');
-    var cat = row.category || '';
-    var thumb = getYtThumb(url);
-    var isInsta = url.indexOf('instagram.com') !== -1;
-    var thumbHtml = thumb
-      ? '<img src="' + thumb + '" alt="" onerror="this.parentNode.innerHTML=\'▶\'">'
-      : (isInsta ? '📸' : '▶');
-    return '<div class="vcard">'
-      + '<div class="vthumb">' + thumbHtml + '<\/div>'
-      + '<div class="vinfo">'
-      + (cat ? '<span class="vcat">' + esc(cat) + '<\/span>' : '')
-      + '<div class="vtitle">' + esc(title) + '<\/div>'
-      + (note ? '<div class="vnote">' + esc(note) + '<\/div>' : '')
-      + '<a class="vlink" href="' + esc(url) + '" target="_blank" rel="noopener">Watch ↗<\/a>'
-      + '<span class="vdate">' + esc(date) + '<\/span>'
-      + '<\/div><\/div>';
-  }).join('');
-}
-// ── PROFESSIONAL GROWTH ───────────────────────────────────────
-var GROWTH_ICONS = {
-  'Speaking Confidently': '🎤',
-  "Don't Know the Answer": '🤔',
-  'Analysis Not Done': '📊',
-  'Being Direct': '🎯',
-  'Leading with Story': '📖',
-  'Over-Explaining': '🔇'
-};
-
-var FALLBACK_GROWTH = {
-  'Speaking Confidently': [
-    "Before you speak, take one slow breath and plant your feet firmly on the floor. Physical grounding directly reduces vocal shakiness and creates a sense of authority before you say a single word.",
-    "Slow down by 20%. Most people speak too fast when nervous — it signals anxiety. Deliberate pace signals confidence. Practice speaking at 80% of your normal speed in low-stakes conversations first.",
-    "Prepare your opening sentence in advance for any important meeting or presentation. Confidence in the first 10 seconds sets the tone for everything that follows. You don't need to prepare everything — just the start.",
-    "Make your statements sound like statements. Avoid rising intonation at the end of sentences (upspeak) — it makes every assertion sound like a question. Record yourself once and listen back.",
-    "Own the silence. When you finish a point, stop. Do not fill the gap with 'um', 'like', or additional words. Silence after a confident statement amplifies the statement. Practice sitting in silence for 3 full seconds after making a point."
-  ],
-  "Don't Know the Answer": [
-    "Use this exact phrase: 'That's an important question — let me give you a considered answer rather than a quick one. Can I come back to you by [specific time]?' This signals intellectual honesty and reliability simultaneously.",
-    "Never pretend to know. Say directly: 'I don't have that information at hand.' Then immediately follow with: 'What I do know is…' and share something relevant. Partial knowledge offered honestly beats false confidence.",
-    "Reframe not knowing as a strength: 'I want to make sure I give you accurate information rather than guessing — I'll confirm and follow up.' People trust those who know the limits of their knowledge far more than those who bluff.",
-    "Ask a clarifying question to buy time: 'To make sure I answer the most relevant part — what specifically are you trying to decide or solve with this?' This redirects to their need and gives you a moment to think.",
-    "If you genuinely have no answer and no path to one, say: 'This is outside my area — the right person to ask is [name]. I'll connect you.' Routing accurately is more valuable than fumbling through a wrong answer."
-  ],
-  'Analysis Not Done': [
-    "Be direct and specific: 'I haven't completed the analysis yet — I'll have it ready by [specific time].' Give a concrete deadline, not 'soon' or 'shortly'. Vagueness about timing damages trust more than the gap itself.",
-    "Offer what you do have: 'I don't have the full picture yet, but what I can share now is [partial finding or hypothesis].' Partial insight with honesty is more credible than silence or deflection.",
-    "Never walk into a meeting unprepared without flagging it beforehand. Send a message 30 minutes ahead: 'I'm still working on the analysis — I can share initial findings today and the complete view by [date]. Does that work?' This shows proactiveness.",
-    "If asked mid-meeting: 'I want to be accurate here — I'll confirm the numbers and send them through within the hour rather than approximate.' Saying this confidently is far better than giving wrong numbers confidently.",
-    "Use the gap productively: 'While the analysis is in progress, let me share the key question I'm trying to answer and the approach I'm taking.' Walking through your thinking demonstrates competence even when the output isn't ready."
-  ],
-  'Being Direct': [
-    "Lead with your answer, then give the reasoning. Not: 'Well, there are several factors to consider and after looking at them I think...' But: 'My recommendation is X. Here's why.' The conclusion comes first, always.",
-    "The BLUF method (Bottom Line Up Front): before any email, message, or verbal response, ask yourself — what is the single most important thing I need to communicate? Say that first. Everything else is supporting context.",
-    "When someone asks a yes/no question, answer it with yes or no first. You can qualify it after. 'Yes, and here's the context' or 'No, because...' — but the direct answer must come before the explanation.",
-    "Practice in writing first. Before your next important email, write the full thing — then move your conclusion from the last paragraph to the first sentence. You'll find this is almost always better.",
-    "Notice when you are about to say 'it depends' and push yourself to answer the question as asked. 'It depends' without an answer is a non-answer. Answer the most likely scenario and then note the exceptions."
-  ],
-  'Leading with Story': [
-    "Use the Pyramid Principle: answer first, then support. Structure every communication as: Answer → Reason → Data/Story. Never: Story → Data → eventual Answer. The audience should know your point by your second sentence.",
-    "Before speaking, write your headline in one sentence: 'The main thing I want to communicate is ___.' Say that sentence first. Everything after is support. Train yourself to find the headline before you open your mouth.",
-    "The 10-second test: if someone had to leave after your first 10 seconds, would they have understood your key message? If not, restructure. The key message must land in the first 10 seconds.",
-    "When you feel the urge to give context before the answer, pause and ask: does this context genuinely help them receive the answer, or am I warming myself up to say something difficult? Context is often a delay tactic.",
-    "Use a simple signpost: 'The short answer is [X]. The context behind it is [Y].' This gives the audience the answer immediately and signals that more is coming — satisfying both directness and completeness."
-  ],
-  'Over-Explaining': [
-    "Set a personal rule: one explanation per point. State the point, give one reason or example, stop. If they want more, they will ask. Most people who over-explain do so because they fear being misunderstood — trust that your first explanation was enough.",
-    "Notice the silence and sit in it. The discomfort you feel after making a point and before the other person responds is not a problem to solve by talking — it is normal processing time. Count to 3 silently before adding anything.",
-    "Ask instead of explain: after making your point, instead of adding more words, ask 'Does that make sense?' or 'Any questions on that?' This transfers the control of depth to them — they decide if more is needed.",
-    "Prepare a one-sentence version of your key points before important conversations. If you can say it in one sentence, you're ready. Over-explanation often happens because the idea hasn't been fully clarified in your own mind first.",
-    "Physical intervention: when you notice yourself continuing past your natural stopping point, physically stop — put your pen down, close your notebook, take a breath. The physical action interrupts the verbal habit."
-  ]
-};
-
-var growthData = {};
-
-function loadGrowth() {
-  document.getElementById('growthLoading').style.display = 'block';
-  document.getElementById('growthGrid').innerHTML = '';
-  jsonpGet('action=read&type=growth', function(data) {
-    document.getElementById('growthLoading').style.display = 'none';
-    if (data && data.rows && data.rows.length) {
-      buildGrowthData(data.rows);
-    } else {
-      growthData = {};
-      Object.keys(FALLBACK_GROWTH).forEach(function(k) { growthData[k] = FALLBACK_GROWTH[k]; });
-    }
-    renderGrowth();
-    populateAddGrowthSelect();
-  }, function() {
-    document.getElementById('growthLoading').style.display = 'none';
-    growthData = {};
-    Object.keys(FALLBACK_GROWTH).forEach(function(k) { growthData[k] = FALLBACK_GROWTH[k]; });
-    renderGrowth();
-    populateAddGrowthSelect();
-  });
-}
-
-function buildGrowthData(rows) {
-  growthData = {};
-  if (!rows || !rows.length) {
-    Object.keys(FALLBACK_GROWTH).forEach(function(k) { growthData[k] = FALLBACK_GROWTH[k]; });
-    return;
-  }
-  rows.forEach(function(row) {
-    var area   = (row.area || row.emotion || '').trim();
-    var method = (row.method || '').trim();
-    if (!area) return;
-    if (!growthData[area]) growthData[area] = [];
-    if (method) growthData[area].push(method);
-  });
-  // Always merge fallback for areas not in sheet
-  Object.keys(FALLBACK_GROWTH).forEach(function(k) {
-    if (!growthData[k] || !growthData[k].length) growthData[k] = FALLBACK_GROWTH[k];
-  });
-}
-
-function renderGrowth() {
-  var grid = document.getElementById('growthGrid');
-  var areas = Object.keys(growthData);
-  if (!areas.length) {
-    grid.innerHTML = '<div class="empty-msg">No growth areas found.<\/div>';
-    return;
-  }
-  grid.innerHTML = areas.map(function(area, i) {
-    var methods = growthData[area];
-    var icon = GROWTH_ICONS[area] || '✦';
-    var methodsHtml = methods.map(function(m, idx) {
-      return '<div class="method-item" style="border-color:rgba(42,63,111,.12)">'
-        + '<span class="method-num" style="color:var(--blue);background:rgba(42,63,111,.08)">' + (idx+1) + '<\/span>'
-        + '<span class="method-text">' + esc(m) + '<\/span>'
-        + '<\/div>';
-    }).join('');
-    return '<div class="emo-card" style="border-color:rgba(42,63,111,.18)">'
-      + '<div class="emo-card-head' + (i===0?' on':'') + '" onclick="toggleGrowth(this)" style="' + (i===0?'background:linear-gradient(135deg,rgba(42,63,111,.1),rgba(42,63,111,.04));border-bottom:1px solid rgba(42,63,111,.12)':'') + '">'
-      + '<span class="emo-icon">' + icon + '<\/span>'
-      + '<div style="flex:1;min-width:0">'
-      + '<div class="emo-title">' + esc(area) + '<\/div>'
-      + '<div class="emo-meta">' + methods.length + ' method' + (methods.length===1?'':'s') + '<\/div>'
-      + '<\/div>'
-      + '<span class="emo-chev" style="color:var(--blue)">▾<\/span>'
-      + '<\/div>'
-      + '<div class="emo-body"' + (i===0?'':' style="display:none"') + '>'
-      + '<div class="method-list">' + methodsHtml + '<\/div>'
-      + '<\/div>'
-      + '<\/div>';
+function renderVideos(rows){
+  var cards=document.getElementById('videoCards'),empty=document.getElementById('videoEmpty');
+  if(!rows||!rows.length){cards.innerHTML='';empty.style.display='block';empty.textContent='No videos yet.';document.getElementById('videoCount').textContent='';return;}
+  empty.style.display='none';document.getElementById('videoCount').textContent=rows.length+' video'+(rows.length===1?'':'s');
+  cards.innerHTML=rows.map(function(row){
+    var url=row.url||'',title=row.title||row.emotion||'Untitled',note=row.note||row.description||'',date=cleanDate(row.date||''),emo=row.emotion||'';
+    if(title===note)note='';var thumb=getYtThumb(url);var isInsta=url.indexOf('instagram.com')!==-1;
+    var thumbHtml=thumb?'<img src="'+esc(thumb)+'" alt="" onerror="this.parentNode.innerHTML=\'▶\'">': (isInsta?'📸':'▶');
+    return '<div class="vcard-wrap"><div class="card-head">'+(emo?'<span class="badge">'+esc(emo)+'<\/span>':'')+' <span class="card-date">'+esc(date)+'<\/span><\/div>'
+      +'<div class="vcard"><div class="vthumb">'+thumbHtml+'<\/div><div class="vinfo"><div class="vtitle">'+esc(title)+'<\/div>'+(note?'<div class="vnote">'+esc(note)+'<\/div>':'')+'<a class="vlink" href="'+esc(url)+'" target="_blank" rel="noopener">Watch ↗<\/a><\/div><\/div><\/div>';
   }).join('');
 }
 
-function toggleGrowth(head) {
-  var isOpen = head.classList.contains('on');
-  // Close all within growthGrid only
-  document.querySelectorAll('#growthGrid .emo-card-head').forEach(function(h) {
-    h.classList.remove('on');
-    h.style.background = '';
-    h.style.borderBottom = '';
-    h.nextElementSibling.style.display = 'none';
-  });
-  if (!isOpen) {
-    head.classList.add('on');
-    head.style.background = 'linear-gradient(135deg,rgba(42,63,111,.1),rgba(42,63,111,.04))';
-    head.style.borderBottom = '1px solid rgba(42,63,111,.12)';
-    head.nextElementSibling.style.display = 'block';
-  }
-}
-
-function populateAddGrowthSelect() {
-  var sel = document.getElementById('addGrowthSel');
-  sel.innerHTML = '<option value="">Select existing…<\/option>'
-    + Object.keys(growthData).map(function(a) {
-        return '<option value="' + esc(a) + '">' + (GROWTH_ICONS[a]||'') + ' ' + esc(a) + '<\/option>';
-      }).join('')
-    + '<option value="__new__">➕ Add new area…<\/option>';
-}
-
-function toggleNewGrowthField() {
-  var sel = document.getElementById('addGrowthSel');
-  document.getElementById('newGrowthWrap').style.display = (sel.value === '__new__') ? 'block' : 'none';
-}
-
-function addGrowthMethod() {
-  var selVal = document.getElementById('addGrowthSel').value;
-  var method = document.getElementById('addGrowthTa').value.trim();
-  var area;
-
-  if (selVal === '__new__') {
-    area = document.getElementById('newGrowthInput').value.trim();
-    if (!area) { showStatus('addGrowthStatus', 'Enter the new area name.', 'var(--red)'); return; }
-  } else {
-    area = selVal;
-  }
-
-  if (!area)   { showStatus('addGrowthStatus', 'Select an area first.', 'var(--red)'); return; }
-  if (!method) { showStatus('addGrowthStatus', 'Write a method first.', 'var(--red)'); return; }
-
-  showStatus('addGrowthStatus', 'Saving…', 'var(--ash)');
-  var params = 'action=write&type=growth&area=' + encodeURIComponent(area) + '&method=' + encodeURIComponent(method);
-
-  jsonpGet(params, function(data) {
-    if (data && data.success) {
-      document.getElementById('addGrowthTa').value = '';
-      if (selVal === '__new__') document.getElementById('newGrowthInput').value = '';
-      document.getElementById('newGrowthWrap').style.display = 'none';
-      document.getElementById('addGrowthSel').value = '';
-      showStatus('addGrowthStatus', '✓ Saved — reloading…', 'var(--green)');
-      setTimeout(loadGrowth, 1200);
-    } else { showStatus('addGrowthStatus', 'Error. Try again.', 'var(--red)'); }
-  }, function() {
-    var sc = document.createElement('script');
-    sc.src = SHEETS_URL + '?' + params + '&callback=_ic_noop2';
-    window['_ic_noop2'] = function(){};
-    document.head.appendChild(sc);
-    document.getElementById('addGrowthTa').value = '';
-    showStatus('addGrowthStatus', '✓ Sent — reloading…', 'var(--green)');
-    setTimeout(loadGrowth, 2000);
-  });
-}
-
-// ── DAILY SPOTLIGHT ───────────────────────────────────────────
-// Day-seed: same item all day, changes next day
-function dayIndex(arr) {
-  if (!arr || !arr.length) return -1;
-  var dayNum = Math.floor(Date.now() / 86400000);
-  return dayNum % arr.length;
-}
-
-function renderSpotlightThought() {
-  var el = document.getElementById('spotThought');
-  if (!el) return;
-
-  // Set date label once
-  var dateEl = document.getElementById('spotDate');
-  if (dateEl && !dateEl.textContent) dateEl.textContent = today();
-
-  if (!allThoughts.length) {
-    el.innerHTML = '<div style="color:var(--ash);font-style:italic;font-size:.88rem;padding:4px 0">No thoughts saved yet.<\/div>';
-    return;
-  }
-
-  var idx  = dayIndex(allThoughts);
-  var item = allThoughts[idx];
-  var cat  = item.category || '';
-  var text = item.thought || item.text || '';
-  var date = cleanDate(item.date || '');
-
-  el.innerHTML = (cat ? '<span class="spot-thought-cat">' + esc(cat) + '<\/span>' : '')
-    + '<div class="spot-thought-text">' + esc(text) + '<\/div>'
-    + '<div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:10px;letter-spacing:.06em">' + esc(date) + '<\/div>';
-}
-
-function renderSpotlightVideo() {
-  var el = document.getElementById('spotVideo');
-  if (!el) return;
-
-  if (!allVideos.length) {
-    el.innerHTML = '<div style="color:var(--ash);font-style:italic;font-size:.88rem;padding:4px 0">No videos saved yet.<\/div>';
-    return;
-  }
-
-  var idx   = dayIndex(allVideos);
-  var item  = allVideos[idx];
-  var url   = item.url || '';
-  var title = item.title || item.emotion || 'Untitled';
-  var note  = item.note || item.description || '';
-  if (title === note) note = '';
-  var date  = cleanDate(item.date || '');
-  var thumb = getYtThumb(url);
-  var isInsta = url.indexOf('instagram.com') !== -1;
-
-  var thumbHtml = thumb
-    ? '<img src="' + thumb + '" alt="" onerror="this.parentNode.innerHTML=\'▶\'">'
-    : (isInsta ? '📸' : '▶');
-
-  el.innerHTML = '<div class="spot-video-thumb">' + thumbHtml + '<\/div>'
-    + '<div class="spot-video-title">' + esc(title) + '<\/div>'
-    + (note ? '<div class="spot-video-note">' + esc(note) + '<\/div>' : '')
-    + (url ? '<a class="spot-link" href="' + esc(url) + '" target="_blank" rel="noopener">Watch ↗<\/a>' : '')
-    + '<div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:8px;letter-spacing:.06em">' + esc(date) + '<\/div>';
-}
 // ── IMAGES ────────────────────────────────────────────────────
-var IMGBB_KEY = 'eb426f1db804774ed1a4a3926acf2a2d';
-var allImages = [];
-var currentImageFile = null;
-
-// Drag & drop
-(function initImageDrop() {
-  var dz = document.getElementById('imgDropZone');
-  if (!dz) return;
-  dz.addEventListener('dragover', function(ev) {
-    ev.preventDefault();
-    dz.classList.add('drag-over');
-  });
-  dz.addEventListener('dragleave', function() { dz.classList.remove('drag-over'); });
-  dz.addEventListener('drop', function(ev) {
-    ev.preventDefault();
-    dz.classList.remove('drag-over');
-    var file = ev.dataTransfer.files[0];
-    if (file && file.type.startsWith('image/')) previewImage(file);
-  });
-})();
-
-function onImagePicked(input) {
-  var file = input.files[0];
-  if (file) previewImage(file);
+function initImageDrop(){
+  var dz=document.getElementById('imgDropZone');if(!dz)return;
+  dz.addEventListener('dragover',function(ev){ev.preventDefault();dz.classList.add('drag-over');});
+  dz.addEventListener('dragleave',function(){dz.classList.remove('drag-over');});
+  dz.addEventListener('drop',function(ev){ev.preventDefault();dz.classList.remove('drag-over');var f=ev.dataTransfer.files[0];if(f&&f.type.startsWith('image/'))previewImage(f);});
 }
-
-function previewImage(file) {
-  currentImageFile = file;
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    document.getElementById('imgPreview').src = ev.target.result;
-    document.getElementById('imgPreviewName').textContent = file.name + ' (' + (file.size/1024).toFixed(1) + ' KB)';
-    document.getElementById('imgPreviewWrap').style.display = 'block';
-    document.getElementById('imgDropIcon').style.display = 'none';
-  };
-  reader.readAsDataURL(file);
+function onImagePicked(input){var f=input.files[0];if(f)previewImage(f);}
+function previewImage(file){
+  currentImageFile=file;var reader=new FileReader();
+  reader.onload=function(ev){
+    document.getElementById('imgPreview').src=ev.target.result;
+    document.getElementById('imgPreviewName').textContent=file.name+' ('+(file.size/1024).toFixed(1)+' KB)';
+    document.getElementById('imgPreviewWrap').style.display='block';
+    document.getElementById('imgDropIcon').style.display='none';
+  };reader.readAsDataURL(file);
 }
-
-function uploadImage() {
-  if (!currentImageFile) {
-    showStatus('imgUploadStatus', 'Select an image first.', 'var(--red)'); return;
-  }
-  var caption  = document.getElementById('imgCaption').value.trim();
-  var category = document.getElementById('imgCategory').value;
-  var note     = document.getElementById('imgNote').value.trim();
-  // Read as base64 then upload
-  var reader = new FileReader();
-  reader.onload = function(ev) {
-    var base64 = ev.target.result.split(',')[1];
-    doUploadToImgbb(base64, caption, category, note);
-  };
+function uploadImage(){
+  if(!currentImageFile){showStatus('imgUploadStatus','Select an image first.','var(--red)');return;}
+  var emotion=document.getElementById('imgEmotion').value.trim();
+  var caption=document.getElementById('imgCaption').value.trim();
+  var category=document.getElementById('imgCategory').value;
+  var reader=new FileReader();
+  reader.onload=function(ev){doUploadToImgbb(ev.target.result.split(',')[1],caption,category,emotion);};
   reader.readAsDataURL(currentImageFile);
 }
-
-function doUploadToImgbb(base64, caption, category, note) {
-  var btn = document.getElementById('imgUploadBtn');
-  btn.disabled = true;
-  document.getElementById('imgProgress').style.display = 'block';
-  document.getElementById('imgProgressBar').style.width = '0%';
-  document.getElementById('imgProgressLabel').textContent = 'Uploading to ImgBB…';
-  showStatus('imgUploadStatus', '', '');
-
-  var prog = 0;
-  var progInt = setInterval(function() {
-    prog = Math.min(prog + 3, 85);
-    document.getElementById('imgProgressBar').style.width = prog + '%';
-  }, 80);
-
-  var formData = new FormData();
-  formData.append('key', IMGBB_KEY);
-  formData.append('image', base64);
-  if (caption) formData.append('name', caption);
-
-  fetch('https://api.imgbb.com/1/upload', { method: 'POST', body: formData })
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      clearInterval(progInt);
-      document.getElementById('imgProgressBar').style.width = '100%';
-
-      if (data.success) {
-        var imgUrl    = data.data.url;
-        var thumbUrl  = data.data.thumb ? data.data.thumb.url : imgUrl;
-        var deleteUrl = data.data.delete_url || '';
-        document.getElementById('imgProgressLabel').textContent = '✓ Upload complete!';
-        showStatus('imgUploadStatus', '✓ Uploaded — saving to sheet…', 'var(--green)');
-
-        var params = 'action=write&type=images'
-          + '&url='      + encodeURIComponent(imgUrl)
-          + '&thumb='    + encodeURIComponent(thumbUrl)
-          + '&caption='  + encodeURIComponent(caption)
-          + '&category=' + encodeURIComponent(category)
-          + '&note='     + encodeURIComponent(note)
-          + '&delete='   + encodeURIComponent(deleteUrl);
-
-        jsonpGet(params, function() {
-          btn.disabled = false;
-          resetUploadForm();
-          showStatus('imgUploadStatus', '✓ Saved to Gallery!', 'var(--green)');
-          allImages.unshift({url:imgUrl, thumb:thumbUrl, caption:caption, category:category, note:note, date:today()});
-          renderImages(allImages);
-          setTimeout(function() { document.getElementById('imgProgress').style.display='none'; }, 2000);
-        }, function() {
-          btn.disabled = false;
-          resetUploadForm();
-          showStatus('imgUploadStatus', '✓ Uploaded! (Sheet save pending)', 'var(--saffron)');
-          allImages.unshift({url:imgUrl, thumb:thumbUrl, caption:caption, category:category, note:note, date:today()});
-          renderImages(allImages);
-          setTimeout(function() { document.getElementById('imgProgress').style.display='none'; }, 2000);
+function doUploadToImgbb(base64,caption,category,emotion){
+  var btn=document.getElementById('imgUploadBtn');btn.disabled=true;
+  document.getElementById('imgProgress').style.display='block';
+  document.getElementById('imgProgressBar').style.width='0%';
+  document.getElementById('imgProgressLabel').textContent='Uploading…';
+  showStatus('imgUploadStatus','','');
+  var prog=0;var progInt=setInterval(function(){prog=Math.min(prog+3,85);document.getElementById('imgProgressBar').style.width=prog+'%';},80);
+  var formData=new FormData();formData.append('key',IMGBB_KEY);formData.append('image',base64);if(caption)formData.append('name',caption);
+  fetch('https://api.imgbb.com/1/upload',{method:'POST',body:formData})
+    .then(function(r){return r.json();})
+    .then(function(data){
+      clearInterval(progInt);document.getElementById('imgProgressBar').style.width='100%';
+      if(data.success){
+        var imgUrl=data.data.url,thumbUrl=data.data.thumb?data.data.thumb.url:imgUrl,deleteUrl=data.data.delete_url||'';
+        document.getElementById('imgProgressLabel').textContent='✓ Done!';
+        var params='action=write&type=images&url='+encodeURIComponent(imgUrl)+'&thumb='+encodeURIComponent(thumbUrl)+'&caption='+encodeURIComponent(caption)+'&category='+encodeURIComponent(category)+'&emotion='+encodeURIComponent(emotion)+'&delete='+encodeURIComponent(deleteUrl);
+        jsonpGet(params,function(){
+          btn.disabled=false;resetUploadForm();showStatus('imgUploadStatus','✓ Saved to Gallery!','var(--green)');
+          allImages.unshift({url:imgUrl,thumb:thumbUrl,caption:caption,category:category,emotion:emotion,date:today()});renderImages(allImages);
+          setTimeout(function(){document.getElementById('imgProgress').style.display='none';},2000);
+        },function(){
+          btn.disabled=false;resetUploadForm();showStatus('imgUploadStatus','✓ Uploaded!','var(--green)');
+          allImages.unshift({url:imgUrl,thumb:thumbUrl,caption:caption,category:category,emotion:emotion,date:today()});renderImages(allImages);
+          setTimeout(function(){document.getElementById('imgProgress').style.display='none';},2000);
         });
-
-      } else {
-        clearInterval(progInt);
-        btn.disabled = false;
-        document.getElementById('imgProgress').style.display = 'none';
-        var errMsg = (data.error && (data.error.message || data.error)) || JSON.stringify(data);
-        showStatus('imgUploadStatus', 'Upload failed: ' + errMsg, 'var(--red)');
+      }else{
+        clearInterval(progInt);btn.disabled=false;document.getElementById('imgProgress').style.display='none';
+        showStatus('imgUploadStatus','Failed: '+(data.error&&(data.error.message||data.error)||JSON.stringify(data)),'var(--red)');
       }
-    })
-    .catch(function(err) {
-      clearInterval(progInt);
-      btn.disabled = false;
-      document.getElementById('imgProgress').style.display = 'none';
-      showStatus('imgUploadStatus', 'Network error: ' + (err.message || err), 'var(--red)');
+    }).catch(function(err){
+      clearInterval(progInt);btn.disabled=false;document.getElementById('imgProgress').style.display='none';
+      showStatus('imgUploadStatus','Error: '+(err.message||err),'var(--red)');
     });
 }
-
-function resetUploadForm() {
-  currentImageFile = null;
-  document.getElementById('imgCaption').value  = '';
-  document.getElementById('imgNote').value     = '';
-  document.getElementById('imgCategory').value = '';
-  document.getElementById('imgPreviewWrap').style.display = 'none';
-  document.getElementById('imgDropIcon').style.display    = 'block';
-  document.getElementById('imgFilePicker').value = '';
+function resetUploadForm(){
+  currentImageFile=null;document.getElementById('imgCaption').value='';document.getElementById('imgEmotion').value='';
+  document.getElementById('imgCategory').value='';document.getElementById('imgPreviewWrap').style.display='none';
+  document.getElementById('imgDropIcon').style.display='block';document.getElementById('imgFilePicker').value='';
 }
-
-function loadImages() {
-  document.getElementById('imgLoading').style.display = 'block';
-  document.getElementById('imgGallery').innerHTML = '';
-  document.getElementById('imgEmpty').style.display = 'none';
-  document.getElementById('imgCount').textContent = '';
-  jsonpGet('action=read&type=images', function(data) {
-    document.getElementById('imgLoading').style.display = 'none';
-    allImages = (data && data.rows) ? data.rows : [];
-    renderImages(allImages);
-  }, function() {
-    document.getElementById('imgLoading').style.display = 'none';
-    if (allImages.length) {
-      renderImages(allImages);
-    } else {
-      document.getElementById('imgEmpty').style.display = 'block';
-      document.getElementById('imgEmpty').textContent = 'Could not load. Refresh to try again.';
-    }
-  });
+function loadImages(){
+  document.getElementById('imgLoading').style.display='block';document.getElementById('imgGallery').innerHTML='';document.getElementById('imgEmpty').style.display='none';document.getElementById('imgCount').textContent='';
+  jsonpGet('action=read&type=images',function(data){
+    document.getElementById('imgLoading').style.display='none';allImages=(data&&data.rows)?data.rows:[];renderImages(allImages);
+  },function(){document.getElementById('imgLoading').style.display='none';if(allImages.length)renderImages(allImages);else{document.getElementById('imgEmpty').style.display='block';}});
 }
-
-function renderImages(rows) {
-  var gallery = document.getElementById('imgGallery');
-  var empty   = document.getElementById('imgEmpty');
-  if (!rows || !rows.length) {
-    gallery.innerHTML = '';
-    empty.style.display = 'block';
-    empty.textContent = 'No images uploaded yet. Upload your first one above.';
-    document.getElementById('imgCount').textContent = '';
-    return;
-  }
-  empty.style.display = 'none';
-  document.getElementById('imgCount').textContent = rows.length + ' image' + (rows.length===1?'':'s');
-  gallery.innerHTML = rows.map(function(row, i) {
-    var thumb   = row.thumb || row.url || '';
-    var url     = row.url   || '';
-    var caption = row.caption || '';
-    var cat     = row.category || '';
-    var note    = row.note || '';
-    var date    = cleanDate(row.date || '');
-    return '<div class="img-card" data-cat="' + esc(cat) + '" onclick="openLightbox(\'' + esc(url) + '\',\'' + esc(caption) + '\',\'' + esc(cat) + '\',\'' + esc(date) + '\',\'' + esc(note) + '\')">'
-      + '<img src="' + esc(thumb) + '" alt="' + esc(caption) + '" loading="lazy" onerror="this.src=\'' + esc(url) + '\'">'
-      + '<div class="img-card-info">'
-      + (cat ? '<span class="img-card-cat">' + esc(cat) + '<\/span>' : '')
-      + (caption ? '<div class="img-card-caption">' + esc(caption) + '<\/div>' : '<div class="img-card-caption" style="color:var(--ash);font-style:italic">Untitled<\/div>')
-      + '<span class="img-card-date">' + esc(date) + '<\/span>'
-      + '<\/div><\/div>';
+function renderImages(rows){
+  var gallery=document.getElementById('imgGallery'),empty=document.getElementById('imgEmpty');
+  if(!rows||!rows.length){gallery.innerHTML='';empty.style.display='block';empty.textContent='No images yet.';document.getElementById('imgCount').textContent='';return;}
+  empty.style.display='none';document.getElementById('imgCount').textContent=rows.length+' image'+(rows.length===1?'':'s');
+  gallery.innerHTML=rows.map(function(row,i){
+    var thumb=row.thumb||row.url||'',url=row.url||'',caption=row.caption||'',cat=row.category||'',emo=row.emotion||row.note||'',date=cleanDate(row.date||'');
+    return '<div class="img-card" data-cat="'+esc(cat)+'" onclick="openLightbox(\''+esc(url)+'\',\''+esc(caption)+'\',\''+esc(cat)+'\',\''+esc(date)+'\',\''+esc(emo)+'\')">'
+      +'<img src="'+esc(thumb)+'" alt="'+esc(caption)+'" loading="lazy" onerror="this.src=\''+esc(url)+'\'">'
+      +'<div class="img-card-info">'+(cat?'<span class="img-card-cat">'+esc(cat)+'<\/span>':'')
+      +'<div class="img-card-caption">'+(caption||'<span style="color:var(--ash);font-style:italic">Untitled<\/span>')+'<\/div>'
+      +(emo?'<div style="font-family:\'DM Mono\',monospace;font-size:.48rem;color:var(--saffron);margin-top:2px">'+esc(emo)+'<\/div>':'')
+      +'<span class="img-card-date">'+esc(date)+'<\/span><\/div><\/div>';
   }).join('');
 }
+function filterImages(){
+  var cat=document.getElementById('imgFilter').value;var v=0;
+  document.querySelectorAll('.img-card').forEach(function(card){var ok=!cat||card.dataset.cat===cat;card.classList.toggle('hidden',!ok);if(ok)v++;});
+  document.getElementById('imgCount').textContent=v+' of '+allImages.length+' image'+(allImages.length===1?'':'s');
+}
+function openLightbox(url,caption,cat,date,emo){
+  document.getElementById('imgLightboxImg').src=url;
+  document.getElementById('imgLightboxCaption').textContent=caption||'Untitled';
+  document.getElementById('imgLightboxMeta').textContent=[cat,date,emo].filter(Boolean).join('  ·  ');
+  document.getElementById('imgLightbox').style.display='flex';document.body.style.overflow='hidden';
+}
+function closeLightbox(){document.getElementById('imgLightbox').style.display='none';document.getElementById('imgLightboxImg').src='';document.body.style.overflow='';}
 
-function filterImages() {
-  var cat = document.getElementById('imgFilter').value;
-  var visible = 0;
-  document.querySelectorAll('.img-card').forEach(function(card) {
-    var ok = !cat || card.dataset.cat === cat;
-    card.classList.toggle('hidden', !ok);
-    if (ok) visible++;
+// ── STORIES ───────────────────────────────────────────────────
+function saveStory(){
+  var emotion=document.getElementById('storyEmotion').value.trim();
+  var story=document.getElementById('storyText').value.trim();
+  if(!story){showStatus('storyStatus','Write a story first.','var(--red)');return;}
+  showStatus('storyStatus','Saving…','var(--ash)');
+  var params='action=write&type=stories&story='+encodeURIComponent(story)+'&emotion='+encodeURIComponent(emotion);
+  jsonpGet(params,function(data){
+    if(data&&data.success){
+      document.getElementById('storyText').value='';document.getElementById('storyEmotion').value='';
+      showStatus('storyStatus','✓ Saved','var(--green)');allStories.unshift({date:today(),story:story,emotion:emotion});renderStories(allStories);
+    }else{showStatus('storyStatus','Error.','var(--red)');}
+  },function(){
+    document.getElementById('storyText').value='';showStatus('storyStatus','✓ Sent','var(--green)');
+    allStories.unshift({date:today(),story:story,emotion:emotion});renderStories(allStories);
   });
-  document.getElementById('imgCount').textContent = visible + ' of ' + allImages.length + ' image' + (allImages.length===1?'':'s');
+}
+function loadStories(){
+  document.getElementById('storyLoading').style.display='block';document.getElementById('storyCards').innerHTML='';document.getElementById('storyEmpty').style.display='none';
+  jsonpGet('action=read&type=stories',function(data){
+    document.getElementById('storyLoading').style.display='none';allStories=(data&&data.rows)?data.rows:[];renderStories(allStories);
+  },function(){document.getElementById('storyLoading').style.display='none';document.getElementById('storyEmpty').style.display='block';});
+}
+function renderStories(rows){
+  var cards=document.getElementById('storyCards'),empty=document.getElementById('storyEmpty');
+  if(!rows||!rows.length){cards.innerHTML='';empty.style.display='block';empty.textContent='No stories yet.';document.getElementById('storyCount').textContent='';return;}
+  empty.style.display='none';document.getElementById('storyCount').textContent=rows.length+' stor'+(rows.length===1?'y':'ies');
+  cards.innerHTML=rows.map(function(row){
+    return '<div class="stcard" data-text="'+esc(((row.story||'')+' '+(row.emotion||'')).toLowerCase())+'">'
+      +'<div class="card-head">'+(row.emotion?'<span class="badge">'+esc(row.emotion)+'<\/span>':'')+' <span class="card-date">'+esc(cleanDate(row.date||''))+'<\/span><\/div>'
+      +'<div style="font-size:.97rem;color:var(--ink);line-height:1.7;white-space:pre-wrap">'+esc(row.story||'')+'<\/div><\/div>';
+  }).join('');
+}
+function filterStories(){
+  var search=(document.getElementById('storySearch').value||'').toLowerCase().trim();
+  document.querySelectorAll('.stcard').forEach(function(c){c.classList.toggle('hidden',!!search&&!c.dataset.text.includes(search));});
 }
 
-function openLightbox(url, caption, cat, date, note) {
-  document.getElementById('imgLightboxImg').src     = url;
-  document.getElementById('imgLightboxCaption').textContent = caption || 'Untitled';
-  document.getElementById('imgLightboxMeta').textContent    = [cat, date, note].filter(Boolean).join('  ·  ');
-  var lb = document.getElementById('imgLightbox');
-  lb.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+// ── BRAIN DUMP ────────────────────────────────────────────────
+function saveBrainDump(){
+  var text=document.getElementById('bdText').value.trim();
+  var emotion=document.getElementById('bdEmotion').value.trim();
+  var event_=document.getElementById('bdEvent').value.trim();
+  if(!text){showStatus('bdStatus','Write something first.','var(--red)');return;}
+  showStatus('bdStatus','Saving…','var(--ash)');
+  var params='action=write&type=braindump&thought='+encodeURIComponent(text)+'&emotion='+encodeURIComponent(emotion)+'&event='+encodeURIComponent(event_);
+  jsonpGet(params,function(data){
+    if(data&&data.success){
+      document.getElementById('bdText').value='';document.getElementById('bdEmotion').value='';document.getElementById('bdEvent').value='';
+      showStatus('bdStatus','✓ Dumped!','var(--green)');
+      allBD.unshift({date:today(),thought:text,emotion:emotion,event:event_});
+      renderBrainDump(allBD);renderBDPatterns();
+    }else{showStatus('bdStatus','Error.','var(--red)');}
+  },function(){
+    document.getElementById('bdText').value='';showStatus('bdStatus','✓ Sent','var(--green)');
+    allBD.unshift({date:today(),thought:text,emotion:emotion,event:event_});renderBrainDump(allBD);renderBDPatterns();
+  });
+}
+function loadBrainDump(){
+  document.getElementById('bdLoading').style.display='block';document.getElementById('bdCards').innerHTML='';document.getElementById('bdEmpty').style.display='none';
+  jsonpGet('action=read&type=braindump',function(data){
+    document.getElementById('bdLoading').style.display='none';allBD=(data&&data.rows)?data.rows:[];renderBrainDump(allBD);renderBDPatterns();
+  },function(){document.getElementById('bdLoading').style.display='none';document.getElementById('bdEmpty').style.display='block';renderBDPatterns();});
+}
+function renderBrainDump(rows){
+  var cards=document.getElementById('bdCards'),empty=document.getElementById('bdEmpty');
+  if(!rows||!rows.length){cards.innerHTML='';empty.style.display='block';empty.textContent='Nothing dumped yet.';document.getElementById('bdCount').textContent='';return;}
+  empty.style.display='none';document.getElementById('bdCount').textContent=rows.length+' dump'+(rows.length===1?'':'s');
+  cards.innerHTML=rows.map(function(row){
+    var emo=row.emotion||'',evt=row.event||'',text=row.thought||'',date=cleanDate(row.date||'');
+    return '<div class="bdcard" data-text="'+esc((text+' '+emo+' '+evt).toLowerCase())+'" data-emo="'+esc(emo.toLowerCase())+'">'
+      +'<div class="card-head" style="margin-bottom:8px">'
+      +(emo?'<span class="bd-tag bd-emo-tag">'+esc(emo)+'<\/span>':'')
+      +(evt?'<span class="bd-tag bd-evt-tag">'+esc(evt)+'<\/span>':'')
+      +'<span class="card-date">'+esc(date)+'<\/span><\/div>'
+      +'<div style="font-size:.97rem;color:var(--ink);line-height:1.68;white-space:pre-wrap">'+esc(text)+'<\/div><\/div>';
+  }).join('');
+}
+function filterBD(){
+  var search=(document.getElementById('bdSearch').value||'').toLowerCase().trim();
+  var emoF=(document.getElementById('bdEmoFilter').value||'').toLowerCase().trim();
+  var v=0;
+  document.querySelectorAll('.bdcard').forEach(function(c){
+    var ok=(!search||c.dataset.text.includes(search))&&(!emoF||c.dataset.emo.includes(emoF));
+    c.classList.toggle('hidden',!ok);if(ok)v++;
+  });
+  document.getElementById('bdCount').textContent=v+' of '+allBD.length+' dump'+(allBD.length===1?'':'s');
+}
+function renderBDPatterns(){
+  // Emotion frequency
+  var eFreq={};allBD.forEach(function(b){var e=(b.emotion||'').trim();if(e){eFreq[e]=(eFreq[e]||0)+1;}});
+  var eSorted=Object.entries(eFreq).sort(function(a,b){return b[1]-a[1];}).slice(0,6);
+  var eMax=eSorted.length?eSorted[0][1]:1;
+  var eel=document.getElementById('bdEmoPattern');
+  eel.innerHTML=eSorted.length?eSorted.map(function(pair){
+    return '<div class="bd-pattern-item"><span>'+esc(pair[0])+'<\/span><span style="font-family:\'DM Mono\',monospace;font-size:.58rem;color:var(--saffron)">'+pair[1]+'×<\/span><\/div>'
+      +'<div class="bd-pattern-bar"><div class="bd-pattern-bar-fill" style="width:'+(pair[1]/eMax*100)+'%"><\/div><\/div>';
+  }).join(''):'<div class="ec-empty">No data yet.<\/div>';
+  // Event frequency
+  var vFreq={};allBD.forEach(function(b){var v=(b.event||'').trim();if(v){vFreq[v]=(vFreq[v]||0)+1;}});
+  var vSorted=Object.entries(vFreq).sort(function(a,b){return b[1]-a[1];}).slice(0,6);
+  var vMax=vSorted.length?vSorted[0][1]:1;
+  var vel=document.getElementById('bdEvtPattern');
+  vel.innerHTML=vSorted.length?vSorted.map(function(pair){
+    return '<div class="bd-pattern-item"><span>'+esc(pair[0])+'<\/span><span style="font-family:\'DM Mono\',monospace;font-size:.58rem;color:var(--blue)">'+pair[1]+'×<\/span><\/div>'
+      +'<div class="bd-pattern-bar"><div class="bd-pattern-bar-fill" style="width:'+(pair[1]/vMax*100)+'%;background:var(--blue)"><\/div><\/div>';
+  }).join(''):'<div class="ec-empty">No data yet.<\/div>';
 }
 
-function closeLightbox() {
-  document.getElementById('imgLightbox').style.display = 'none';
-  document.getElementById('imgLightboxImg').src = '';
-  document.body.style.overflow = '';
+// ── PROFESSIONAL GROWTH ───────────────────────────────────────
+var GROWTH_ICONS={'Speaking Confidently':'🎤',"Don't Know the Answer":'🤔','Analysis Not Done':'📊','Being Direct':'🎯','Leading with Story':'📖','Over-Explaining':'🔇'};
+function loadGrowth(){
+  document.getElementById('growthLoading').style.display='block';document.getElementById('growthGrid').innerHTML='';
+  jsonpGet('action=read&type=growth',function(data){
+    document.getElementById('growthLoading').style.display='none';
+    if(data&&data.rows&&data.rows.length)buildGrowthData(data.rows);
+    else{growthData={};Object.keys(FALLBACK_GROWTH).forEach(function(k){growthData[k]=FALLBACK_GROWTH[k];});}
+    renderGrowth();populateAddGrowthSelect();
+  },function(){
+    document.getElementById('growthLoading').style.display='none';
+    growthData={};Object.keys(FALLBACK_GROWTH).forEach(function(k){growthData[k]=FALLBACK_GROWTH[k];});
+    renderGrowth();populateAddGrowthSelect();
+  });
+}
+function buildGrowthData(rows){
+  growthData={};
+  if(!rows||!rows.length){Object.keys(FALLBACK_GROWTH).forEach(function(k){growthData[k]=FALLBACK_GROWTH[k];});return;}
+  rows.forEach(function(row){var a=(row.area||'').trim(),m=(row.method||'').trim();if(!a)return;if(!growthData[a])growthData[a]=[];if(m)growthData[a].push(m);});
+  Object.keys(FALLBACK_GROWTH).forEach(function(k){if(!growthData[k]||!growthData[k].length)growthData[k]=FALLBACK_GROWTH[k];});
+}
+function renderGrowth(){
+  var grid=document.getElementById('growthGrid');var areas=Object.keys(growthData);
+  if(!areas.length){grid.innerHTML='<div class="empty-msg">No areas found.<\/div>';return;}
+  grid.innerHTML=areas.map(function(area,i){
+    var methods=growthData[area],icon=GROWTH_ICONS[area]||'✦';
+    var mHtml=methods.map(function(m,idx){
+      return '<div class="method-item" style="border-color:rgba(42,63,111,.12)"><span class="method-num" style="color:var(--blue);background:rgba(42,63,111,.08)">'+(idx+1)+'<\/span><span class="method-text">'+esc(m)+'<\/span><\/div>';
+    }).join('');
+    return '<div class="emo-card" style="border-color:rgba(42,63,111,.18)">'
+      +'<div class="emo-card-head'+(i===0?' on':'')+'" onclick="toggleGrowth(this)" style="'+(i===0?'background:linear-gradient(135deg,rgba(42,63,111,.1),rgba(42,63,111,.04));border-bottom:1px solid rgba(42,63,111,.12)':'')+'">'
+      +'<span class="emo-icon">'+icon+'<\/span><div style="flex:1"><div class="emo-title">'+esc(area)+'<\/div><div class="emo-meta">'+methods.length+' method'+(methods.length===1?'':'s')+'<\/div><\/div>'
+      +'<span class="emo-chev" style="color:var(--blue)">▾<\/span><\/div>'
+      +'<div class="emo-body"'+(i===0?'':' style="display:none"')+'><div class="method-list">'+mHtml+'<\/div><\/div><\/div>';
+  }).join('');
+}
+function toggleGrowth(head){
+  var isOpen=head.classList.contains('on');
+  document.querySelectorAll('#growthGrid .emo-card-head').forEach(function(h){h.classList.remove('on');h.style.background='';h.style.borderBottom='';h.nextElementSibling.style.display='none';});
+  if(!isOpen){head.classList.add('on');head.style.background='linear-gradient(135deg,rgba(42,63,111,.1),rgba(42,63,111,.04))';head.style.borderBottom='1px solid rgba(42,63,111,.12)';head.nextElementSibling.style.display='block';}
+}
+function populateAddGrowthSelect(){
+  var sel=document.getElementById('addGrowthSel');
+  sel.innerHTML='<option value="">Select existing…<\/option>'+Object.keys(growthData).map(function(a){return '<option value="'+esc(a)+'">'+(GROWTH_ICONS[a]||'')+' '+esc(a)+'<\/option>';}).join('')+'<option value="__new__">➕ New area…<\/option>';
+}
+function toggleNewGrowthField(){var sel=document.getElementById('addGrowthSel');document.getElementById('newGrowthWrap').style.display=(sel.value==='__new__')?'block':'none';}
+function addGrowthMethod(){
+  var selVal=document.getElementById('addGrowthSel').value,method=document.getElementById('addGrowthTa').value.trim(),area;
+  if(selVal==='__new__'){area=document.getElementById('newGrowthInput').value.trim();if(!area){showStatus('addGrowthStatus','Enter area name.','var(--red)');return;}}else{area=selVal;}
+  if(!area){showStatus('addGrowthStatus','Select an area.','var(--red)');return;}
+  if(!method){showStatus('addGrowthStatus','Write a method.','var(--red)');return;}
+  showStatus('addGrowthStatus','Saving…','var(--ash)');
+  var params='action=write&type=growth&area='+encodeURIComponent(area)+'&method='+encodeURIComponent(method);
+  jsonpGet(params,function(data){
+    if(data&&data.success){document.getElementById('addGrowthTa').value='';if(selVal==='__new__')document.getElementById('newGrowthInput').value='';
+      document.getElementById('newGrowthWrap').style.display='none';document.getElementById('addGrowthSel').value='';
+      showStatus('addGrowthStatus','✓ Saved — reloading…','var(--green)');setTimeout(loadGrowth,1200);}
+    else{showStatus('addGrowthStatus','Error.','var(--red)');}
+  },function(){document.getElementById('addGrowthTa').value='';showStatus('addGrowthStatus','✓ Sent','var(--green)');setTimeout(loadGrowth,2000);});
 }
 
-// Close lightbox on Escape key
-document.addEventListener('keydown', function(ev) {
-  if (ev.key === 'Escape') closeLightbox();
-});
+// ── MONTHLY FOCUS ─────────────────────────────────────────────
+var focusData=[];
+function currentMonthLabel(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');}
+function monthDisplayLabel(k){if(!k||k.indexOf('-')===-1)return k||'';var p=k.split('-');return ['January','February','March','April','May','June','July','August','September','October','November','December'][parseInt(p[1],10)-1]+' '+p[0];}
+function toggleFocus(){var b=document.getElementById('focusBody'),c=document.getElementById('focusChev');b.classList.toggle('open');c.classList.toggle('open');}
+function toggleFocusForm(){var f=document.getElementById('focusForm');var o=f.classList.contains('open');f.classList.toggle('open',!o);if(!o)buildFocusInputRows();}
+function buildFocusInputRows(){
+  var c=document.getElementById('focusInputRows'),rows='';
+  for(var i=0;i<3;i++){var ex=focusData[i]||{};
+    rows+='<div style="background:rgba(255,255,255,.6);border:1px solid var(--border);border-radius:2px;padding:12px 14px;margin-bottom:8px">'
+      +'<div style="font-family:\'DM Mono\',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:var(--saffron);margin-bottom:9px">Focus '+(i+1)+'<\/div>'
+      +'<div style="margin-bottom:8px"><span class="focus-sub-label">Emotional Skill<\/span><input class="itext" id="focusSkill'+i+'" placeholder="e.g. Control Anger…" value="'+esc(ex.skill||'')+'"><\/div>'
+      +'<div><span class="focus-sub-label">Daily Habit<\/span><textarea class="ta sm" id="focusHabit'+i+'" placeholder="The daily practice…">'+esc(ex.habit||'')+'<\/textarea><\/div><\/div>';
+  }c.innerHTML=rows;
+}
+function saveFocus(){
+  var items=[];for(var i=0;i<3;i++){var sk=(document.getElementById('focusSkill'+i)||{}).value||'',hb=(document.getElementById('focusHabit'+i)||{}).value||'';if(sk||hb)items.push({skill:sk.trim(),habit:hb.trim(),num:i+1});}
+  if(!items.length){showStatus('focusSaveStatus','Add at least one.','var(--red)');return;}
+  showStatus('focusSaveStatus','Saving…','var(--ash)');
+  var month=currentMonthLabel();var idx=0;
+  function saveNext(){if(idx>=items.length){focusData=items;renderFocusItems();document.getElementById('focusForm').classList.remove('open');showStatus('focusSaveStatus','✓ Saved!','var(--green)');return;}
+    var item=items[idx++];var params='action=write&type=focus&month='+encodeURIComponent(month)+'&num='+item.num+'&skill='+encodeURIComponent(item.skill)+'&habit='+encodeURIComponent(item.habit);
+    jsonpGet(params,saveNext,saveNext);
+  }saveNext();
+}
+function loadFocus(){
+  var el=document.getElementById('focusLoading');if(el)el.style.display='block';
+  var month=currentMonthLabel();
+  var tag=document.getElementById('focusMonthTag');if(tag)tag.textContent=monthDisplayLabel(month);
+  jsonpGet('action=read&type=focus&month='+encodeURIComponent(month),function(data){
+    if(el)el.style.display='none';focusData=(data&&data.rows)?data.rows:[];renderFocusItems();
+  },function(){if(el)el.style.display='none';renderFocusItems();});
+}
+function renderFocusItems(){
+  var c=document.getElementById('focusItems');if(!c)return;
+  if(!focusData.length){c.innerHTML='<div class="focus-empty">No focus set. Click ✏️ Edit Focus to add.<\/div>';return;}
+  c.innerHTML=focusData.map(function(item,i){
+    return '<div class="focus-item"><span class="focus-item-num">Focus '+(item.num||i+1)+'<\/span>'
+      +'<div class="focus-item-skill">'+esc(item.skill||'')+'<\/div>'
+      +'<div class="focus-item-habit">'+esc(item.habit||'')+'<\/div><\/div>';
+  }).join('');
+}
+function toggleUniv(){var b=document.getElementById('univBody'),c=document.getElementById('univChev');b.classList.toggle('open');c.classList.toggle('open');}
+
+// ── DAILY SPOTLIGHT ───────────────────────────────────────────
+function renderSpotlightThought(){
+  var el=document.getElementById('spotThought');if(!el)return;
+  var dateEl=document.getElementById('spotDate');if(dateEl&&!dateEl.textContent)dateEl.textContent=today();
+  if(!allThoughts.length){el.innerHTML='<div style="color:var(--ash);font-style:italic;font-size:.88rem">No thoughts saved yet.<\/div>';return;}
+  var item=allThoughts[dayIndex(allThoughts)],cat=item.category||'',text=item.thought||item.text||'',date=cleanDate(item.date||'');
+  el.innerHTML=(cat?'<span class="spot-thought-cat">'+esc(cat)+'<\/span>':'')+'<div class="spot-thought-text">'+esc(text)+'<\/div><div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:10px">'+esc(date)+'<\/div>';
+}
+function renderSpotlightVideo(){
+  var el=document.getElementById('spotVideo');if(!el)return;
+  if(!allVideos.length){el.innerHTML='<div style="color:var(--ash);font-style:italic;font-size:.88rem">No videos saved yet.<\/div>';return;}
+  var item=allVideos[dayIndex(allVideos)],url=item.url||'',title=item.title||item.emotion||'Untitled',note=item.note||item.description||'',date=cleanDate(item.date||'');
+  if(title===note)note='';var thumb=getYtThumb(url),isInsta=url.indexOf('instagram.com')!==-1;
+  var thumbHtml=thumb?'<img src="'+esc(thumb)+'" alt="" onerror="this.parentNode.innerHTML=\'▶\'">': (isInsta?'📸':'▶');
+  el.innerHTML='<div class="spot-video-thumb">'+thumbHtml+'<\/div><div class="spot-video-title">'+esc(title)+'<\/div>'+(note?'<div class="spot-video-note">'+esc(note)+'<\/div>':'')+(url?'<a class="spot-link" href="'+esc(url)+'" target="_blank" rel="noopener">Watch ↗<\/a>':'')+'<div style="font-family:\'DM Mono\',monospace;font-size:.5rem;color:var(--ash);margin-top:8px">'+esc(date)+'<\/div>';
+}
 </script>
 </body>
 </html>
