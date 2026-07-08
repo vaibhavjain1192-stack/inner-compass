@@ -354,7 +354,23 @@ h1 em{color:var(--saffron);font-style:italic}
       <div class="panel-accent"></div>
       <div class="plabel">Capture a Learning</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div><label class="field-label">Emotion</label><input class="itext" id="lEmotion" placeholder="What emotion was involved? (e.g. Anger, Fear…)"></div>
+        <div>
+          <label class="field-label">Emotion</label>
+          <div style="display:flex;gap:7px;align-items:center">
+            <select class="sel emo-sel" id="lEmotion" style="flex:1" onchange="onEmoSelChange(this)">
+              <option value="">Select emotion…</option>
+            </select>
+          </div>
+          <div id="lEmotion_newWrap" style="display:none;margin-top:7px;display:none">
+            <input class="itext" id="lEmotion_newInput" placeholder="New emotion name (press Enter to add)…" style="font-size:.9rem"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addNewEmotion('lEmotion');}" >
+            <div style="display:flex;gap:6px;margin-top:5px">
+              <button class="btn" style="font-size:.55rem;padding:5px 12px" onclick="addNewEmotion('lEmotion')">Add ✦</button>
+              <button class="btn-ghost" style="font-size:.55rem;padding:5px 10px" onclick="cancelNewEmo('lEmotion')">Cancel</button>
+              <span id="lEmotion_newStatus" class="status"></span>
+            </div>
+          </div>
+        </div>
         <div><label class="field-label">The Incident</label><textarea class="ta" id="incidentTa" placeholder="What happened?"></textarea></div>
         <div><label class="field-label">The Learning</label><textarea class="ta" id="learningTa" placeholder="What did this teach you?"></textarea></div>
         <div style="display:flex;gap:8px;align-items:flex-end;flex-wrap:wrap">
@@ -397,7 +413,23 @@ h1 em{color:var(--saffron);font-style:italic}
       <div class="panel-accent" style="background:var(--blue)"></div>
       <div class="plabel blue">Capture a Thought</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div><label class="field-label">Emotion</label><input class="itext" id="thoughtEmotion" placeholder="What emotion triggered this thought?"></div>
+        <div>
+          <label class="field-label">Emotion</label>
+          <div style="display:flex;gap:7px;align-items:center">
+            <select class="sel emo-sel" id="thoughtEmotion" style="flex:1" onchange="onEmoSelChange(this)">
+              <option value="">Select emotion…</option>
+            </select>
+          </div>
+          <div id="thoughtEmotion_newWrap" style="display:none;margin-top:7px;display:none">
+            <input class="itext" id="thoughtEmotion_newInput" placeholder="New emotion name (press Enter to add)…" style="font-size:.9rem"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addNewEmotion('thoughtEmotion');}" >
+            <div style="display:flex;gap:6px;margin-top:5px">
+              <button class="btn" style="font-size:.55rem;padding:5px 12px" onclick="addNewEmotion('thoughtEmotion')">Add ✦</button>
+              <button class="btn-ghost" style="font-size:.55rem;padding:5px 10px" onclick="cancelNewEmo('thoughtEmotion')">Cancel</button>
+              <span id="thoughtEmotion_newStatus" class="status"></span>
+            </div>
+          </div>
+        </div>
         <div><label class="field-label">Category</label>
           <select class="sel" id="thoughtCat" style="width:100%">
             <option value="">Select category…</option>
@@ -431,7 +463,23 @@ h1 em{color:var(--saffron);font-style:italic}
       <div class="panel-accent" style="background:var(--green)"></div>
       <div class="plabel green">Save a Video</div>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div><label class="field-label">Emotion</label><input class="itext" id="videoEmotion" placeholder="What emotion does this relate to?"></div>
+        <div>
+          <label class="field-label">Emotion</label>
+          <div style="display:flex;gap:7px;align-items:center">
+            <select class="sel emo-sel" id="videoEmotion" style="flex:1" onchange="onEmoSelChange(this)">
+              <option value="">Select emotion…</option>
+            </select>
+          </div>
+          <div id="videoEmotion_newWrap" style="display:none;margin-top:7px;display:none">
+            <input class="itext" id="videoEmotion_newInput" placeholder="New emotion name (press Enter to add)…" style="font-size:.9rem"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addNewEmotion('videoEmotion');}" >
+            <div style="display:flex;gap:6px;margin-top:5px">
+              <button class="btn" style="font-size:.55rem;padding:5px 12px" onclick="addNewEmotion('videoEmotion')">Add ✦</button>
+              <button class="btn-ghost" style="font-size:.55rem;padding:5px 10px" onclick="cancelNewEmo('videoEmotion')">Cancel</button>
+              <span id="videoEmotion_newStatus" class="status"></span>
+            </div>
+          </div>
+        </div>
         <div><label class="field-label">Video URL</label><input class="itext" id="videoUrl" placeholder="YouTube or Instagram link…"></div>
         <div><label class="field-label">Title / Topic</label><input class="itext" id="videoTitle" placeholder="What is this video about?"></div>
         <div><label class="field-label">Note</label><textarea class="ta sm" id="videoNote" placeholder="Why save it?"></textarea></div>
@@ -470,7 +518,23 @@ h1 em{color:var(--saffron);font-style:italic}
       </div>
       <input type="file" id="imgFilePicker" accept="image/*" style="display:none" onchange="onImagePicked(this)">
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div><label class="field-label">Emotion</label><input class="itext" id="imgEmotion" placeholder="What emotion does this image relate to?"></div>
+        <div>
+          <label class="field-label">Emotion</label>
+          <div style="display:flex;gap:7px;align-items:center">
+            <select class="sel emo-sel" id="imgEmotion" style="flex:1" onchange="onEmoSelChange(this)">
+              <option value="">Select emotion…</option>
+            </select>
+          </div>
+          <div id="imgEmotion_newWrap" style="display:none;margin-top:7px;display:none">
+            <input class="itext" id="imgEmotion_newInput" placeholder="New emotion name (press Enter to add)…" style="font-size:.9rem"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addNewEmotion('imgEmotion');}" >
+            <div style="display:flex;gap:6px;margin-top:5px">
+              <button class="btn" style="font-size:.55rem;padding:5px 12px" onclick="addNewEmotion('imgEmotion')">Add ✦</button>
+              <button class="btn-ghost" style="font-size:.55rem;padding:5px 10px" onclick="cancelNewEmo('imgEmotion')">Cancel</button>
+              <span id="imgEmotion_newStatus" class="status"></span>
+            </div>
+          </div>
+        </div>
         <div><label class="field-label">Caption</label><input class="itext" id="imgCaption" placeholder="What is this image about?"></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
           <div style="flex:1;min-width:140px"><label class="field-label">Category</label>
@@ -519,7 +583,23 @@ h1 em{color:var(--saffron);font-style:italic}
       <div class="plabel amber">Add a Story</div>
       <p class="panel-hint">Stories that shaped you — moments, experiences, turning points.</p>
       <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
-        <div><label class="field-label">Emotion</label><input class="itext" id="storyEmotion" placeholder="What emotion does this story carry?"></div>
+        <div>
+          <label class="field-label">Emotion</label>
+          <div style="display:flex;gap:7px;align-items:center">
+            <select class="sel emo-sel" id="storyEmotion" style="flex:1" onchange="onEmoSelChange(this)">
+              <option value="">Select emotion…</option>
+            </select>
+          </div>
+          <div id="storyEmotion_newWrap" style="display:none;margin-top:7px;display:none">
+            <input class="itext" id="storyEmotion_newInput" placeholder="New emotion name (press Enter to add)…" style="font-size:.9rem"
+              onkeydown="if(event.key==='Enter'){event.preventDefault();addNewEmotion('storyEmotion');}" >
+            <div style="display:flex;gap:6px;margin-top:5px">
+              <button class="btn" style="font-size:.55rem;padding:5px 12px" onclick="addNewEmotion('storyEmotion')">Add ✦</button>
+              <button class="btn-ghost" style="font-size:.55rem;padding:5px 10px" onclick="cancelNewEmo('storyEmotion')">Cancel</button>
+              <span id="storyEmotion_newStatus" class="status"></span>
+            </div>
+          </div>
+        </div>
         <div><label class="field-label">Story</label><textarea class="ta" id="storyText" placeholder="Tell the story…" style="min-height:120px"></textarea></div>
       </div>
       <div style="display:flex;gap:8px;align-items:center">
@@ -553,8 +633,21 @@ h1 em{color:var(--saffron);font-style:italic}
         <div><label class="field-label">The Thought / Feeling</label>
           <textarea class="ta" id="bdText" placeholder="Whatever is in your head right now — positive, negative, random, chaotic. Just write it."></textarea></div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <div style="flex:1;min-width:140px"><label class="field-label">Emotion Tag</label>
-            <input class="itext" id="bdEmotion" placeholder="e.g. Anxious, Angry, Hopeful…"></div>
+          <div style="flex:1;min-width:140px">
+            <label class="field-label">Emotion Tag</label>
+            <select class="sel emo-sel" id="bdEmotion" style="width:100%" onchange="onEmoSelChange(this)">
+              <option value="">Select emotion…</option>
+            </select>
+            <div id="bdEmotion_newWrap" style="display:none;margin-top:6px">
+              <input class="itext" id="bdEmotion_newInput" placeholder="New emotion…" style="font-size:.88rem"
+                onkeydown="if(event.key==='Enter'){event.preventDefault();addNewEmotion('bdEmotion');}">
+              <div style="display:flex;gap:5px;margin-top:4px">
+                <button class="btn" style="font-size:.54rem;padding:4px 10px" onclick="addNewEmotion('bdEmotion')">Add ✦</button>
+                <button class="btn-ghost" style="font-size:.54rem;padding:4px 9px" onclick="cancelNewEmo('bdEmotion')">✕</button>
+                <span id="bdEmotion_newStatus" class="status"></span>
+              </div>
+            </div>
+          </div>
           <div style="flex:1;min-width:140px"><label class="field-label">Event / Trigger</label>
             <input class="itext" id="bdEvent" placeholder="e.g. Meeting, Traffic, News…"></div>
         </div>
@@ -828,15 +921,116 @@ function loadEmotions(){
 
 function buildEmotionData(rows){
   emotionsData={};
-  if(!rows||!rows.length){Object.keys(FALLBACK_EMOTIONS).forEach(function(k){emotionsData[k]=FALLBACK_EMOTIONS[k];});return;}
+  if(!rows||!rows.length){
+    Object.keys(FALLBACK_EMOTIONS).forEach(function(k){emotionsData[k]=FALLBACK_EMOTIONS[k];});
+    refreshAllEmoDropdowns(); return;
+  }
   rows.forEach(function(row){
-    var area=(row.emotion||row.area||'').trim();var method=(row.method||'').trim();
-    if(!area)return;if(!emotionsData[area])emotionsData[area]=[];if(method)emotionsData[area].push(method);
+    var area=(row.emotion||row.area||'').trim();
+    var method=(row.method||'').trim();
+    if(!area)return;
+    if(!emotionsData[area])emotionsData[area]=[];
+    if(method)emotionsData[area].push(method);
   });
   Object.keys(FALLBACK_EMOTIONS).forEach(function(k){
     if(!emotionsData[k]||!emotionsData[k].length)emotionsData[k]=FALLBACK_EMOTIONS[k];
   });
+  refreshAllEmoDropdowns();
 }
+
+// ── SHARED EMOTION DROPDOWN SYSTEM ───────────────────────────
+var EMO_DROPDOWN_IDS = ['lEmotion','thoughtEmotion','videoEmotion','imgEmotion','storyEmotion','bdEmotion'];
+
+function refreshAllEmoDropdowns(){
+  var emotions = Object.keys(emotionsData);
+  EMO_DROPDOWN_IDS.forEach(function(id){
+    buildEmotionDropdown(id, emotions);
+  });
+}
+
+function buildEmotionDropdown(id, emotions){
+  var sel = document.getElementById(id);
+  if(!sel || sel.tagName !== 'SELECT') return;
+  var current = sel.value;
+  sel.innerHTML = '<option value="">Select emotion…<\/option>'
+    + emotions.map(function(emo){
+        return '<option value="'+esc(emo)+'"'+(emo===current?' selected':'')+'>'+esc(emo)+'<\/option>';
+      }).join('')
+    + '<option value="__new__">➕ Add new emotion…<\/option>';
+  if(current) sel.value = current;
+}
+
+function onEmoSelChange(sel){
+  var id = sel.id;
+  var wrap = document.getElementById(id+'_newWrap');
+  if(!wrap) return;
+  if(sel.value === '__new__'){
+    wrap.style.display = 'block';
+    var inp = document.getElementById(id+'_newInput');
+    if(inp) setTimeout(function(){inp.focus();}, 50);
+  } else {
+    wrap.style.display = 'none';
+  }
+}
+
+function cancelNewEmo(id){
+  var wrap = document.getElementById(id+'_newWrap');
+  var inp  = document.getElementById(id+'_newInput');
+  var sel  = document.getElementById(id);
+  if(wrap) wrap.style.display = 'none';
+  if(inp)  inp.value = '';
+  if(sel)  sel.value = '';
+}
+
+function addNewEmotion(selId){
+  var inp   = document.getElementById(selId+'_newInput');
+  var emo   = inp ? inp.value.trim() : '';
+  var statEl= document.getElementById(selId+'_newStatus');
+  if(!emo){ showStatus(selId+'_newStatus','Enter a name.','var(--red)'); return; }
+  if(emotionsData[emo]){ 
+    // Already exists — just select it
+    cancelNewEmo(selId);
+    var sel = document.getElementById(selId);
+    if(sel) sel.value = emo;
+    return;
+  }
+  showStatus(selId+'_newStatus','Saving…','var(--ash)');
+  // Add to sheet with a placeholder first method
+  var params = 'action=write&type=emotions&emotion='+encodeURIComponent(emo)+'&method='+encodeURIComponent('(Add methods via Emotional Control tab)');
+  jsonpGet(params, function(data){
+    if(data && data.success){
+      emotionsData[emo] = [];
+      refreshAllEmoDropdowns();
+      cancelNewEmo(selId);
+      var sel = document.getElementById(selId);
+      if(sel) sel.value = emo;
+      // Also refresh EC selector
+      renderEcSelector();
+      showStatus(selId+'_newStatus','✓ Added!','var(--green)');
+    } else {
+      showStatus(selId+'_newStatus','Error.','var(--red)');
+    }
+  }, function(){
+    // Fallback — add locally even if sheet fails
+    emotionsData[emo] = [];
+    refreshAllEmoDropdowns();
+    cancelNewEmo(selId);
+    var sel = document.getElementById(selId);
+    if(sel) sel.value = emo;
+    renderEcSelector();
+    showStatus(selId+'_newStatus','✓ Added locally','var(--saffron)');
+  });
+}
+
+// Helper: get selected emotion value (works for both select and input)
+function getEmoVal(id){
+  var el = document.getElementById(id);
+  if(!el) return '';
+  if(el.tagName === 'SELECT') return el.value === '__new__' ? '' : (el.value || '');
+  return el.value || '';
+}
+
+
 
 function renderEcSelector(){
   var sel=document.getElementById('ecSelector');if(!sel)return;
@@ -864,28 +1058,35 @@ function renderEcMethods(emo){
 
 function renderEcRelated(emo){
   var elow=emo.toLowerCase();
+  // Match: exact emotion field match (primary), or keyword in text (secondary)
+  function eMatch(field,text){
+    var ef=(field||'').toLowerCase();
+    if(ef===elow) return true;            // exact emotion match
+    if(ef&&ef.indexOf(elow)!==-1) return true; // partial emotion match
+    return false;                          // no text search — keeps EC focused
+  }
   // Thoughts
   var tEl=document.getElementById('ecThoughts');
-  var tItems=allThoughts.filter(function(t){return (t.emotion||'').toLowerCase().indexOf(elow)!==-1||(t.thought||'').toLowerCase().indexOf(elow)!==-1;});
+  var tItems=allThoughts.filter(function(t){return eMatch(t.emotion,t.thought);});
   tEl.innerHTML=tItems.length?tItems.slice(0,5).map(function(t){
     return '<div class="ec-related-item">'+esc(t.thought||'')+'<div class="ec-related-meta">'+(t.category?'<span class="badge blue">'+esc(t.category)+'<\/span> ':'')+esc(cleanDate(t.date||''))+(t.emotion?' · '+esc(t.emotion):'')+'<\/div><\/div>';
   }).join(''):'<div class="ec-empty">No related thoughts found.<\/div>';
   // Videos
   var vEl=document.getElementById('ecVideos');
-  var vItems=allVideos.filter(function(v){return (v.emotion||v.title||'').toLowerCase().indexOf(elow)!==-1||(v.note||v.description||'').toLowerCase().indexOf(elow)!==-1;});
+  var vItems=allVideos.filter(function(v){return eMatch(v.emotion,v.title);});
   vEl.innerHTML=vItems.length?vItems.slice(0,4).map(function(v){
     var thumb=getYtThumb(v.url||'');
     return '<div class="ec-related-item" style="display:flex;gap:10px;align-items:flex-start">'+(thumb?'<img src="'+esc(thumb)+'" style="width:80px;height:45px;object-fit:cover;border-radius:2px;flex-shrink:0" alt="">':'')+'<div><div style="font-size:.92rem;font-weight:600;color:var(--ink)">'+esc(v.title||v.emotion||'')+'<\/div>'+(v.note||v.description?'<div class="ec-related-meta">'+esc(v.note||v.description)+'<\/div>':'')+'<a href="'+esc(v.url||'')+'" target="_blank" class="vlink" style="margin-top:5px;display:inline-block">Watch ↗<\/a><\/div><\/div>';
   }).join(''):'<div class="ec-empty">No related videos found.<\/div>';
   // Images
   var iEl=document.getElementById('ecImages');
-  var iItems=allImages.filter(function(i){return (i.emotion||i.note||i.caption||'').toLowerCase().indexOf(elow)!==-1;});
+  var iItems=allImages.filter(function(i){return eMatch(i.emotion,i.caption);});
   iEl.innerHTML=iItems.length?iItems.slice(0,6).map(function(img){
     return '<div class="ec-img-item" onclick="openLightbox(\''+esc(img.url||'')+'\',\''+esc(img.caption||'')+'\',\''+esc(img.category||'')+'\',\''+esc(cleanDate(img.date||''))+'\',\''+esc(img.emotion||img.note||'')+'\')"><img src="'+esc(img.thumb||img.url||'')+'" alt="'+esc(img.caption||'')+'" loading="lazy"><\/div>';
   }).join(''):'<div class="ec-empty" style="grid-column:1/-1">No related images found.<\/div>';
   // Stories
   var sEl=document.getElementById('ecStories');
-  var sItems=allStories.filter(function(s){return (s.emotion||'').toLowerCase().indexOf(elow)!==-1||(s.story||'').toLowerCase().indexOf(elow)!==-1;});
+  var sItems=allStories.filter(function(s){return eMatch(s.emotion,s.story);});
   sEl.innerHTML=sItems.length?sItems.slice(0,3).map(function(st){
     return '<div class="ec-related-item">'+esc((st.story||'').substring(0,200))+((st.story||'').length>200?'…':'')+'<div class="ec-related-meta">'+(st.emotion?'<span class="badge">'+esc(st.emotion)+'<\/span> ':'')+esc(cleanDate(st.date||''))+'<\/div><\/div>';
   }).join(''):'<div class="ec-empty">No related stories found.<\/div>';
@@ -913,7 +1114,7 @@ function addEcMethod(){
 
 // ── LEARNINGS ─────────────────────────────────────────────────
 function saveLearning(){
-  var emotion=document.getElementById('lEmotion').value.trim();
+  var emotion=getEmoVal('lEmotion');
   var incident=document.getElementById('incidentTa').value.trim();
   var learning=document.getElementById('learningTa').value.trim();
   var category=document.getElementById('lCat').value;
@@ -966,7 +1167,7 @@ function filterL(){
 
 // ── THOUGHTS ──────────────────────────────────────────────────
 function saveThought(){
-  var emotion=document.getElementById('thoughtEmotion').value.trim();
+  var emotion=getEmoVal('thoughtEmotion');
   var text=document.getElementById('thoughtTa').value.trim();
   var cat=document.getElementById('thoughtCat').value;
   if(!text){showStatus('thoughtStatus','Write something first.','var(--red)');return;}
@@ -1006,7 +1207,7 @@ function renderThoughts(rows){
 
 // ── VIDEOS ────────────────────────────────────────────────────
 function saveVideo(){
-  var emotion=document.getElementById('videoEmotion').value.trim();
+  var emotion=getEmoVal('videoEmotion');
   var url=document.getElementById('videoUrl').value.trim();
   var title=document.getElementById('videoTitle').value.trim();
   var note=document.getElementById('videoNote').value.trim();
@@ -1062,7 +1263,7 @@ function previewImage(file){
 }
 function uploadImage(){
   if(!currentImageFile){showStatus('imgUploadStatus','Select an image first.','var(--red)');return;}
-  var emotion=document.getElementById('imgEmotion').value.trim();
+  var emotion=getEmoVal('imgEmotion');
   var caption=document.getElementById('imgCaption').value.trim();
   var category=document.getElementById('imgCategory').value;
   var reader=new FileReader();
@@ -1104,7 +1305,7 @@ function doUploadToImgbb(base64,caption,category,emotion){
     });
 }
 function resetUploadForm(){
-  currentImageFile=null;document.getElementById('imgCaption').value='';document.getElementById('imgEmotion').value='';
+  currentImageFile=null;document.getElementById('imgCaption').value='';var imgEmoEl=document.getElementById('imgEmotion');if(imgEmoEl)imgEmoEl.value='';
   document.getElementById('imgCategory').value='';document.getElementById('imgPreviewWrap').style.display='none';
   document.getElementById('imgDropIcon').style.display='block';document.getElementById('imgFilePicker').value='';
 }
@@ -1143,7 +1344,7 @@ function closeLightbox(){document.getElementById('imgLightbox').style.display='n
 
 // ── STORIES ───────────────────────────────────────────────────
 function saveStory(){
-  var emotion=document.getElementById('storyEmotion').value.trim();
+  var emotion=getEmoVal('storyEmotion');
   var story=document.getElementById('storyText').value.trim();
   if(!story){showStatus('storyStatus','Write a story first.','var(--red)');return;}
   showStatus('storyStatus','Saving…','var(--ash)');
@@ -1182,7 +1383,7 @@ function filterStories(){
 // ── BRAIN DUMP ────────────────────────────────────────────────
 function saveBrainDump(){
   var text=document.getElementById('bdText').value.trim();
-  var emotion=document.getElementById('bdEmotion').value.trim();
+  var emotion=getEmoVal('bdEmotion');
   var event_=document.getElementById('bdEvent').value.trim();
   if(!text){showStatus('bdStatus','Write something first.','var(--red)');return;}
   showStatus('bdStatus','Saving…','var(--ash)');
